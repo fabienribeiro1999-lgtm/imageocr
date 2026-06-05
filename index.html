@@ -618,11 +618,25 @@
     return directAnthropic("claude-sonnet-4-20250514",Math.min(userMax,1000),messages,null);
   }
 
+  // Réduit + compresse l'image pour l'IA (≈1568 px de côté, JPEG) → envoi beaucoup plus léger
+  function compressForAI(srcCanvas, maxSide=1568, quality=0.85){
+    let w=srcCanvas.width, h=srcCanvas.height;
+    const long=Math.max(w,h);
+    const scale=long>maxSide ? maxSide/long : 1;
+    const cw=Math.max(1,Math.round(w*scale)), ch=Math.max(1,Math.round(h*scale));
+    const c=document.createElement("canvas"); c.width=cw; c.height=ch;
+    const ctx=c.getContext("2d");
+    ctx.fillStyle="#ffffff"; ctx.fillRect(0,0,cw,ch);
+    ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality="high";
+    ctx.drawImage(srcCanvas,0,0,cw,ch);
+    return c.toDataURL("image/jpeg", quality).split(",")[1];
+  }
+
   async function ocrAI(p,region,idx){
     if(idx===current){statusEl.textContent="Transcription par l'IA…";barFill.style.width="40%";}
-    const b64=region.toDataURL("image/png").split(",")[1];
+    const b64=compressForAI(region);
     const prompt="Transcris fidèlement TOUT le texte de cette image (y compris écriture manuscrite ou ancienne).\nRègles :\n- Conserve l'orthographe d'origine, la ponctuation et les retours à la ligne.\n- Entoure de ⟦ et ⟧ chaque mot dont tu n'es pas certain, avec ta meilleure hypothèse à l'intérieur.\n- Ne traduis pas, ne commente pas. Réponds UNIQUEMENT avec la transcription.";
-    const messages=[{role:"user",content:[{type:"image",source:{type:"base64",media_type:"image/png",data:b64}},{type:"text",text:prompt}]}];
+    const messages=[{role:"user",content:[{type:"image",source:{type:"base64",media_type:"image/jpeg",data:b64}},{type:"text",text:prompt}]}];
     const data=await callAnthropic(messages);
     if(data.error)throw new Error(data.error.message||"API");
     const text=(data.content||[]).filter(x=>x.type==="text").map(x=>x.text).join("\n").trim();
