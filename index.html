@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ImageOCR — Convertissez vos images en texte</title>
+<title>Image2OCR — Convertissez vos images et manuscrits en texte</title>
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
@@ -216,6 +216,16 @@
   footer{border-top:1px solid var(--border);background:var(--card)}
   .simple-view{max-width:860px;margin:0 auto}
   .btn-signin{background:transparent;color:var(--ink-2);font-weight:600;font-size:14px;padding:11px 18px;border-radius:10px;border:1px solid var(--border-strong);transition:all .15s}
+  .btn-analyze{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:#fff;background:var(--blue);border:1px solid var(--blue);padding:7px 13px;border-radius:9px;transition:all .15s}
+  .btn-analyze:hover{background:var(--blue-dark)}
+  .btn-analyze:disabled{opacity:.45;cursor:not-allowed}
+  .acte-card{border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:12px;background:var(--bg)}
+  .acte-card .acte-type{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+  .acte-row{display:flex;gap:12px;padding:5px 0;border-bottom:1px solid var(--border);font-size:14px}
+  .acte-row:last-child{border-bottom:none}
+  .acte-row .k{flex:0 0 38%;color:var(--muted);font-weight:600}
+  .acte-row .v{flex:1;color:var(--ink-2)}
+  #analyzeContent{max-height:50vh;overflow:auto;margin-bottom:8px}
   .btn-signin:hover{background:var(--blue-soft);color:var(--blue);border-color:var(--blue)}
   .legal-doc{font-size:14.5px;line-height:1.7;color:var(--muted)}
   .legal-doc h3{font-size:16px;font-weight:700;color:var(--ink-2);margin:26px 0 8px}
@@ -278,7 +288,7 @@
 
 <header>
   <div class="wrap nav">
-    <div class="brand"><span class="logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.5-3.5L9 20"/></svg></span><span>Image<span class="blue">OCR</span></span></div>
+    <div class="brand"><span class="logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.5-3.5L9 20"/></svg></span><span>Image2<span class="blue">OCR</span></span></div>
     <nav class="menu"><a href="#" class="active" id="navHome" data-i18n="nav_home">Accueil</a><a href="#" id="navP2W" data-i18n="nav_p2w">PDF → Word</a><a href="#features" id="navFeat" data-i18n="nav_features">Fonctionnalités</a><a href="#" id="navFAQ" data-i18n="nav_faq">FAQ</a></nav>
     <div class="nav-right">
       <button class="theme-toggle" id="themeToggle" title="Mode nuit" aria-label="Basculer le thème">
@@ -357,6 +367,7 @@
     <div class="panel-head">
       <div class="panel-title"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span data-i18n="t_text">TEXTE EXTRAIT</span></div>
       <div class="head-actions">
+        <button class="btn-analyze" id="analyzeBtn" disabled><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM21 21l-4.3-4.3"/></svg><span data-i18n="analyze">Analyser l'acte</span></button>
         <button class="btn-ghost" id="copyBtn" disabled><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span data-i18n="btn_copy">Copier</span></button>
         <div class="dd">
           <button class="btn-ghost" id="dlBtn" disabled><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span data-i18n="btn_download">Télécharger</span></button>
@@ -415,7 +426,7 @@
 </section>
 
 <section class="wrap simple-view" id="faqView" style="display:none">
-  <div class="hero" style="padding:48px 0 28px"><h1>FAQ</h1><p>Questions fréquentes sur ImageOCR</p></div>
+  <div class="hero" style="padding:48px 0 28px"><h1>FAQ</h1><p>Questions fréquentes sur Image2OCR</p></div>
   <div class="faq">
     <details><summary>Quels fichiers puis-je importer&nbsp;?</summary><p>Des images (JPG, PNG, WEBP, TIFF, GIF, BMP) et des PDF. Vous pouvez déposer plusieurs fichiers à la fois ou un PDF entier&nbsp;: chaque page devient une page à traiter, et tout peut être exporté en un seul document.</p></details>
     <details><summary>Quelle est la différence entre les deux moteurs&nbsp;?</summary><p>L'«&nbsp;OCR rapide&nbsp;» est conçu pour le texte imprimé&nbsp;: il est instantané et s'exécute directement dans votre navigateur. Le mode «&nbsp;IA — manuscrit &amp; difficile&nbsp;» utilise une intelligence artificielle de vision capable de lire l'écriture manuscrite et les documents anciens, là où l'OCR classique échoue.</p></details>
@@ -433,7 +444,7 @@
   <div class="legal-doc">
     <p class="legal-note">⚠️ Modèle à compléter avec vos informations réelles avant la mise en ligne publique (obligatoire en France — loi LCEN).</p>
     <h3>Éditeur du site</h3>
-    <p>Le site <strong>ImageOCR</strong> est édité par&nbsp;: [Votre nom ou raison sociale]<br>Statut&nbsp;: [particulier / auto-entrepreneur / société]<br>Adresse&nbsp;: [votre adresse]<br>E-mail&nbsp;: [votre e-mail]<br>SIRET (le cas échéant)&nbsp;: [numéro]</p>
+    <p>Le site <strong>Image2OCR</strong> est édité par&nbsp;: [Votre nom ou raison sociale]<br>Statut&nbsp;: [particulier / auto-entrepreneur / société]<br>Adresse&nbsp;: [votre adresse]<br>E-mail&nbsp;: [votre e-mail]<br>SIRET (le cas échéant)&nbsp;: [numéro]</p>
     <h3>Directeur de la publication</h3>
     <p>[Votre nom]</p>
     <h3>Hébergeur</h3>
@@ -473,7 +484,7 @@
   </div>
 </section>
 
-<footer><div class="wrap foot"><span class="copy" data-i18n="footer_copy">© 2026 ImageOCR — Tous droits réservés.</span><a href="#" id="navLegal" data-i18n="footer_legal">Mentions légales</a><a href="#" id="navPrivacy" data-i18n="footer_privacy">Confidentialité</a><a href="#" id="navContact" data-i18n="footer_contact">Contact</a></div></footer>
+<footer><div class="wrap foot"><span class="copy" data-i18n="footer_copy">© 2026 Image2OCR — Tous droits réservés.</span><a href="#" id="navLegal" data-i18n="footer_legal">Mentions légales</a><a href="#" id="navPrivacy" data-i18n="footer_privacy">Confidentialité</a><a href="#" id="navContact" data-i18n="footer_contact">Contact</a></div></footer>
 
 <div class="modal-bg" id="modalBg"><div class="modal">
   <h3 data-i18n="m_title">Paramètres du mode IA</h3>
@@ -499,6 +510,18 @@
   <div class="modal-foot" style="margin-top:8px"><button class="btn-cancel" id="authCancel">Fermer</button></div>
 </div></div>
 
+<div class="modal-bg" id="analyzeBg"><div class="modal" style="max-width:580px">
+  <h3>🔎 Analyse de l'acte</h3>
+  <p class="sub">Informations généalogiques extraites du texte transcrit.</p>
+  <div id="analyzeLoading" class="p2w-loading" style="display:none"><div class="spinner"></div><span>Analyse en cours…</span></div>
+  <div id="analyzeContent"></div>
+  <div class="modal-foot">
+    <button class="btn-cancel" id="analyzeClose">Fermer</button>
+    <button class="btn-cancel" id="analyzeCopy" style="display:none">Copier</button>
+    <button class="btn-save" id="analyzeCsv" style="display:none">Exporter CSV</button>
+  </div>
+</div></div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -510,6 +533,7 @@
   const engineSel=$("#engine"),langSel=$("#lang"),langCtrl=$("#langCtrl"),enhanceCtrl=$("#enhanceCtrl"),enhanceChk=$("#enhance"),engineNote=$("#engineNote");
   const pager=$("#pager"),textArea=$("#textArea"),progress=$("#progress"),statusEl=$("#status"),barFill=$("#barFill");
   const legend=$("#legend"),editBtn=$("#editBtn"),copyBtn=$("#copyBtn"),dlBtn=$("#dlBtn"),dlMenu=$("#dlMenu");
+  const analyzeBtn=$("#analyzeBtn"),analyzeBg=$("#analyzeBg"),analyzeContent=$("#analyzeContent"),analyzeLoading=$("#analyzeLoading"),analyzeClose=$("#analyzeClose"),analyzeCopy=$("#analyzeCopy"),analyzeCsv=$("#analyzeCsv");
   const pop=$("#pop"),suggList=$("#suggList"),popInput=$("#popInput"),popOk=$("#popOk"),toast=$("#toast");
   const gearBtn=$("#gearBtn"),modalBg=$("#modalBg"),apiKeyIn=$("#apiKey"),modelIn=$("#modelId"),maxTokIn=$("#maxTok"),proxyIn=$("#proxyUrl"),modalSave=$("#modalSave"),modalCancel=$("#modalCancel"),themeToggle=$("#themeToggle");
 
@@ -583,7 +607,7 @@
     pager.classList.remove("show");pager.innerHTML="";
     document.querySelectorAll("textarea.editor").forEach(t=>t.remove());
     textArea.style.display="";textArea.className="text-area empty";textArea.textContent="Le texte extrait apparaîtra ici";
-    progress.style.display="none";legend.style.display="none";copyBtn.disabled=dlBtn.disabled=true;
+    progress.style.display="none";legend.style.display="none";copyBtn.disabled=dlBtn.disabled=analyzeBtn.disabled=true;
   });
 
   // ---------- pager ----------
@@ -614,8 +638,8 @@
     zoneResetBtn.style.display=(p.crop.w<.999||p.crop.h<.999)?"inline-flex":"none";
     if(p.status==="processing"){progress.style.display="flex";textArea.style.display="none";legend.style.display="none";return;}
     progress.style.display="none";
-    if(!p.done){textArea.style.display="";textArea.className="text-area empty";textArea.textContent="En attente…";legend.style.display="none";copyBtn.disabled=dlBtn.disabled=true;return;}
-    copyBtn.disabled=dlBtn.disabled=false;legend.style.display="flex";
+    if(!p.done){textArea.style.display="";textArea.className="text-area empty";textArea.textContent="En attente…";legend.style.display="none";copyBtn.disabled=dlBtn.disabled=analyzeBtn.disabled=true;return;}
+    copyBtn.disabled=dlBtn.disabled=analyzeBtn.disabled=false;legend.style.display="flex";
     if(p.manual!=null){showEditor(p);return;}
     textArea.style.display="";renderLines(p);
   }
@@ -1011,7 +1035,7 @@
       t_text:"TEXTE EXTRAIT",btn_copy:"Copier",btn_download:"Télécharger",dl_txt:"Fichier texte (.txt)",dl_doc:"Document Word (.doc)",dl_md:"Markdown (.md)",dl_pdf:"PDF texte (.pdf)",dl_pdfs:"⭐ PDF cherchable (scan + texte)",
       empty_text:"Le texte extrait apparaîtra ici",legend:"Mots incertains — cliquez pour corriger · clic = surbrillance sur l'image",btn_editall:"Tout modifier",edit_active:"Édition manuelle activée",
       f1_t:"Mot ↔ image",f1_d:"Cliquez un mot : il s'entoure au bon endroit sur le scan",f2_t:"Sélection de zone",f2_d:"Traitez une colonne ou un paragraphe précis du document",f3_t:"PDF cherchable",f3_d:"Exportez le scan avec une couche de texte sélectionnable",f4_t:"Multi-pages & PDF",f4_d:"Importez plusieurs images ou un PDF entier en un coup",
-      footer_copy:"© 2026 ImageOCR — Tous droits réservés.",footer_legal:"Mentions légales",footer_privacy:"Confidentialité",footer_contact:"Contact",
+      footer_copy:"© 2026 Image2OCR — Tous droits réservés.",footer_legal:"Mentions légales",footer_privacy:"Confidentialité",footer_contact:"Contact",
       p2w_title:'PDF → <span class="blue">Word</span>',p2w_sub:"Récupérez le texte d'un PDF dans un document Word éditable, en un clic",p2w_dz_title:"Déposez votre PDF ici",p2w_dz_sub:"ou cliquez pour parcourir · fichiers .pdf",p2w_warn:"⚠️ Ce PDF semble être un scan d'images sans couche de texte. La conversion directe donnera peu ou pas de texte — utilisez plutôt l'outil OCR.",p2w_toocr:"Aller à l'OCR",p2w_convert:"Télécharger en Word (.doc)",p2w_clear:"Changer de PDF",
       m_title:"Paramètres du mode IA",m_sub:"Dans l'aperçu Claude, le mode IA fonctionne sans configuration. Pour un site hébergé, indiquez votre clé API Anthropic.",m_warn:"⚠️ Une clé saisie ici reste côté navigateur : usage personnel/local uniquement. Pour un site public, passez par un backend qui garde la clé secrète.",m_key:"Clé API Anthropic (optionnelle)",m_model:"Modèle (clé perso)",m_max:"Longueur max de la réponse (tokens)",m_cancel:"Annuler",m_save:"Enregistrer"},
     en:{nav_home:"Home",nav_p2w:"PDF → Word",nav_features:"Features",nav_pricing:"Pricing",nav_faq:"FAQ",nav_api:"API",login:"Sign in",
@@ -1023,7 +1047,7 @@
       t_text:"EXTRACTED TEXT",btn_copy:"Copy",btn_download:"Download",dl_txt:"Text file (.txt)",dl_doc:"Word document (.doc)",dl_md:"Markdown (.md)",dl_pdf:"Text PDF (.pdf)",dl_pdfs:"⭐ Searchable PDF (scan + text)",
       empty_text:"Extracted text will appear here",legend:"Uncertain words — click to fix · click = highlight on the image",btn_editall:"Edit all",edit_active:"Manual editing enabled",
       f1_t:"Word ↔ image",f1_d:"Click a word: it's outlined at the right spot on the scan",f2_t:"Region selection",f2_d:"Process a specific column or paragraph of the document",f3_t:"Searchable PDF",f3_d:"Export the scan with a selectable text layer",f4_t:"Multi-page & PDF",f4_d:"Import several images or a whole PDF at once",
-      footer_copy:"© 2026 ImageOCR — All rights reserved.",footer_legal:"Legal notice",footer_privacy:"Privacy",footer_contact:"Contact",
+      footer_copy:"© 2026 Image2OCR — All rights reserved.",footer_legal:"Legal notice",footer_privacy:"Privacy",footer_contact:"Contact",
       p2w_title:'PDF → <span class="blue">Word</span>',p2w_sub:"Get the text of a PDF into an editable Word document, in one click",p2w_dz_title:"Drop your PDF here",p2w_dz_sub:"or click to browse · .pdf files",p2w_warn:"⚠️ This PDF looks like a scanned image with no text layer. Direct conversion will yield little or no text — use the OCR tool instead.",p2w_toocr:"Go to OCR",p2w_convert:"Download as Word (.doc)",p2w_clear:"Change PDF",
       m_title:"AI mode settings",m_sub:"In the Claude preview, AI mode works with no setup. For a hosted site, enter your Anthropic API key.",m_warn:"⚠️ A key entered here stays in the browser: personal/local use only. For a public site, use a backend that keeps the key secret.",m_key:"Anthropic API key (optional)",m_model:"Model (personal key)",m_max:"Max response length (tokens)",m_cancel:"Cancel",m_save:"Save"},
     es:{nav_home:"Inicio",nav_p2w:"PDF → Word",nav_features:"Funciones",nav_pricing:"Precios",nav_faq:"FAQ",nav_api:"API",login:"Iniciar sesión",
@@ -1035,7 +1059,7 @@
       t_text:"TEXTO EXTRAÍDO",btn_copy:"Copiar",btn_download:"Descargar",dl_txt:"Archivo de texto (.txt)",dl_doc:"Documento Word (.doc)",dl_md:"Markdown (.md)",dl_pdf:"PDF de texto (.pdf)",dl_pdfs:"⭐ PDF con búsqueda (escaneo + texto)",
       empty_text:"El texto extraído aparecerá aquí",legend:"Palabras inciertas — haz clic para corregir · clic = resaltar en la imagen",btn_editall:"Editar todo",edit_active:"Edición manual activada",
       f1_t:"Palabra ↔ imagen",f1_d:"Haz clic en una palabra: se resalta en el lugar exacto del escaneo",f2_t:"Selección de zona",f2_d:"Procesa una columna o un párrafo concreto del documento",f3_t:"PDF con búsqueda",f3_d:"Exporta el escaneo con una capa de texto seleccionable",f4_t:"Multipágina y PDF",f4_d:"Importa varias imágenes o un PDF entero de una vez",
-      footer_copy:"© 2026 ImageOCR — Todos los derechos reservados.",footer_legal:"Aviso legal",footer_privacy:"Privacidad",footer_contact:"Contacto",
+      footer_copy:"© 2026 Image2OCR — Todos los derechos reservados.",footer_legal:"Aviso legal",footer_privacy:"Privacidad",footer_contact:"Contacto",
       p2w_title:'PDF → <span class="blue">Word</span>',p2w_sub:"Pasa el texto de un PDF a un documento Word editable, en un clic",p2w_dz_title:"Suelta tu PDF aquí",p2w_dz_sub:"o haz clic para buscar · archivos .pdf",p2w_warn:"⚠️ Este PDF parece un escaneo de imágenes sin capa de texto. La conversión directa dará poco o ningún texto — usa mejor la herramienta OCR.",p2w_toocr:"Ir al OCR",p2w_convert:"Descargar como Word (.doc)",p2w_clear:"Cambiar PDF",
       m_title:"Ajustes del modo IA",m_sub:"En la vista previa de Claude, el modo IA funciona sin configuración. Para un sitio alojado, introduce tu clave API de Anthropic.",m_warn:"⚠️ Una clave introducida aquí permanece en el navegador: solo uso personal/local. Para un sitio público, usa un backend que mantenga la clave secreta.",m_key:"Clave API de Anthropic (opcional)",m_model:"Modelo (clave personal)",m_max:"Longitud máx. de respuesta (tokens)",m_cancel:"Cancelar",m_save:"Guardar"},
     de:{nav_home:"Start",nav_p2w:"PDF → Word",nav_features:"Funktionen",nav_pricing:"Preise",nav_faq:"FAQ",nav_api:"API",login:"Anmelden",
@@ -1047,7 +1071,7 @@
       t_text:"EXTRAHIERTER TEXT",btn_copy:"Kopieren",btn_download:"Herunterladen",dl_txt:"Textdatei (.txt)",dl_doc:"Word-Dokument (.doc)",dl_md:"Markdown (.md)",dl_pdf:"Text-PDF (.pdf)",dl_pdfs:"⭐ Durchsuchbares PDF (Scan + Text)",
       empty_text:"Der extrahierte Text erscheint hier",legend:"Unsichere Wörter — zum Korrigieren klicken · Klick = im Bild hervorheben",btn_editall:"Alles bearbeiten",edit_active:"Manuelle Bearbeitung aktiviert",
       f1_t:"Wort ↔ Bild",f1_d:"Auf ein Wort klicken: es wird an der richtigen Stelle im Scan markiert",f2_t:"Bereichsauswahl",f2_d:"Eine bestimmte Spalte oder einen Absatz verarbeiten",f3_t:"Durchsuchbares PDF",f3_d:"Scan mit auswählbarer Textebene exportieren",f4_t:"Mehrseitig & PDF",f4_d:"Mehrere Bilder oder ein ganzes PDF auf einmal importieren",
-      footer_copy:"© 2026 ImageOCR — Alle Rechte vorbehalten.",footer_legal:"Impressum",footer_privacy:"Datenschutz",footer_contact:"Kontakt",
+      footer_copy:"© 2026 Image2OCR — Alle Rechte vorbehalten.",footer_legal:"Impressum",footer_privacy:"Datenschutz",footer_contact:"Kontakt",
       p2w_title:'PDF → <span class="blue">Word</span>',p2w_sub:"Holen Sie den Text eines PDFs in ein bearbeitbares Word-Dokument, mit einem Klick",p2w_dz_title:"PDF hier ablegen",p2w_dz_sub:"oder klicken zum Durchsuchen · .pdf-Dateien",p2w_warn:"⚠️ Dieses PDF scheint ein gescanntes Bild ohne Textebene zu sein. Die direkte Umwandlung liefert wenig oder keinen Text — nutzen Sie stattdessen das OCR-Werkzeug.",p2w_toocr:"Zum OCR",p2w_convert:"Als Word (.doc) herunterladen",p2w_clear:"PDF ändern",
       m_title:"KI-Modus-Einstellungen",m_sub:"In der Claude-Vorschau funktioniert der KI-Modus ohne Einrichtung. Für eine gehostete Seite geben Sie Ihren Anthropic-API-Schlüssel ein.",m_warn:"⚠️ Ein hier eingegebener Schlüssel bleibt im Browser: nur persönliche/lokale Nutzung. Für eine öffentliche Seite ein Backend verwenden, das den Schlüssel geheim hält.",m_key:"Anthropic-API-Schlüssel (optional)",m_model:"Modell (persönlicher Schlüssel)",m_max:"Max. Antwortlänge (Tokens)",m_cancel:"Abbrechen",m_save:"Speichern"},
     it:{nav_home:"Home",nav_p2w:"PDF → Word",nav_features:"Funzioni",nav_pricing:"Prezzi",nav_faq:"FAQ",nav_api:"API",login:"Accedi",
@@ -1059,7 +1083,7 @@
       t_text:"TESTO ESTRATTO",btn_copy:"Copia",btn_download:"Scarica",dl_txt:"File di testo (.txt)",dl_doc:"Documento Word (.doc)",dl_md:"Markdown (.md)",dl_pdf:"PDF di testo (.pdf)",dl_pdfs:"⭐ PDF ricercabile (scan + testo)",
       empty_text:"Il testo estratto apparirà qui",legend:"Parole incerte — clicca per correggere · clic = evidenzia sull'immagine",btn_editall:"Modifica tutto",edit_active:"Modifica manuale attivata",
       f1_t:"Parola ↔ immagine",f1_d:"Clicca una parola: viene evidenziata nel punto giusto della scansione",f2_t:"Selezione zona",f2_d:"Elabora una colonna o un paragrafo preciso del documento",f3_t:"PDF ricercabile",f3_d:"Esporta la scansione con uno strato di testo selezionabile",f4_t:"Multipagina e PDF",f4_d:"Importa più immagini o un intero PDF in una volta",
-      footer_copy:"© 2026 ImageOCR — Tutti i diritti riservati.",footer_legal:"Note legali",footer_privacy:"Privacy",footer_contact:"Contatto",
+      footer_copy:"© 2026 Image2OCR — Tutti i diritti riservati.",footer_legal:"Note legali",footer_privacy:"Privacy",footer_contact:"Contatto",
       p2w_title:'PDF → <span class="blue">Word</span>',p2w_sub:"Porta il testo di un PDF in un documento Word modificabile, in un clic",p2w_dz_title:"Trascina qui il tuo PDF",p2w_dz_sub:"o clicca per sfogliare · file .pdf",p2w_warn:"⚠️ Questo PDF sembra una scansione di immagini senza strato di testo. La conversione diretta darà poco o nessun testo — usa invece lo strumento OCR.",p2w_toocr:"Vai all'OCR",p2w_convert:"Scarica come Word (.doc)",p2w_clear:"Cambia PDF",
       m_title:"Impostazioni modalità IA",m_sub:"Nell'anteprima Claude la modalità IA funziona senza configurazione. Per un sito ospitato, inserisci la tua chiave API Anthropic.",m_warn:"⚠️ Una chiave inserita qui resta nel browser: solo uso personale/locale. Per un sito pubblico usa un backend che mantenga segreta la chiave.",m_key:"Chiave API Anthropic (opzionale)",m_model:"Modello (chiave personale)",m_max:"Lunghezza max risposta (token)",m_cancel:"Annulla",m_save:"Salva"},
     pt:{nav_home:"Início",nav_p2w:"PDF → Word",nav_features:"Funcionalidades",nav_pricing:"Preços",nav_faq:"FAQ",nav_api:"API",login:"Entrar",
@@ -1071,16 +1095,16 @@
       t_text:"TEXTO EXTRAÍDO",btn_copy:"Copiar",btn_download:"Descarregar",dl_txt:"Ficheiro de texto (.txt)",dl_doc:"Documento Word (.doc)",dl_md:"Markdown (.md)",dl_pdf:"PDF de texto (.pdf)",dl_pdfs:"⭐ PDF pesquisável (digitalização + texto)",
       empty_text:"O texto extraído aparecerá aqui",legend:"Palavras incertas — clique para corrigir · clique = realçar na imagem",btn_editall:"Editar tudo",edit_active:"Edição manual ativada",
       f1_t:"Palavra ↔ imagem",f1_d:"Clique numa palavra: é realçada no local certo da digitalização",f2_t:"Seleção de zona",f2_d:"Processe uma coluna ou um parágrafo específico do documento",f3_t:"PDF pesquisável",f3_d:"Exporte a digitalização com uma camada de texto selecionável",f4_t:"Multipágina e PDF",f4_d:"Importe várias imagens ou um PDF inteiro de uma vez",
-      footer_copy:"© 2026 ImageOCR — Todos os direitos reservados.",footer_legal:"Aviso legal",footer_privacy:"Privacidade",footer_contact:"Contacto",
+      footer_copy:"© 2026 Image2OCR — Todos os direitos reservados.",footer_legal:"Aviso legal",footer_privacy:"Privacidade",footer_contact:"Contacto",
       p2w_title:'PDF → <span class="blue">Word</span>',p2w_sub:"Coloque o texto de um PDF num documento Word editável, num clique",p2w_dz_title:"Largue aqui o seu PDF",p2w_dz_sub:"ou clique para procurar · ficheiros .pdf",p2w_warn:"⚠️ Este PDF parece ser uma digitalização de imagens sem camada de texto. A conversão direta dará pouco ou nenhum texto — use antes a ferramenta OCR.",p2w_toocr:"Ir para o OCR",p2w_convert:"Descarregar como Word (.doc)",p2w_clear:"Mudar de PDF",
       m_title:"Definições do modo IA",m_sub:"Na pré-visualização do Claude, o modo IA funciona sem configuração. Para um site alojado, indique a sua chave API Anthropic.",m_warn:"⚠️ Uma chave introduzida aqui fica no navegador: apenas uso pessoal/local. Para um site público, use um backend que mantenha a chave secreta.",m_key:"Chave API Anthropic (opcional)",m_model:"Modelo (chave pessoal)",m_max:"Comprimento máx. da resposta (tokens)",m_cancel:"Cancelar",m_save:"Guardar"}
   };
-  Object.assign(I18N.fr,{features_kicker:"FONCTIONNALITÉS",features_heading:"Pensé pour les documents difficiles",f5_t:"Transcription IA",f5_d:"Lit l'écriture manuscrite et les actes anciens, là où l'OCR classique échoue",m_proxy:"Backend (proxy) — pour un site hébergé",signup:"S'inscrire"});
-  Object.assign(I18N.en,{features_kicker:"FEATURES",features_heading:"Built for difficult documents",f5_t:"AI transcription",f5_d:"Reads handwriting and old records where classic OCR fails",m_proxy:"Backend (proxy) — for a hosted site",signup:"Sign up"});
-  Object.assign(I18N.es,{features_kicker:"FUNCIONES",features_heading:"Pensado para documentos difíciles",f5_t:"Transcripción IA",f5_d:"Lee la escritura manuscrita y los actos antiguos donde el OCR clásico falla",m_proxy:"Backend (proxy) — para un sitio alojado",signup:"Registrarse"});
-  Object.assign(I18N.de,{features_kicker:"FUNKTIONEN",features_heading:"Für schwierige Dokumente gemacht",f5_t:"KI-Transkription",f5_d:"Liest Handschrift und alte Urkunden, wo klassisches OCR scheitert",m_proxy:"Backend (Proxy) — für eine gehostete Seite",signup:"Registrieren"});
-  Object.assign(I18N.it,{features_kicker:"FUNZIONI",features_heading:"Pensato per i documenti difficili",f5_t:"Trascrizione IA",f5_d:"Legge la scrittura a mano e gli atti antichi dove l'OCR classico fallisce",m_proxy:"Backend (proxy) — per un sito ospitato",signup:"Registrati"});
-  Object.assign(I18N.pt,{features_kicker:"FUNCIONALIDADES",features_heading:"Feito para documentos difíceis",f5_t:"Transcrição IA",f5_d:"Lê a escrita manuscrita e os registos antigos onde o OCR clássico falha",m_proxy:"Backend (proxy) — para um site alojado",signup:"Registar-se"});
+  Object.assign(I18N.fr,{features_kicker:"FONCTIONNALITÉS",features_heading:"Pensé pour les documents difficiles",f5_t:"Transcription IA",f5_d:"Lit l'écriture manuscrite et les actes anciens, là où l'OCR classique échoue",m_proxy:"Backend (proxy) — pour un site hébergé",signup:"S'inscrire",analyze:"Analyser l'acte"});
+  Object.assign(I18N.en,{features_kicker:"FEATURES",features_heading:"Built for difficult documents",f5_t:"AI transcription",f5_d:"Reads handwriting and old records where classic OCR fails",m_proxy:"Backend (proxy) — for a hosted site",signup:"Sign up",analyze:"Analyze the act"});
+  Object.assign(I18N.es,{features_kicker:"FUNCIONES",features_heading:"Pensado para documentos difíciles",f5_t:"Transcripción IA",f5_d:"Lee la escritura manuscrita y los actos antiguos donde el OCR clásico falla",m_proxy:"Backend (proxy) — para un sitio alojado",signup:"Registrarse",analyze:"Analizar el acta"});
+  Object.assign(I18N.de,{features_kicker:"FUNKTIONEN",features_heading:"Für schwierige Dokumente gemacht",f5_t:"KI-Transkription",f5_d:"Liest Handschrift und alte Urkunden, wo klassisches OCR scheitert",m_proxy:"Backend (Proxy) — für eine gehostete Seite",signup:"Registrieren",analyze:"Urkunde analysieren"});
+  Object.assign(I18N.it,{features_kicker:"FUNZIONI",features_heading:"Pensato per i documenti difficili",f5_t:"Trascrizione IA",f5_d:"Legge la scrittura a mano e gli atti antichi dove l'OCR classico fallisce",m_proxy:"Backend (proxy) — per un sito ospitato",signup:"Registrati",analyze:"Analizza l'atto"});
+  Object.assign(I18N.pt,{features_kicker:"FUNCIONALIDADES",features_heading:"Feito para documentos difíceis",f5_t:"Transcrição IA",f5_d:"Lê a escrita manuscrita e os registos antigos onde o OCR clássico falha",m_proxy:"Backend (proxy) — para um site alojado",signup:"Registar-se",analyze:"Analisar o registo"});
   function t(k){return (I18N[curLang]||I18N.fr)[k]||I18N.fr[k]||k;}
   function applyLang(l){
     const d=I18N[l]||I18N.fr;curLang=l;
@@ -1092,6 +1116,48 @@
   langBtn.addEventListener("click",e=>{e.stopPropagation();langMenu.classList.toggle("open");});
   langMenu.addEventListener("click",e=>{const b=e.target.closest("[data-lang]");if(!b)return;applyLang(b.dataset.lang);langMenu.classList.remove("open");});
   document.addEventListener("click",e=>{if(!e.target.closest(".lang-wrap"))langMenu.classList.remove("open");});
+  // ---------- Analyser l'acte (extraction structurée) ----------
+  let lastActes=null;
+  analyzeClose.addEventListener("click",()=>analyzeBg.classList.remove("open"));
+  analyzeBg.addEventListener("click",e=>{if(e.target===analyzeBg)analyzeBg.classList.remove("open");});
+  analyzeBtn.addEventListener("click",runAnalyze);
+  async function runAnalyze(){
+    if(current<0||!pages[current]||!pages[current].done)return;
+    const text=pageText(pages[current]).trim();
+    if(!text)return showToast("Aucun texte à analyser");
+    lastActes=null;analyzeContent.innerHTML="";analyzeCopy.style.display="none";analyzeCsv.style.display="none";
+    analyzeLoading.style.display="flex";analyzeBg.classList.add("open");
+    const prompt="Tu es expert en généalogie et paléographie. Voici la transcription d'un ou plusieurs actes anciens (registre paroissial ou état civil).\nPour CHAQUE acte présent, extrais les informations clés.\nRéponds UNIQUEMENT en JSON valide, sans texte ni balises autour, au format :\n{\"actes\":[{\"type\":\"baptême|mariage|décès|autre\",\"champs\":[{\"label\":\"Date\",\"valeur\":\"...\"},{\"label\":\"Nom\",\"valeur\":\"...\"}]}]}\nInclure selon disponibilité : date, lieu, nom et prénom(s) du sujet, père, mère, parrain, marraine, conjoint(e), témoins, profession, âge, mentions marginales. N'invente rien ; omets les champs absents.\n\nTRANSCRIPTION :\n"+text;
+    try{
+      const data=await callAnthropic([{role:"user",content:[{type:"text",text:prompt}]}]);
+      if(data.error)throw new Error(data.error.message||"API");
+      let raw=(data.content||[]).filter(x=>x.type==="text").map(x=>x.text).join("\n").trim().replace(/```json|```/g,"").trim();
+      const obj=JSON.parse(raw);
+      lastActes=obj.actes||[];
+      renderActes(lastActes);
+    }catch(err){
+      console.error(err);analyzeLoading.style.display="none";
+      analyzeContent.innerHTML='<p style="color:var(--muted);font-size:14px">Analyse impossible ('+esc(err.message||"erreur")+'). Réessayez, ou vérifiez que le mode IA fonctionne. Pour un long texte, traitez un acte à la fois.</p>';
+    }
+  }
+  function renderActes(actes){
+    analyzeLoading.style.display="none";
+    if(!actes||!actes.length){analyzeContent.innerHTML='<p style="color:var(--muted);font-size:14px">Aucun acte identifié dans ce texte.</p>';return;}
+    analyzeContent.innerHTML=actes.map((a,i)=>{
+      const rows=(a.champs||[]).map(c=>`<div class="acte-row"><span class="k">${esc(c.label||"")}</span><span class="v">${esc(c.valeur||"")}</span></div>`).join("");
+      return `<div class="acte-card"><div class="acte-type">${esc(a.type||("Acte "+(i+1)))}</div>${rows}</div>`;
+    }).join("");
+    analyzeCopy.style.display="";analyzeCsv.style.display="";
+  }
+  function actesToText(){return (lastActes||[]).map((a,i)=>{const head=(a.type||("Acte "+(i+1))).toUpperCase();return head+"\n"+(a.champs||[]).map(c=>`${c.label} : ${c.valeur}`).join("\n");}).join("\n\n");}
+  analyzeCopy.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(actesToText());showToast("Analyse copiée ✓");}catch(_){showToast("Copie impossible");}});
+  analyzeCsv.addEventListener("click",()=>{
+    const q=s=>'"'+String(s||"").replace(/"/g,'""')+'"';
+    let csv="Acte,Type,Champ,Valeur\n";
+    (lastActes||[]).forEach((a,i)=>{(a.champs||[]).forEach(c=>{csv+=[i+1,q(a.type),q(c.label),q(c.valeur)].join(",")+"\n";});});
+    saveBlob(new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"}),"acte-analyse.csv");showToast("CSV téléchargé ✓");
+  });
+
   if(/[?&]admin/i.test(location.search)) gearBtn.style.display="flex";
   applyLang("fr");
 })();
