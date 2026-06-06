@@ -214,6 +214,22 @@
   .feature p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.55}
 
   footer{border-top:1px solid var(--border);background:var(--card)}
+  .simple-view{max-width:860px;margin:0 auto}
+  .faq details{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;padding:0 20px;transition:border-color .15s}
+  .faq details[open]{border-color:var(--blue)}
+  .faq summary{cursor:pointer;padding:17px 0;font-weight:600;font-size:15px;color:var(--ink-2);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:14px}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";font-size:22px;line-height:1;color:var(--blue);font-weight:400;flex:0 0 auto}
+  .faq details[open] summary::after{content:"\2013"}
+  .faq details p{margin:0 0 18px;color:var(--muted);font-size:14px;line-height:1.65}
+  .api-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:34px 30px;text-align:center;max-width:680px;margin:0 auto}
+  .api-badge{display:inline-block;background:var(--blue-soft);color:var(--blue);font-size:12px;font-weight:700;letter-spacing:.09em;padding:6px 14px;border-radius:99px;margin-bottom:18px}
+  .api-card h3{font-size:20px;font-weight:700;margin:0 0 10px;color:var(--ink-2)}
+  .api-card p{color:var(--muted);font-size:14.5px;line-height:1.65;margin:0 auto 16px;max-width:520px}
+  .api-list{text-align:left;max-width:430px;margin:18px auto 22px;display:flex;flex-direction:column;gap:10px}
+  .api-list div{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--ink-2)}
+  .api-list svg{flex:0 0 auto;color:var(--blue);margin-top:2px}
+  .api-card .btn-login{display:inline-block;text-decoration:none}
   .foot{display:flex;align-items:center;justify-content:center;gap:30px;flex-wrap:wrap;padding:26px 0;font-size:14px;color:var(--muted)}
   .p2w-card{max-width:760px;margin:0 auto 56px}
   .p2w-drop{border:2px dashed var(--border-strong);border-radius:12px;min-height:240px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--muted);background:#fcfdff;cursor:pointer;padding:30px;transition:all .18s}
@@ -251,7 +267,7 @@
 <header>
   <div class="wrap nav">
     <div class="brand"><span class="logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.5-3.5L9 20"/></svg></span><span>Image<span class="blue">OCR</span></span></div>
-    <nav class="menu"><a href="#" class="active" id="navHome" data-i18n="nav_home">Accueil</a><a href="#" id="navP2W" data-i18n="nav_p2w">PDF → Word</a><a href="#features" id="navFeat" data-i18n="nav_features">Fonctionnalités</a><a href="#" data-i18n="nav_pricing">Tarifs</a><a href="#" data-i18n="nav_faq">FAQ</a><a href="#" data-i18n="nav_api">API</a></nav>
+    <nav class="menu"><a href="#" class="active" id="navHome" data-i18n="nav_home">Accueil</a><a href="#" id="navP2W" data-i18n="nav_p2w">PDF → Word</a><a href="#features" id="navFeat" data-i18n="nav_features">Fonctionnalités</a><a href="#" id="navFAQ" data-i18n="nav_faq">FAQ</a><a href="#" id="navAPI" data-i18n="nav_api">API</a></nav>
     <div class="nav-right">
       <button class="theme-toggle" id="themeToggle" title="Mode nuit" aria-label="Basculer le thème">
         <svg class="ic-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -382,6 +398,36 @@
       </div>
     </div>
     <div class="p2w-loading" id="p2wLoading" style="display:none"><div class="spinner"></div><span id="p2wStatus">Lecture du PDF…</span></div>
+  </div>
+</section>
+
+<section class="wrap simple-view" id="faqView" style="display:none">
+  <div class="hero" style="padding:48px 0 28px"><h1>FAQ</h1><p>Questions fréquentes sur ImageOCR</p></div>
+  <div class="faq">
+    <details><summary>Quels fichiers puis-je importer&nbsp;?</summary><p>Des images (JPG, PNG, WEBP, TIFF, GIF, BMP) et des PDF. Vous pouvez déposer plusieurs fichiers à la fois ou un PDF entier&nbsp;: chaque page devient une page à traiter, et tout peut être exporté en un seul document.</p></details>
+    <details><summary>Quelle est la différence entre les deux moteurs&nbsp;?</summary><p>L'«&nbsp;OCR rapide&nbsp;» est conçu pour le texte imprimé&nbsp;: il est instantané et s'exécute directement dans votre navigateur. Le mode «&nbsp;IA — manuscrit &amp; difficile&nbsp;» utilise une intelligence artificielle de vision capable de lire l'écriture manuscrite et les documents anciens, là où l'OCR classique échoue.</p></details>
+    <details><summary>Pourquoi certains mots apparaissent-ils en rouge&nbsp;?</summary><p>Ce sont les mots dont la reconnaissance est incertaine. Cliquez dessus pour voir plusieurs propositions de correction, ou taper la vôtre. En OCR rapide, cliquer sur un mot le surligne aussi au bon endroit sur l'image.</p></details>
+    <details><summary>Le mode IA bloque sur une grande page, que faire&nbsp;?</summary><p>L'image est compressée automatiquement avant l'envoi, mais une double page très dense reste mieux traitée morceau par morceau. Utilisez le bouton «&nbsp;Zone&nbsp;» pour encadrer une colonne ou un paragraphe&nbsp;: c'est plus rapide et la transcription est plus précise.</p></details>
+    <details><summary>Dans quels formats puis-je exporter&nbsp;?</summary><p>Texte (.txt), Word (.doc), Markdown (.md), PDF texte, et surtout le PDF cherchable&nbsp;: votre scan d'origine avec une couche de texte invisible mais sélectionnable et trouvable par recherche.</p></details>
+    <details><summary>Mes documents sont-ils confidentiels&nbsp;?</summary><p>En OCR rapide, tout est traité localement dans votre navigateur&nbsp;: aucune image n'est envoyée. En mode IA, l'image est transmise au service de transcription le temps du traitement, puis n'est pas conservée.</p></details>
+    <details><summary>Quelles langues sont prises en charge&nbsp;?</summary><p>L'interface est disponible en 6 langues (français, anglais, espagnol, allemand, italien, portugais). Pour l'OCR rapide, vous pouvez aussi choisir la langue du document à reconnaître.</p></details>
+    <details><summary>Le service est-il gratuit&nbsp;?</summary><p>L'OCR rapide et la conversion PDF→Word sont gratuits et illimités. Le mode IA, plus coûteux à faire tourner, pourra être proposé avec une limite ou des crédits à l'avenir.</p></details>
+  </div>
+</section>
+
+<section class="wrap simple-view" id="apiView" style="display:none">
+  <div class="hero" style="padding:48px 0 28px"><h1>API</h1><p>Intégrez l'OCR et la transcription dans vos propres outils</p></div>
+  <div class="api-card">
+    <span class="api-badge">BIENTÔT DISPONIBLE</span>
+    <h3>Une API pour les développeurs</h3>
+    <p>Nous préparons une API permettant d'utiliser le même moteur d'OCR et de transcription IA directement depuis vos applications, scripts ou logiciels de généalogie.</p>
+    <div class="api-list">
+      <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Transcription d'images et de PDF par appel HTTP</div>
+      <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>OCR imprimé et reconnaissance de manuscrits</div>
+      <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Traitement par lot et sorties structurées (texte, JSON)</div>
+    </div>
+    <p>Vous souhaitez y accéder en avant-première ou discuter d'un besoin&nbsp;? Écrivez-nous.</p>
+    <a href="#" class="btn-login" id="apiContact">Nous contacter</a>
   </div>
 </section>
 
@@ -774,16 +820,22 @@
     if(doc){doc.save("document-cherchable.pdf");showToast("PDF cherchable téléchargé ✓");}
   }
   // ---------- navigation des vues (Accueil / PDF→Word) ----------
-  const navHome=$("#navHome"),navP2W=$("#navP2W"),navFeat=$("#navFeat"),p2wView=$("#p2wView");
+  const navHome=$("#navHome"),navP2W=$("#navP2W"),navFeat=$("#navFeat"),navFAQ=$("#navFAQ"),navAPI=$("#navAPI"),p2wView=$("#p2wView"),faqView=$("#faqView"),apiView=$("#apiView");
   function showView(v){
     document.querySelectorAll(".home-view").forEach(el=>el.style.display=(v==="home"?"":"none"));
     p2wView.style.display=(v==="p2w"?"":"none");
+    faqView.style.display=(v==="faq"?"":"none");
+    apiView.style.display=(v==="api"?"":"none");
     navHome.classList.toggle("active",v==="home");
     navP2W.classList.toggle("active",v==="p2w");
+    navFAQ.classList.toggle("active",v==="faq");
+    navAPI.classList.toggle("active",v==="api");
     window.scrollTo({top:0});
   }
   navHome.addEventListener("click",e=>{e.preventDefault();showView("home");});
   navP2W.addEventListener("click",e=>{e.preventDefault();showView("p2w");});
+  navFAQ.addEventListener("click",e=>{e.preventDefault();showView("faq");});
+  navAPI.addEventListener("click",e=>{e.preventDefault();showView("api");});
   navFeat.addEventListener("click",e=>{e.preventDefault();showView("home");setTimeout(()=>$("#features").scrollIntoView({behavior:"smooth"}),50);});
 
   // ---------- convertisseur PDF → Word ----------
