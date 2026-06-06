@@ -215,6 +215,18 @@
 
   footer{border-top:1px solid var(--border);background:var(--card)}
   .simple-view{max-width:860px;margin:0 auto}
+  .btn-signin{background:transparent;color:var(--ink-2);font-weight:600;font-size:14px;padding:11px 18px;border-radius:10px;border:1px solid var(--border-strong);transition:all .15s}
+  .btn-signin:hover{background:var(--blue-soft);color:var(--blue);border-color:var(--blue)}
+  .legal-doc{font-size:14.5px;line-height:1.7;color:var(--muted)}
+  .legal-doc h3{font-size:16px;font-weight:700;color:var(--ink-2);margin:26px 0 8px}
+  .legal-doc p{margin:0 0 12px}
+  .legal-doc strong{color:var(--ink-2)}
+  .legal-note{background:#fffbeb;border:1px solid #fde68a;color:#b45309;border-radius:10px;padding:12px 14px;font-size:13px;margin-bottom:8px}
+  [data-theme="dark"] .legal-note{background:#2a2410;border-color:#534718;color:#f0c674}
+  .auth-tabs{display:flex;gap:6px;background:var(--blue-soft);border-radius:11px;padding:4px;margin-bottom:18px}
+  .auth-tab{flex:1;padding:9px;border-radius:8px;font-size:14px;font-weight:600;color:var(--muted)}
+  .auth-tab.active{background:var(--card);color:var(--blue);box-shadow:0 1px 3px rgba(15,23,42,.08)}
+  .auth-soon{font-size:12.5px;color:var(--muted);text-align:center;margin:14px 0 4px;line-height:1.5}
   .faq details{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;padding:0 20px;transition:border-color .15s}
   .faq details[open]{border-color:var(--blue)}
   .faq summary{cursor:pointer;padding:17px 0;font-weight:600;font-size:15px;color:var(--ink-2);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:14px}
@@ -267,7 +279,7 @@
 <header>
   <div class="wrap nav">
     <div class="brand"><span class="logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.5-3.5L9 20"/></svg></span><span>Image<span class="blue">OCR</span></span></div>
-    <nav class="menu"><a href="#" class="active" id="navHome" data-i18n="nav_home">Accueil</a><a href="#" id="navP2W" data-i18n="nav_p2w">PDF → Word</a><a href="#features" id="navFeat" data-i18n="nav_features">Fonctionnalités</a><a href="#" id="navFAQ" data-i18n="nav_faq">FAQ</a><a href="#" id="navAPI" data-i18n="nav_api">API</a></nav>
+    <nav class="menu"><a href="#" class="active" id="navHome" data-i18n="nav_home">Accueil</a><a href="#" id="navP2W" data-i18n="nav_p2w">PDF → Word</a><a href="#features" id="navFeat" data-i18n="nav_features">Fonctionnalités</a><a href="#" id="navFAQ" data-i18n="nav_faq">FAQ</a></nav>
     <div class="nav-right">
       <button class="theme-toggle" id="themeToggle" title="Mode nuit" aria-label="Basculer le thème">
         <svg class="ic-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -284,7 +296,8 @@
           <button data-lang="pt"><span class="flag">🇵🇹</span> Português</button>
         </div>
       </div>
-      <button class="btn-login" data-i18n="login">Se connecter</button>
+      <button class="btn-signin" id="signinBtn" data-i18n="login">Se connecter</button>
+      <button class="btn-login" id="signupBtn" data-i18n="signup">S'inscrire</button>
     </div>
   </div>
 </header>
@@ -415,23 +428,52 @@
   </div>
 </section>
 
-<section class="wrap simple-view" id="apiView" style="display:none">
-  <div class="hero" style="padding:48px 0 28px"><h1>API</h1><p>Intégrez l'OCR et la transcription dans vos propres outils</p></div>
-  <div class="api-card">
-    <span class="api-badge">BIENTÔT DISPONIBLE</span>
-    <h3>Une API pour les développeurs</h3>
-    <p>Nous préparons une API permettant d'utiliser le même moteur d'OCR et de transcription IA directement depuis vos applications, scripts ou logiciels de généalogie.</p>
-    <div class="api-list">
-      <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Transcription d'images et de PDF par appel HTTP</div>
-      <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>OCR imprimé et reconnaissance de manuscrits</div>
-      <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Traitement par lot et sorties structurées (texte, JSON)</div>
-    </div>
-    <p>Vous souhaitez y accéder en avant-première ou discuter d'un besoin&nbsp;? Écrivez-nous.</p>
-    <a href="#" class="btn-login" id="apiContact">Nous contacter</a>
+<section class="wrap simple-view" id="legalView" style="display:none">
+  <div class="hero" style="padding:48px 0 24px"><h1>Mentions légales</h1></div>
+  <div class="legal-doc">
+    <p class="legal-note">⚠️ Modèle à compléter avec vos informations réelles avant la mise en ligne publique (obligatoire en France — loi LCEN).</p>
+    <h3>Éditeur du site</h3>
+    <p>Le site <strong>ImageOCR</strong> est édité par&nbsp;: [Votre nom ou raison sociale]<br>Statut&nbsp;: [particulier / auto-entrepreneur / société]<br>Adresse&nbsp;: [votre adresse]<br>E-mail&nbsp;: [votre e-mail]<br>SIRET (le cas échéant)&nbsp;: [numéro]</p>
+    <h3>Directeur de la publication</h3>
+    <p>[Votre nom]</p>
+    <h3>Hébergeur</h3>
+    <p>Cloudflare, Inc.<br>101 Townsend Street, San Francisco, CA 94107, États-Unis<br>https://www.cloudflare.com</p>
+    <h3>Propriété intellectuelle</h3>
+    <p>L'ensemble des éléments du site (textes, interface, code) est protégé. Toute reproduction sans autorisation est interdite. Les documents que vous importez vous appartiennent et ne sont pas conservés.</p>
+    <h3>Responsabilité</h3>
+    <p>Les résultats de reconnaissance de texte sont fournis à titre indicatif et peuvent comporter des erreurs&nbsp;; il vous revient de vérifier le texte obtenu. L'éditeur ne saurait être tenu responsable d'éventuelles inexactitudes.</p>
   </div>
 </section>
 
-<footer><div class="wrap foot"><span class="copy" data-i18n="footer_copy">© 2026 ImageOCR — Tous droits réservés.</span><a href="#" data-i18n="footer_legal">Mentions légales</a><a href="#" data-i18n="footer_privacy">Confidentialité</a><a href="#" data-i18n="footer_contact">Contact</a></div></footer>
+<section class="wrap simple-view" id="privacyView" style="display:none">
+  <div class="hero" style="padding:48px 0 24px"><h1>Confidentialité</h1><p>Comment vos données sont traitées</p></div>
+  <div class="legal-doc">
+    <p class="legal-note">⚠️ Modèle à adapter et à faire relire&nbsp;; complétez l'e-mail de contact pour les demandes RGPD.</p>
+    <h3>OCR rapide</h3>
+    <p>En mode «&nbsp;OCR rapide&nbsp;», la reconnaissance s'effectue entièrement dans votre navigateur. Vos images <strong>ne quittent pas votre appareil</strong> et ne sont jamais envoyées à un serveur.</p>
+    <h3>Mode IA (manuscrit &amp; difficile)</h3>
+    <p>En mode IA, l'image sélectionnée est transmise à notre prestataire de transcription (Anthropic) le temps du traitement, puis <strong>n'est pas conservée</strong>. Aucune image n'est stockée sur nos serveurs.</p>
+    <h3>Comptes et données personnelles</h3>
+    <p>Le site ne crée pas de compte et ne demande aucune donnée personnelle pour fonctionner. Aucun cookie publicitaire ni traceur de suivi n'est utilisé.</p>
+    <h3>Hébergement</h3>
+    <p>Le site est hébergé par Cloudflare, qui peut conserver des journaux techniques (adresse IP, requêtes) à des fins de sécurité et de fonctionnement.</p>
+    <h3>Vos droits</h3>
+    <p>Conformément au RGPD, vous pouvez exercer vos droits d'accès, de rectification et de suppression en écrivant à&nbsp;: [votre e-mail].</p>
+  </div>
+</section>
+
+<section class="wrap simple-view" id="contactView" style="display:none">
+  <div class="hero" style="padding:48px 0 24px"><h1>Contact</h1><p>Une question, une suggestion, un besoin&nbsp;?</p></div>
+  <div class="api-card">
+    <div class="f-icon" style="margin:0 auto 16px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg></div>
+    <h3>Écrivez-nous</h3>
+    <p>Pour toute question sur l'outil, un retour, ou une demande liée à vos données, contactez-nous par e-mail. Nous répondons dès que possible.</p>
+    <a href="mailto:[votre-email]" class="btn-login" id="contactMail">Envoyer un e-mail</a>
+    <p style="margin-top:16px;font-size:13px">[votre-email]</p>
+  </div>
+</section>
+
+<footer><div class="wrap foot"><span class="copy" data-i18n="footer_copy">© 2026 ImageOCR — Tous droits réservés.</span><a href="#" id="navLegal" data-i18n="footer_legal">Mentions légales</a><a href="#" id="navPrivacy" data-i18n="footer_privacy">Confidentialité</a><a href="#" id="navContact" data-i18n="footer_contact">Contact</a></div></footer>
 
 <div class="modal-bg" id="modalBg"><div class="modal">
   <h3 data-i18n="m_title">Paramètres du mode IA</h3>
@@ -442,6 +484,19 @@
   <div class="field"><label for="maxTok" data-i18n="m_max">Longueur max de la réponse (tokens)</label><input type="number" id="maxTok" value="4000" min="500" max="16000"></div>
   <div class="field"><label for="proxyUrl" data-i18n="m_proxy">Backend (proxy) — pour un site hébergé</label><input type="text" id="proxyUrl" value="/api/ocr" placeholder="/api/ocr"></div>
   <div class="modal-foot"><button class="btn-cancel" id="modalCancel" data-i18n="m_cancel">Annuler</button><button class="btn-save" id="modalSave" data-i18n="m_save">Enregistrer</button></div>
+</div></div>
+
+<div class="modal-bg" id="authBg"><div class="modal">
+  <div class="auth-tabs">
+    <button class="auth-tab active" id="tabSignin">Connexion</button>
+    <button class="auth-tab" id="tabSignup">Inscription</button>
+  </div>
+  <div class="field"><label for="authEmail">E-mail</label><input type="email" id="authEmail" placeholder="vous@exemple.com"></div>
+  <div class="field"><label for="authPass">Mot de passe</label><input type="password" id="authPass" placeholder="••••••••"></div>
+  <div class="field" id="authPass2Wrap" style="display:none"><label for="authPass2">Confirmer le mot de passe</label><input type="password" id="authPass2" placeholder="••••••••"></div>
+  <button class="btn-save" id="authSubmit" style="width:100%;padding:11px;border-radius:10px;font-size:15px">Se connecter</button>
+  <p class="auth-soon">🔒 Les comptes arrivent bientôt. Cette inscription préparera votre accès aux crédits du mode IA.</p>
+  <div class="modal-foot" style="margin-top:8px"><button class="btn-cancel" id="authCancel">Fermer</button></div>
 </div></div>
 
 <div class="toast" id="toast"></div>
@@ -820,23 +875,44 @@
     if(doc){doc.save("document-cherchable.pdf");showToast("PDF cherchable téléchargé ✓");}
   }
   // ---------- navigation des vues (Accueil / PDF→Word) ----------
-  const navHome=$("#navHome"),navP2W=$("#navP2W"),navFeat=$("#navFeat"),navFAQ=$("#navFAQ"),navAPI=$("#navAPI"),p2wView=$("#p2wView"),faqView=$("#faqView"),apiView=$("#apiView");
+  const navHome=$("#navHome"),navP2W=$("#navP2W"),navFeat=$("#navFeat"),navFAQ=$("#navFAQ"),p2wView=$("#p2wView"),faqView=$("#faqView"),legalView=$("#legalView"),privacyView=$("#privacyView"),contactView=$("#contactView"),navLegal=$("#navLegal"),navPrivacy=$("#navPrivacy"),navContact=$("#navContact");
   function showView(v){
     document.querySelectorAll(".home-view").forEach(el=>el.style.display=(v==="home"?"":"none"));
     p2wView.style.display=(v==="p2w"?"":"none");
     faqView.style.display=(v==="faq"?"":"none");
-    apiView.style.display=(v==="api"?"":"none");
+    legalView.style.display=(v==="legal"?"":"none");
+    privacyView.style.display=(v==="privacy"?"":"none");
+    contactView.style.display=(v==="contact"?"":"none");
     navHome.classList.toggle("active",v==="home");
     navP2W.classList.toggle("active",v==="p2w");
     navFAQ.classList.toggle("active",v==="faq");
-    navAPI.classList.toggle("active",v==="api");
     window.scrollTo({top:0});
   }
   navHome.addEventListener("click",e=>{e.preventDefault();showView("home");});
   navP2W.addEventListener("click",e=>{e.preventDefault();showView("p2w");});
   navFAQ.addEventListener("click",e=>{e.preventDefault();showView("faq");});
-  navAPI.addEventListener("click",e=>{e.preventDefault();showView("api");});
+  navLegal.addEventListener("click",e=>{e.preventDefault();showView("legal");});
+  navPrivacy.addEventListener("click",e=>{e.preventDefault();showView("privacy");});
+  navContact.addEventListener("click",e=>{e.preventDefault();showView("contact");});
   navFeat.addEventListener("click",e=>{e.preventDefault();showView("home");setTimeout(()=>$("#features").scrollIntoView({behavior:"smooth"}),50);});
+
+  // ---------- connexion / inscription (UI ; backend comptes à venir) ----------
+  const signinBtn=$("#signinBtn"),signupBtn=$("#signupBtn"),authBg=$("#authBg"),tabSignin=$("#tabSignin"),tabSignup=$("#tabSignup"),authPass2Wrap=$("#authPass2Wrap"),authSubmit=$("#authSubmit"),authCancel=$("#authCancel");
+  function openAuth(mode){
+    const signup=mode==="signup";
+    tabSignin.classList.toggle("active",!signup);
+    tabSignup.classList.toggle("active",signup);
+    authPass2Wrap.style.display=signup?"":"none";
+    authSubmit.textContent=signup?"Créer mon compte":"Se connecter";
+    authBg.classList.add("open");
+  }
+  signinBtn.addEventListener("click",()=>openAuth("signin"));
+  signupBtn.addEventListener("click",()=>openAuth("signup"));
+  tabSignin.addEventListener("click",()=>openAuth("signin"));
+  tabSignup.addEventListener("click",()=>openAuth("signup"));
+  authCancel.addEventListener("click",()=>authBg.classList.remove("open"));
+  authBg.addEventListener("click",e=>{if(e.target===authBg)authBg.classList.remove("open");});
+  authSubmit.addEventListener("click",()=>{authBg.classList.remove("open");showToast("Les comptes arrivent bientôt — merci de votre intérêt !",4000);});
 
   // ---------- convertisseur PDF → Word ----------
   const p2wDrop=$("#p2wDrop"),p2wInput=$("#p2wInput"),p2wResult=$("#p2wResult"),p2wInfo=$("#p2wInfo"),
@@ -999,12 +1075,12 @@
       p2w_title:'PDF → <span class="blue">Word</span>',p2w_sub:"Coloque o texto de um PDF num documento Word editável, num clique",p2w_dz_title:"Largue aqui o seu PDF",p2w_dz_sub:"ou clique para procurar · ficheiros .pdf",p2w_warn:"⚠️ Este PDF parece ser uma digitalização de imagens sem camada de texto. A conversão direta dará pouco ou nenhum texto — use antes a ferramenta OCR.",p2w_toocr:"Ir para o OCR",p2w_convert:"Descarregar como Word (.doc)",p2w_clear:"Mudar de PDF",
       m_title:"Definições do modo IA",m_sub:"Na pré-visualização do Claude, o modo IA funciona sem configuração. Para um site alojado, indique a sua chave API Anthropic.",m_warn:"⚠️ Uma chave introduzida aqui fica no navegador: apenas uso pessoal/local. Para um site público, use um backend que mantenha a chave secreta.",m_key:"Chave API Anthropic (opcional)",m_model:"Modelo (chave pessoal)",m_max:"Comprimento máx. da resposta (tokens)",m_cancel:"Cancelar",m_save:"Guardar"}
   };
-  Object.assign(I18N.fr,{features_kicker:"FONCTIONNALITÉS",features_heading:"Pensé pour les documents difficiles",f5_t:"Transcription IA",f5_d:"Lit l'écriture manuscrite et les actes anciens, là où l'OCR classique échoue",m_proxy:"Backend (proxy) — pour un site hébergé"});
-  Object.assign(I18N.en,{features_kicker:"FEATURES",features_heading:"Built for difficult documents",f5_t:"AI transcription",f5_d:"Reads handwriting and old records where classic OCR fails",m_proxy:"Backend (proxy) — for a hosted site"});
-  Object.assign(I18N.es,{features_kicker:"FUNCIONES",features_heading:"Pensado para documentos difíciles",f5_t:"Transcripción IA",f5_d:"Lee la escritura manuscrita y los actos antiguos donde el OCR clásico falla",m_proxy:"Backend (proxy) — para un sitio alojado"});
-  Object.assign(I18N.de,{features_kicker:"FUNKTIONEN",features_heading:"Für schwierige Dokumente gemacht",f5_t:"KI-Transkription",f5_d:"Liest Handschrift und alte Urkunden, wo klassisches OCR scheitert",m_proxy:"Backend (Proxy) — für eine gehostete Seite"});
-  Object.assign(I18N.it,{features_kicker:"FUNZIONI",features_heading:"Pensato per i documenti difficili",f5_t:"Trascrizione IA",f5_d:"Legge la scrittura a mano e gli atti antichi dove l'OCR classico fallisce",m_proxy:"Backend (proxy) — per un sito ospitato"});
-  Object.assign(I18N.pt,{features_kicker:"FUNCIONALIDADES",features_heading:"Feito para documentos difíceis",f5_t:"Transcrição IA",f5_d:"Lê a escrita manuscrita e os registos antigos onde o OCR clássico falha",m_proxy:"Backend (proxy) — para um site alojado"});
+  Object.assign(I18N.fr,{features_kicker:"FONCTIONNALITÉS",features_heading:"Pensé pour les documents difficiles",f5_t:"Transcription IA",f5_d:"Lit l'écriture manuscrite et les actes anciens, là où l'OCR classique échoue",m_proxy:"Backend (proxy) — pour un site hébergé",signup:"S'inscrire"});
+  Object.assign(I18N.en,{features_kicker:"FEATURES",features_heading:"Built for difficult documents",f5_t:"AI transcription",f5_d:"Reads handwriting and old records where classic OCR fails",m_proxy:"Backend (proxy) — for a hosted site",signup:"Sign up"});
+  Object.assign(I18N.es,{features_kicker:"FUNCIONES",features_heading:"Pensado para documentos difíciles",f5_t:"Transcripción IA",f5_d:"Lee la escritura manuscrita y los actos antiguos donde el OCR clásico falla",m_proxy:"Backend (proxy) — para un sitio alojado",signup:"Registrarse"});
+  Object.assign(I18N.de,{features_kicker:"FUNKTIONEN",features_heading:"Für schwierige Dokumente gemacht",f5_t:"KI-Transkription",f5_d:"Liest Handschrift und alte Urkunden, wo klassisches OCR scheitert",m_proxy:"Backend (Proxy) — für eine gehostete Seite",signup:"Registrieren"});
+  Object.assign(I18N.it,{features_kicker:"FUNZIONI",features_heading:"Pensato per i documenti difficili",f5_t:"Trascrizione IA",f5_d:"Legge la scrittura a mano e gli atti antichi dove l'OCR classico fallisce",m_proxy:"Backend (proxy) — per un sito ospitato",signup:"Registrati"});
+  Object.assign(I18N.pt,{features_kicker:"FUNCIONALIDADES",features_heading:"Feito para documentos difíceis",f5_t:"Transcrição IA",f5_d:"Lê a escrita manuscrita e os registos antigos onde o OCR clássico falha",m_proxy:"Backend (proxy) — para um site alojado",signup:"Registar-se"});
   function t(k){return (I18N[curLang]||I18N.fr)[k]||I18N.fr[k]||k;}
   function applyLang(l){
     const d=I18N[l]||I18N.fr;curLang=l;
