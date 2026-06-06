@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -91,9 +91,10 @@
   .ctrl label{font-size:12px;font-weight:600;color:var(--muted)}
   select.sel{font-family:inherit;font-size:13px;font-weight:600;color:var(--ink-2);border:1px solid var(--border-strong);border-radius:9px;padding:7px 28px 7px 11px;background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%2364748b' stroke-width='2' viewBox='0 0 24 24'><path d='M6 9l6 6 6-6'/></svg>") no-repeat right 9px center;appearance:none;cursor:pointer}
   select.sel:disabled{opacity:.5;cursor:not-allowed}
+  #engine{background:var(--blue-soft) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='15' height='15' fill='none' stroke='%233b82f6' stroke-width='2.6' viewBox='0 0 24 24'><path d='M6 9l6 6 6-6'/></svg>") no-repeat right 10px center;border-color:var(--blue);color:var(--blue);font-weight:700;padding-right:34px}
   .chk{display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;user-select:none}
   .chk input{width:16px;height:16px;accent-color:var(--blue);cursor:pointer}
-  .gear{margin-left:auto;width:34px;height:34px;border-radius:9px;border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:center;color:var(--muted);background:#fff}
+  .gear{margin-left:auto;width:34px;height:34px;border-radius:9px;border:1px solid var(--border-strong);display:none;align-items:center;justify-content:center;color:var(--muted);background:#fff}
   .gear:hover{background:#f8fafc;color:var(--ink-2)}
   .engine-note{display:none;font-size:12px;color:var(--muted);margin:-4px 0 12px;padding:8px 12px;background:var(--blue-soft);border-radius:9px;border-left:3px solid var(--blue)}
   .engine-note.show{display:block}
@@ -291,7 +292,7 @@
       <label class="chk" id="enhanceCtrl"><input type="checkbox" id="enhance" checked><span data-i18n="lbl_enhance">Améliorer</span></label>
       <button class="gear" id="gearBtn" title="Paramètres IA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
     </div>
-    <div class="engine-note" id="engineNote" data-i18n="engine_note">🖋️ Mode IA : idéal pour le manuscrit et les documents anciens. Gratuit dans l'aperçu Claude ; sur un site hébergé, ajoutez votre clé API (⚙). La surbrillance mot↔image n'est disponible qu'avec l'OCR rapide.</div>
+    <div class="engine-note" id="engineNote" data-i18n="engine_note">🖋️ Mode IA : idéal pour l'écriture manuscrite et les documents anciens. La surbrillance mot↔image n'est disponible qu'avec l'OCR rapide.</div>
 
     <div class="pager" id="pager"></div>
 
@@ -876,7 +877,7 @@
     fr:{nav_home:"Accueil",nav_p2w:"PDF → Word",nav_features:"Fonctionnalités",nav_pricing:"Tarifs",nav_faq:"FAQ",nav_api:"API",login:"Se connecter",
       hero_title:'Convertissez vos <span class="blue">images</span> en <span class="blue">texte</span>',hero_sub:"OCR imprimé, transcription IA du manuscrit, multi-pages, PDF cherchable",
       lbl_engine:"Moteur",eng_fast:"OCR rapide (imprimé)",eng_ai:"IA — manuscrit & difficile",lbl_lang:"Langue",lbl_enhance:"Améliorer",
-      engine_note:"🖋️ Mode IA : idéal pour le manuscrit et les documents anciens. Gratuit dans l'aperçu Claude ; sur un site hébergé, ajoutez votre clé API (⚙). La surbrillance mot↔image n'est disponible qu'avec l'OCR rapide.",
+      engine_note:"🖋️ Mode IA : idéal pour l'écriture manuscrite et les documents anciens. La surbrillance mot↔image n'est disponible qu'avec l'OCR rapide.",
       t_image:"IMAGE",dz_title:"Déposez vos images ou un PDF",dz_sub:"plusieurs fichiers acceptés · JPG, PNG, WEBP, TIFF, PDF…",
       btn_add:"Ajouter",btn_zone:"Zone",btn_fullpage:"Page entière",btn_clearall:"Tout supprimer",
       t_text:"TEXTE EXTRAIT",btn_copy:"Copier",btn_download:"Télécharger",dl_txt:"Fichier texte (.txt)",dl_doc:"Document Word (.doc)",dl_md:"Markdown (.md)",dl_pdf:"PDF texte (.pdf)",dl_pdfs:"⭐ PDF cherchable (scan + texte)",
@@ -888,7 +889,7 @@
     en:{nav_home:"Home",nav_p2w:"PDF → Word",nav_features:"Features",nav_pricing:"Pricing",nav_faq:"FAQ",nav_api:"API",login:"Sign in",
       hero_title:'Convert your <span class="blue">images</span> into <span class="blue">text</span>',hero_sub:"Printed OCR, AI handwriting transcription, multi-page, searchable PDF",
       lbl_engine:"Engine",eng_fast:"Fast OCR (printed)",eng_ai:"AI — handwriting & difficult",lbl_lang:"Language",lbl_enhance:"Enhance",
-      engine_note:"🖋️ AI mode: ideal for handwriting and old documents. Free in the Claude preview; on a hosted site, add your API key (⚙). Word↔image highlighting is only available with Fast OCR.",
+      engine_note:"🖋️ AI mode: ideal for handwriting and old documents. Word↔image highlighting is only available with Fast OCR.",
       t_image:"IMAGE",dz_title:"Drop your images or a PDF",dz_sub:"multiple files accepted · JPG, PNG, WEBP, TIFF, PDF…",
       btn_add:"Add",btn_zone:"Region",btn_fullpage:"Full page",btn_clearall:"Clear all",
       t_text:"EXTRACTED TEXT",btn_copy:"Copy",btn_download:"Download",dl_txt:"Text file (.txt)",dl_doc:"Word document (.doc)",dl_md:"Markdown (.md)",dl_pdf:"Text PDF (.pdf)",dl_pdfs:"⭐ Searchable PDF (scan + text)",
@@ -900,7 +901,7 @@
     es:{nav_home:"Inicio",nav_p2w:"PDF → Word",nav_features:"Funciones",nav_pricing:"Precios",nav_faq:"FAQ",nav_api:"API",login:"Iniciar sesión",
       hero_title:'Convierte tus <span class="blue">imágenes</span> en <span class="blue">texto</span>',hero_sub:"OCR impreso, transcripción IA de manuscritos, multipágina, PDF con búsqueda",
       lbl_engine:"Motor",eng_fast:"OCR rápido (impreso)",eng_ai:"IA — manuscrito y difícil",lbl_lang:"Idioma",lbl_enhance:"Mejorar",
-      engine_note:"🖋️ Modo IA: ideal para manuscritos y documentos antiguos. Gratis en la vista previa de Claude; en un sitio alojado, añade tu clave API (⚙). El resaltado palabra↔imagen solo está disponible con el OCR rápido.",
+      engine_note:"🖋️ Modo IA: ideal para escritura manuscrita y documentos antiguos. El resaltado palabra↔imagen solo está disponible con el OCR rápido.",
       t_image:"IMAGEN",dz_title:"Suelta tus imágenes o un PDF",dz_sub:"se aceptan varios archivos · JPG, PNG, WEBP, TIFF, PDF…",
       btn_add:"Añadir",btn_zone:"Zona",btn_fullpage:"Página completa",btn_clearall:"Borrar todo",
       t_text:"TEXTO EXTRAÍDO",btn_copy:"Copiar",btn_download:"Descargar",dl_txt:"Archivo de texto (.txt)",dl_doc:"Documento Word (.doc)",dl_md:"Markdown (.md)",dl_pdf:"PDF de texto (.pdf)",dl_pdfs:"⭐ PDF con búsqueda (escaneo + texto)",
@@ -912,7 +913,7 @@
     de:{nav_home:"Start",nav_p2w:"PDF → Word",nav_features:"Funktionen",nav_pricing:"Preise",nav_faq:"FAQ",nav_api:"API",login:"Anmelden",
       hero_title:'Wandeln Sie <span class="blue">Bilder</span> in <span class="blue">Text</span> um',hero_sub:"Druck-OCR, KI-Handschriftübertragung, mehrseitig, durchsuchbares PDF",
       lbl_engine:"Engine",eng_fast:"Schnell-OCR (Druck)",eng_ai:"KI — Handschrift & schwierig",lbl_lang:"Sprache",lbl_enhance:"Verbessern",
-      engine_note:"🖋️ KI-Modus: ideal für Handschrift und alte Dokumente. In der Claude-Vorschau kostenlos; auf einer gehosteten Seite Ihren API-Schlüssel hinzufügen (⚙). Wort↔Bild-Hervorhebung gibt es nur mit Schnell-OCR.",
+      engine_note:"🖋️ KI-Modus: ideal für Handschrift und alte Dokumente. Wort↔Bild-Hervorhebung gibt es nur mit Schnell-OCR.",
       t_image:"BILD",dz_title:"Bilder oder ein PDF hier ablegen",dz_sub:"mehrere Dateien möglich · JPG, PNG, WEBP, TIFF, PDF…",
       btn_add:"Hinzufügen",btn_zone:"Bereich",btn_fullpage:"Ganze Seite",btn_clearall:"Alles löschen",
       t_text:"EXTRAHIERTER TEXT",btn_copy:"Kopieren",btn_download:"Herunterladen",dl_txt:"Textdatei (.txt)",dl_doc:"Word-Dokument (.doc)",dl_md:"Markdown (.md)",dl_pdf:"Text-PDF (.pdf)",dl_pdfs:"⭐ Durchsuchbares PDF (Scan + Text)",
@@ -924,7 +925,7 @@
     it:{nav_home:"Home",nav_p2w:"PDF → Word",nav_features:"Funzioni",nav_pricing:"Prezzi",nav_faq:"FAQ",nav_api:"API",login:"Accedi",
       hero_title:'Converti le tue <span class="blue">immagini</span> in <span class="blue">testo</span>',hero_sub:"OCR per stampa, trascrizione IA del manoscritto, multipagina, PDF ricercabile",
       lbl_engine:"Motore",eng_fast:"OCR rapido (stampa)",eng_ai:"IA — manoscritto e difficile",lbl_lang:"Lingua",lbl_enhance:"Migliora",
-      engine_note:"🖋️ Modalità IA: ideale per manoscritti e documenti antichi. Gratis nell'anteprima Claude; su un sito ospitato, aggiungi la tua chiave API (⚙). L'evidenziazione parola↔immagine è disponibile solo con l'OCR rapido.",
+      engine_note:"🖋️ Modalità IA: ideale per la scrittura a mano e i documenti antichi. L'evidenziazione parola↔immagine è disponibile solo con l'OCR rapido.",
       t_image:"IMMAGINE",dz_title:"Trascina le tue immagini o un PDF",dz_sub:"accettati più file · JPG, PNG, WEBP, TIFF, PDF…",
       btn_add:"Aggiungi",btn_zone:"Zona",btn_fullpage:"Pagina intera",btn_clearall:"Cancella tutto",
       t_text:"TESTO ESTRATTO",btn_copy:"Copia",btn_download:"Scarica",dl_txt:"File di testo (.txt)",dl_doc:"Documento Word (.doc)",dl_md:"Markdown (.md)",dl_pdf:"PDF di testo (.pdf)",dl_pdfs:"⭐ PDF ricercabile (scan + testo)",
@@ -936,7 +937,7 @@
     pt:{nav_home:"Início",nav_p2w:"PDF → Word",nav_features:"Funcionalidades",nav_pricing:"Preços",nav_faq:"FAQ",nav_api:"API",login:"Entrar",
       hero_title:'Converta as suas <span class="blue">imagens</span> em <span class="blue">texto</span>',hero_sub:"OCR de impressos, transcrição IA de manuscritos, multipágina, PDF pesquisável",
       lbl_engine:"Motor",eng_fast:"OCR rápido (impresso)",eng_ai:"IA — manuscrito e difícil",lbl_lang:"Idioma",lbl_enhance:"Melhorar",
-      engine_note:"🖋️ Modo IA: ideal para manuscritos e documentos antigos. Grátis na pré-visualização do Claude; num site alojado, adicione a sua chave API (⚙). O realce palavra↔imagem só está disponível com o OCR rápido.",
+      engine_note:"🖋️ Modo IA: ideal para escrita manuscrita e documentos antigos. O realce palavra↔imagem só está disponível com o OCR rápido.",
       t_image:"IMAGEM",dz_title:"Largue as suas imagens ou um PDF",dz_sub:"vários ficheiros aceites · JPG, PNG, WEBP, TIFF, PDF…",
       btn_add:"Adicionar",btn_zone:"Zona",btn_fullpage:"Página inteira",btn_clearall:"Apagar tudo",
       t_text:"TEXTO EXTRAÍDO",btn_copy:"Copiar",btn_download:"Descarregar",dl_txt:"Ficheiro de texto (.txt)",dl_doc:"Documento Word (.doc)",dl_md:"Markdown (.md)",dl_pdf:"PDF de texto (.pdf)",dl_pdfs:"⭐ PDF pesquisável (digitalização + texto)",
@@ -963,6 +964,7 @@
   langBtn.addEventListener("click",e=>{e.stopPropagation();langMenu.classList.toggle("open");});
   langMenu.addEventListener("click",e=>{const b=e.target.closest("[data-lang]");if(!b)return;applyLang(b.dataset.lang);langMenu.classList.remove("open");});
   document.addEventListener("click",e=>{if(!e.target.closest(".lang-wrap"))langMenu.classList.remove("open");});
+  if(/[?&]admin/i.test(location.search)) gearBtn.style.display="flex";
   applyLang("fr");
 })();
 </script>
