@@ -215,7 +215,6 @@
 
   footer{border-top:1px solid var(--border);background:var(--card)}
   .simple-view{max-width:860px;margin:0 auto}
-  .btn-signin{background:transparent;color:var(--ink-2);font-weight:600;font-size:14px;padding:11px 18px;border-radius:10px;border:1px solid var(--border-strong);transition:all .15s}
   .btn-analyze{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:#fff;background:var(--blue);border:1px solid var(--blue);padding:7px 13px;border-radius:9px;transition:all .15s}
   .btn-analyze:hover{background:var(--blue-dark)}
   .btn-analyze:disabled{opacity:.45;cursor:not-allowed}
@@ -226,17 +225,12 @@
   .acte-row .k{flex:0 0 38%;color:var(--muted);font-weight:600}
   .acte-row .v{flex:1;color:var(--ink-2)}
   #analyzeContent{max-height:50vh;overflow:auto;margin-bottom:8px}
-  .btn-signin:hover{background:var(--blue-soft);color:var(--blue);border-color:var(--blue)}
   .legal-doc{font-size:14.5px;line-height:1.7;color:var(--muted)}
   .legal-doc h3{font-size:16px;font-weight:700;color:var(--ink-2);margin:26px 0 8px}
   .legal-doc p{margin:0 0 12px}
   .legal-doc strong{color:var(--ink-2)}
   .legal-note{background:#fffbeb;border:1px solid #fde68a;color:#b45309;border-radius:10px;padding:12px 14px;font-size:13px;margin-bottom:8px}
   [data-theme="dark"] .legal-note{background:#2a2410;border-color:#534718;color:#f0c674}
-  .auth-tabs{display:flex;gap:6px;background:var(--blue-soft);border-radius:11px;padding:4px;margin-bottom:18px}
-  .auth-tab{flex:1;padding:9px;border-radius:8px;font-size:14px;font-weight:600;color:var(--muted)}
-  .auth-tab.active{background:var(--card);color:var(--blue);box-shadow:0 1px 3px rgba(15,23,42,.08)}
-  .auth-soon{font-size:12.5px;color:var(--muted);text-align:center;margin:14px 0 4px;line-height:1.5}
   .faq details{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;padding:0 20px;transition:border-color .15s}
   .faq details[open]{border-color:var(--blue)}
   .faq summary{cursor:pointer;padding:17px 0;font-weight:600;font-size:15px;color:var(--ink-2);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:14px}
@@ -306,8 +300,6 @@
           <button data-lang="pt"><span class="flag">🇵🇹</span> Português</button>
         </div>
       </div>
-      <button class="btn-signin" id="signinBtn" data-i18n="login">Se connecter</button>
-      <button class="btn-login" id="signupBtn" data-i18n="signup">S'inscrire</button>
     </div>
   </div>
 </header>
@@ -476,19 +468,6 @@
 </section>
 
 <footer><div class="wrap foot"><span class="copy" data-i18n="footer_copy">© 2026 Image2OCR — Tous droits réservés.</span><a href="#" id="navLegal" data-i18n="footer_legal">Mentions légales</a><a href="#" id="navPrivacy" data-i18n="footer_privacy">Confidentialité</a><a href="#" id="navContact" data-i18n="footer_contact">Contact</a></div></footer>
-
-<div class="modal-bg" id="authBg"><div class="modal">
-  <div class="auth-tabs">
-    <button class="auth-tab active" id="tabSignin">Connexion</button>
-    <button class="auth-tab" id="tabSignup">Inscription</button>
-  </div>
-  <div class="field"><label for="authEmail">E-mail</label><input type="email" id="authEmail" placeholder="vous@exemple.com"></div>
-  <div class="field"><label for="authPass">Mot de passe</label><input type="password" id="authPass" placeholder="••••••••"></div>
-  <div class="field" id="authPass2Wrap" style="display:none"><label for="authPass2">Confirmer le mot de passe</label><input type="password" id="authPass2" placeholder="••••••••"></div>
-  <button class="btn-save" id="authSubmit" style="width:100%;padding:11px;border-radius:10px;font-size:15px">Se connecter</button>
-  <p class="auth-soon">🔒 Les comptes arrivent bientôt.</p>
-  <div class="modal-foot" style="margin-top:8px"><button class="btn-cancel" id="authCancel">Fermer</button></div>
-</div></div>
 
 <div class="toast" id="toast"></div>
 
@@ -827,23 +806,6 @@
   navContact.addEventListener("click",e=>{e.preventDefault();showView("contact");});
   navFeat.addEventListener("click",e=>{e.preventDefault();showView("home");setTimeout(()=>$("#features").scrollIntoView({behavior:"smooth"}),50);});
 
-  // ---------- connexion / inscription (UI ; backend comptes à venir) ----------
-  const signinBtn=$("#signinBtn"),signupBtn=$("#signupBtn"),authBg=$("#authBg"),tabSignin=$("#tabSignin"),tabSignup=$("#tabSignup"),authPass2Wrap=$("#authPass2Wrap"),authSubmit=$("#authSubmit"),authCancel=$("#authCancel");
-  function openAuth(mode){
-    const signup=mode==="signup";
-    tabSignin.classList.toggle("active",!signup);
-    tabSignup.classList.toggle("active",signup);
-    authPass2Wrap.style.display=signup?"":"none";
-    authSubmit.textContent=signup?"Créer mon compte":"Se connecter";
-    authBg.classList.add("open");
-  }
-  signinBtn.addEventListener("click",()=>openAuth("signin"));
-  signupBtn.addEventListener("click",()=>openAuth("signup"));
-  tabSignin.addEventListener("click",()=>openAuth("signin"));
-  tabSignup.addEventListener("click",()=>openAuth("signup"));
-  authCancel.addEventListener("click",()=>authBg.classList.remove("open"));
-  authBg.addEventListener("click",e=>{if(e.target===authBg)authBg.classList.remove("open");});
-  authSubmit.addEventListener("click",()=>{authBg.classList.remove("open");showToast("Les comptes arrivent bientôt — merci de votre intérêt !",4000);});
 
   // ---------- convertisseur PDF → Word ----------
   const p2wDrop=$("#p2wDrop"),p2wInput=$("#p2wInput"),p2wResult=$("#p2wResult"),p2wInfo=$("#p2wInfo"),
