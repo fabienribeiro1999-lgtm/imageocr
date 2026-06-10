@@ -215,19 +215,11 @@
   .feature p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.55}
 
   footer{border-top:1px solid var(--border);background:var(--card)}
-  .dz-actions{margin-top:14px}
-  .dz-btn{display:inline-flex;align-items:center;gap:7px;background:var(--blue);color:#fff;border:1px solid var(--blue);font-weight:600;font-size:13.5px;padding:9px 16px;border-radius:10px;transition:background .15s}
-  .dz-btn:hover{background:var(--blue-dark)}
   .dz-hint{display:block;margin-top:12px;font-size:12px;color:var(--muted)}
   .dz-hint kbd{background:var(--bg);border:1px solid var(--border-strong);border-bottom-width:2px;border-radius:5px;padding:1px 6px;font-size:11px;font-family:inherit;color:var(--ink-2)}
   .batch-status{display:flex;align-items:center;gap:10px;background:var(--blue-soft);border:1px solid var(--blue);color:var(--blue);border-radius:12px;padding:11px 16px;margin-bottom:18px;font-size:14px;font-weight:600}
   .batch-status strong{color:var(--blue)}
   .bspin{width:16px;height:16px;border:2px solid color-mix(in srgb,var(--blue) 30%,transparent);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite;flex:0 0 auto}
-  .cam-modal{max-width:560px}
-  .cam-wrap{background:#000;border-radius:12px;overflow:hidden;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
-  .cam-wrap video{width:100%;height:100%;object-fit:cover}
-  .cam-err{color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:9px;padding:10px 12px;font-size:13px;margin:0 0 8px}
-  [data-theme="dark"] .cam-err{background:#2a2410;border-color:#534718;color:#f0c674}
   .simple-view{max-width:860px;margin:0 auto}
   .btn-analyze{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:#fff;background:var(--blue);border:1px solid var(--blue);padding:7px 13px;border-radius:9px;transition:all .15s}
   .btn-analyze:hover{background:var(--blue-dark)}
@@ -341,9 +333,6 @@
       <div class="dz-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
       <strong data-i18n="dz_title">Déposez vos images ou un PDF</strong>
       <span data-i18n="dz_sub">plusieurs fichiers acceptés · JPG, PNG, WEBP, TIFF, PDF…</span>
-      <div class="dz-actions">
-        <button class="dz-btn" id="camBtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span data-i18n="cam_take">Prendre une photo</span></button>
-      </div>
       <span class="dz-hint" data-i18n-html="dz_hint">ou collez une capture avec <kbd>Ctrl</kbd>+<kbd>V</kbd></span>
     </div>
 
@@ -360,7 +349,6 @@
     <div class="img-foot">
       <div class="foot-left">
         <button class="btn-out" id="changeBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg><span data-i18n="btn_add">Ajouter</span></button>
-        <button class="btn-out" id="camBtn2"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span data-i18n="cam_photo">Photo</span></button>
         <button class="btn-out" id="zoneBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/></svg><span data-i18n="btn_zone">Zone</span></button>
         <button class="btn-out" id="zoneResetBtn" style="display:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9 9 0 0 0-6.7 3M3 4v5h5"/></svg><span data-i18n="btn_fullpage">Page entière</span></button>
       </div>
@@ -490,16 +478,6 @@
 
 <footer><div class="wrap foot"><span class="copy" data-i18n="footer_copy">© 2026 Image2OCR — Tous droits réservés.</span><a href="#" id="navLegal" data-i18n="footer_legal">Mentions légales</a><a href="#" id="navPrivacy" data-i18n="footer_privacy">Confidentialité</a><a href="#" id="navContact" data-i18n="footer_contact">Contact</a></div></footer>
 
-<div class="modal-bg" id="camBg"><div class="modal cam-modal">
-  <h3 data-i18n="cam_title">📷 Prendre une photo</h3>
-  <div class="cam-wrap"><video id="camVideo" autoplay playsinline muted></video></div>
-  <p class="cam-err" id="camErr" style="display:none"></p>
-  <div class="modal-foot">
-    <button class="btn-cancel" id="camCancel" data-i18n="m_cancel">Annuler</button>
-    <button class="btn-save" id="camShot" data-i18n="cam_shot">Capturer</button>
-  </div>
-</div></div>
-
 <div class="toast" id="toast"></div>
 
 <script>
@@ -539,32 +517,6 @@
   dropzone.addEventListener("drop",e=>{if(e.dataTransfer.files.length)addFiles(e.dataTransfer.files);});
   window.addEventListener("paste",e=>{const fs=[...(e.clipboardData?.items||[])].filter(i=>i.type.startsWith("image/")).map(i=>i.getAsFile());if(fs.length)addFiles(fs);});
 
-  // ---------- caméra (capture photo, local) ----------
-  const camBg=$("#camBg"),camVideo=$("#camVideo"),camErr=$("#camErr"),camShot=$("#camShot"),camCancel=$("#camCancel");
-  let camStream=null;
-  async function openCamera(){
-    camErr.style.display="none";camShot.disabled=false;camBg.classList.add("open");
-    if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){camShot.disabled=true;camErr.textContent="Caméra non disponible sur cet appareil. Utilisez « Ajouter » pour choisir une image.";camErr.style.display="block";return;}
-    try{ camStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"}},audio:false}); camVideo.srcObject=camStream; }
-    catch(err){ camShot.disabled=true; camErr.textContent="Accès caméra refusé ou indisponible ("+(err.name||"erreur")+"). Autorisez la caméra dans le navigateur, ou utilisez « Ajouter »."; camErr.style.display="block"; }
-  }
-  function closeCamera(){if(camStream){camStream.getTracks().forEach(t=>t.stop());camStream=null;}camVideo.srcObject=null;camBg.classList.remove("open");}
-  camCancel.addEventListener("click",closeCamera);
-  camBg.addEventListener("click",e=>{if(e.target===camBg)closeCamera();});
-  camShot.addEventListener("click",()=>{
-    if(!camStream||!camVideo.videoWidth)return;
-    const c=document.createElement("canvas");c.width=camVideo.videoWidth;c.height=camVideo.videoHeight;
-    c.getContext("2d").drawImage(camVideo,0,0);
-    const src=c.toDataURL("image/jpeg",0.92);
-    pages.push(newPage(src,c.width,c.height));
-    if(current<0)current=0;
-    dropzone.style.display="none";previewBox.style.display="flex";
-    renderPager();renderPage();processQueue();
-    closeCamera();showToast("Photo ajoutée ✓");
-  });
-  const camBtn=$("#camBtn"),camBtn2=$("#camBtn2");
-  if(camBtn)camBtn.addEventListener("click",e=>{e.stopPropagation();openCamera();});
-  if(camBtn2)camBtn2.addEventListener("click",openCamera);
 
   async function addFiles(fileList){
     const files=[...fileList];
