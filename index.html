@@ -226,10 +226,6 @@
   .acte-row .k{flex:0 0 38%;color:var(--muted);font-weight:600}
   .acte-row .v{flex:1;color:var(--ink-2)}
   #analyzeContent{max-height:50vh;overflow:auto;margin-bottom:8px}
-  .acte-links{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:13px;padding-top:12px;border-top:1px dashed var(--border)}
-  .acte-links-lbl{font-size:12px;color:var(--muted);font-weight:600}
-  .acte-link{font-size:12.5px;font-weight:600;color:var(--blue);background:var(--blue-soft);padding:5px 12px;border-radius:99px;text-decoration:none;transition:all .15s}
-  .acte-link:hover{background:var(--blue);color:#fff}
   .btn-signin:hover{background:var(--blue-soft);color:var(--blue);border-color:var(--blue)}
   .legal-doc{font-size:14.5px;line-height:1.7;color:var(--muted)}
   .legal-doc h3{font-size:16px;font-weight:700;color:var(--ink-2);margin:26px 0 8px}
@@ -1149,36 +1145,9 @@
     if(!actes||!actes.length){analyzeContent.innerHTML='<p style="color:var(--muted);font-size:14px">Aucun acte identifié dans ce texte.</p>';return;}
     analyzeContent.innerHTML=actes.map((a,i)=>{
       const rows=(a.champs||[]).map(c=>`<div class="acte-row"><span class="k">${esc(c.label||"")}</span><span class="v">${esc(c.valeur||"")}</span></div>`).join("");
-      return `<div class="acte-card"><div class="acte-type">${esc(a.type||("Acte "+(i+1)))}</div>${rows}${buildActeLinks(a)}</div>`;
+      return `<div class="acte-card"><div class="acte-type">${esc(a.type||("Acte "+(i+1)))}</div>${rows}</div>`;
     }).join("");
     analyzeCopy.style.display="";analyzeCsv.style.display="";
-  }
-  function normLbl(s){return (s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
-  function extractSubject(a){
-    let prenom="",nom="",full="",year="",lieu="";
-    (a.champs||[]).forEach(c=>{
-      const l=normLbl(c.label),v=(c.valeur||"").trim();
-      if(!v||/^(n\/a|inconnu|néant|neant|-|\?)$/i.test(v))return;
-      if(/pere|mere|parrain|marraine|temoin|conjoint|epoux|epouse|parent/.test(l))return;
-      if(/prenom/.test(l)&&!prenom)prenom=v;
-      else if(/(nom et prenom|nom complet|nom\/prenom|identite|sujet|enfant|defunt|baptise|epou.{0,3}principal)/.test(l)&&!full)full=v;
-      else if(/(nom|patronyme)/.test(l)&&!nom)nom=v;
-      if(/date/.test(l)&&!year){const m=v.match(/\b(1[0-9]{3}|20[0-2][0-9])\b/);if(m)year=m[1];}
-      if(/(lieu|commune|paroisse|ville)/.test(l)&&!lieu)lieu=v;
-    });
-    return {prenom,nom,full,year,lieu};
-  }
-  function buildActeLinks(a){
-    const s=extractSubject(a),enc=encodeURIComponent;
-    const nomQ=s.nom||s.full,prenomQ=s.prenom;
-    if(!nomQ&&!prenomQ)return"";
-    const gen="https://www.geneanet.org/fonds/individus/?go=1&nom="+enc(nomQ||"")+(prenomQ?"&prenom="+enc(prenomQ):"");
-    let fs="https://www.familysearch.org/search/record/results?q.surname="+enc(nomQ||prenomQ)+((prenomQ&&nomQ)?"&q.givenName="+enc(prenomQ):"");
-    const y=parseInt(s.year,10);if(y)fs+="&q.birthLikeDate.from="+(y-5)+"&q.birthLikeDate.to="+(y+5);
-    const gtext=((prenomQ?prenomQ+" ":"")+(nomQ||"")+" "+(s.lieu||"")+" généalogie").replace(/\s+/g," ").trim();
-    const goog="https://www.google.com/search?q="+enc(gtext);
-    const lk=(h,t)=>`<a class="acte-link" href="${h}" target="_blank" rel="noopener noreferrer">${t}</a>`;
-    return `<div class="acte-links"><span class="acte-links-lbl">Rechercher&nbsp;:</span>${lk(gen,"Geneanet")}${lk(fs,"FamilySearch")}${lk(goog,"Web")}</div>`;
   }
   function actesToText(){return (lastActes||[]).map((a,i)=>{const head=(a.type||("Acte "+(i+1))).toUpperCase();return head+"\n"+(a.champs||[]).map(c=>`${c.label} : ${c.valeur}`).join("\n");}).join("\n\n");}
   analyzeCopy.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(actesToText());showToast("Analyse copiée ✓");}catch(_){showToast("Copie impossible");}});
