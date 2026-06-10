@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Image2OCR — Convertissez vos images et manuscrits en texte</title>
+<title>Image2OCR — Convertissez vos images en texte</title>
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
@@ -206,7 +206,7 @@
   .features-inner{margin:0 auto;text-align:center}
   .features-kicker{font-size:12px;font-weight:700;letter-spacing:.13em;color:var(--blue);margin-bottom:10px}
   .features-title{font-size:27px;font-weight:800;letter-spacing:-.02em;margin:0;color:var(--ink)}
-  .features-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-top:34px}
+  .features-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:34px}
   .feature{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:28px 18px;display:flex;flex-direction:column;align-items:center;text-align:center;transition:transform .18s,box-shadow .2s,border-color .18s}
   .feature:hover{transform:translateY(-5px);box-shadow:0 14px 34px rgba(15,23,42,.10);border-color:var(--blue)}
   .feature .f-icon{width:54px;height:54px;border-radius:15px;background:var(--blue-soft);color:var(--blue);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
@@ -314,7 +314,7 @@
 
 <section class="wrap hero home-view">
   <h1 data-i18n-html="hero_title">Convertissez vos <span class="blue">images</span> en <span class="blue">texte</span></h1>
-  <p data-i18n="hero_sub">OCR imprimé, transcription IA du manuscrit, multi-pages, PDF cherchable</p>
+  <p data-i18n="hero_sub">OCR de texte imprimé, multi-pages, PDF &amp; images, export PDF cherchable</p>
 </section>
 
 <section class="wrap workspace home-view">
@@ -322,16 +322,11 @@
     <div class="panel-head"><div class="panel-title"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.5-3.5L9 20"/></svg><span data-i18n="t_image">IMAGE</span></div></div>
 
     <div class="controls">
-      <div class="ctrl"><label for="engine" data-i18n="lbl_engine">Moteur</label>
-        <select id="engine" class="sel"><option value="tesseract" data-i18n="eng_fast">OCR rapide (imprimé)</option><option value="ai" data-i18n="eng_ai">IA — manuscrit &amp; difficile</option></select>
-      </div>
       <div class="ctrl" id="langCtrl"><label for="lang" data-i18n="lbl_lang">Langue</label>
         <select id="lang" class="sel"><option value="fra">Français</option><option value="eng">English</option><option value="spa">Español</option><option value="deu">Deutsch</option><option value="ita">Italiano</option><option value="por">Português</option><option value="nld">Nederlands</option><option value="fra+eng">Français + English</option></select>
       </div>
       <label class="chk" id="enhanceCtrl"><input type="checkbox" id="enhance" checked><span data-i18n="lbl_enhance">Améliorer</span></label>
-      <button class="gear" id="gearBtn" title="Paramètres IA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
     </div>
-    <div class="engine-note" id="engineNote" data-i18n="engine_note">🖋️ Mode IA : idéal pour l'écriture manuscrite et les documents anciens. La surbrillance mot↔image n'est disponible qu'avec l'OCR rapide.</div>
 
     <div class="pager" id="pager"></div>
 
@@ -367,7 +362,6 @@
     <div class="panel-head">
       <div class="panel-title"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span data-i18n="t_text">TEXTE EXTRAIT</span></div>
       <div class="head-actions">
-        <button class="btn-analyze" id="analyzeBtn" disabled><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM21 21l-4.3-4.3"/></svg><span data-i18n="analyze">Analyser l'acte</span></button>
         <button class="btn-ghost" id="copyBtn" disabled><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span data-i18n="btn_copy">Copier</span></button>
         <div class="dd">
           <button class="btn-ghost" id="dlBtn" disabled><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span data-i18n="btn_download">Télécharger</span></button>
@@ -399,7 +393,6 @@
   <div class="feature"><div class="f-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/></svg></div><div><h3 data-i18n="f2_t">Sélection de zone</h3><p data-i18n="f2_d">Traitez une colonne ou un paragraphe précis du document</p></div></div>
   <div class="feature"><div class="f-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="11" cy="11" r="3"/><path d="m20 20-3.5-3.5"/></svg></div><div><h3 data-i18n="f3_t">PDF cherchable</h3><p data-i18n="f3_d">Exportez le scan avec une couche de texte sélectionnable</p></div></div>
   <div class="feature"><div class="f-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/></svg></div><div><h3 data-i18n="f4_t">Multi-pages & PDF</h3><p data-i18n="f4_d">Importez plusieurs images ou un PDF entier en un coup</p></div></div>
-  <div class="feature"><div class="f-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5 10.1 10.9 5.5 9l4.6-1.4L12 3z"/><path d="M19 14l.7 1.8L21.5 16.5l-1.8.7L19 19l-.7-1.8L16.5 16.5l1.8-.7L19 14z"/></svg></div><div><h3 data-i18n="f5_t">Transcription IA</h3><p data-i18n="f5_d">Lit l'écriture manuscrite et les actes anciens, là où l'OCR classique échoue</p></div></div>
   </div>
   </div>
 </section>
@@ -429,13 +422,13 @@
   <div class="hero" style="padding:48px 0 28px"><h1>FAQ</h1><p>Questions fréquentes sur Image2OCR</p></div>
   <div class="faq">
     <details><summary>Quels fichiers puis-je importer&nbsp;?</summary><p>Des images (JPG, PNG, WEBP, TIFF, GIF, BMP) et des PDF. Vous pouvez déposer plusieurs fichiers à la fois ou un PDF entier&nbsp;: chaque page devient une page à traiter, et tout peut être exporté en un seul document.</p></details>
-    <details><summary>Quelle est la différence entre les deux moteurs&nbsp;?</summary><p>L'«&nbsp;OCR rapide&nbsp;» est conçu pour le texte imprimé&nbsp;: il est instantané et s'exécute directement dans votre navigateur. Le mode «&nbsp;IA — manuscrit &amp; difficile&nbsp;» utilise une intelligence artificielle de vision capable de lire l'écriture manuscrite et les documents anciens, là où l'OCR classique échoue.</p></details>
-    <details><summary>Pourquoi certains mots apparaissent-ils en rouge&nbsp;?</summary><p>Ce sont les mots dont la reconnaissance est incertaine. Cliquez dessus pour voir plusieurs propositions de correction, ou taper la vôtre. En OCR rapide, cliquer sur un mot le surligne aussi au bon endroit sur l'image.</p></details>
-    <details><summary>Le mode IA bloque sur une grande page, que faire&nbsp;?</summary><p>L'image est compressée automatiquement avant l'envoi, mais une double page très dense reste mieux traitée morceau par morceau. Utilisez le bouton «&nbsp;Zone&nbsp;» pour encadrer une colonne ou un paragraphe&nbsp;: c'est plus rapide et la transcription est plus précise.</p></details>
+    <details><summary>Quel type de texte est reconnu&nbsp;?</summary><p>Image2OCR reconnaît le <strong>texte imprimé</strong>&nbsp;: livres, documents dactylographiés, captures d'écran, PDF scannés, etc. La reconnaissance s'exécute directement dans votre navigateur, gratuitement. L'écriture manuscrite n'est pas prise en charge.</p></details>
+    <details><summary>Pourquoi certains mots apparaissent-ils en rouge&nbsp;?</summary><p>Ce sont les mots dont la reconnaissance est incertaine. Cliquez dessus pour voir des propositions de correction ou taper la vôtre&nbsp;; cliquer sur un mot le surligne aussi au bon endroit sur l'image.</p></details>
+    <details><summary>Comment améliorer la précision sur une page dense&nbsp;?</summary><p>Gardez l'option «&nbsp;Améliorer&nbsp;» activée (elle nettoie et redresse l'image), et utilisez le bouton «&nbsp;Zone&nbsp;» pour n'encadrer qu'une colonne ou un paragraphe&nbsp;: le résultat est souvent plus net sur les documents denses.</p></details>
     <details><summary>Dans quels formats puis-je exporter&nbsp;?</summary><p>Texte (.txt), Word (.doc), Markdown (.md), PDF texte, et surtout le PDF cherchable&nbsp;: votre scan d'origine avec une couche de texte invisible mais sélectionnable et trouvable par recherche.</p></details>
-    <details><summary>Mes documents sont-ils confidentiels&nbsp;?</summary><p>En OCR rapide, tout est traité localement dans votre navigateur&nbsp;: aucune image n'est envoyée. En mode IA, l'image est transmise au service de transcription le temps du traitement, puis n'est pas conservée.</p></details>
-    <details><summary>Quelles langues sont prises en charge&nbsp;?</summary><p>L'interface est disponible en 6 langues (français, anglais, espagnol, allemand, italien, portugais). Pour l'OCR rapide, vous pouvez aussi choisir la langue du document à reconnaître.</p></details>
-    <details><summary>Le service est-il gratuit&nbsp;?</summary><p>L'OCR rapide et la conversion PDF→Word sont gratuits et illimités. Le mode IA, plus coûteux à faire tourner, pourra être proposé avec une limite ou des crédits à l'avenir.</p></details>
+    <details><summary>Mes documents sont-ils confidentiels&nbsp;?</summary><p>Oui. Toute la reconnaissance s'effectue dans votre navigateur&nbsp;: vos images <strong>ne quittent jamais votre appareil</strong> et ne sont envoyées à aucun serveur.</p></details>
+    <details><summary>Quelles langues sont prises en charge&nbsp;?</summary><p>L'interface est disponible en 6 langues (français, anglais, espagnol, allemand, italien, portugais). Vous pouvez aussi choisir la langue du document à reconnaître pour de meilleurs résultats.</p></details>
+    <details><summary>Le service est-il gratuit&nbsp;?</summary><p>Oui, entièrement. L'OCR et la conversion PDF→Word sont gratuits et illimités, et fonctionnent directement dans votre navigateur, sans inscription.</p></details>
   </div>
 </section>
 
@@ -460,10 +453,8 @@
   <div class="hero" style="padding:48px 0 24px"><h1>Confidentialité</h1><p>Comment vos données sont traitées</p></div>
   <div class="legal-doc">
     <p class="legal-note">⚠️ Modèle à adapter et à faire relire&nbsp;; complétez l'e-mail de contact pour les demandes RGPD.</p>
-    <h3>OCR rapide</h3>
-    <p>En mode «&nbsp;OCR rapide&nbsp;», la reconnaissance s'effectue entièrement dans votre navigateur. Vos images <strong>ne quittent pas votre appareil</strong> et ne sont jamais envoyées à un serveur.</p>
-    <h3>Mode IA (manuscrit &amp; difficile)</h3>
-    <p>En mode IA, l'image sélectionnée est transmise à notre prestataire de transcription (Anthropic) le temps du traitement, puis <strong>n'est pas conservée</strong>. Aucune image n'est stockée sur nos serveurs.</p>
+    <h3>Traitement local</h3>
+    <p>La reconnaissance de texte s'effectue <strong>entièrement dans votre navigateur</strong>. Vos images et PDF ne quittent pas votre appareil et ne sont envoyés à aucun serveur. Aucune image n'est stockée.</p>
     <h3>Comptes et données personnelles</h3>
     <p>Le site ne crée pas de compte et ne demande aucune donnée personnelle pour fonctionner. Aucun cookie publicitaire ni traceur de suivi n'est utilisé.</p>
     <h3>Hébergement</h3>
@@ -486,17 +477,6 @@
 
 <footer><div class="wrap foot"><span class="copy" data-i18n="footer_copy">© 2026 Image2OCR — Tous droits réservés.</span><a href="#" id="navLegal" data-i18n="footer_legal">Mentions légales</a><a href="#" id="navPrivacy" data-i18n="footer_privacy">Confidentialité</a><a href="#" id="navContact" data-i18n="footer_contact">Contact</a></div></footer>
 
-<div class="modal-bg" id="modalBg"><div class="modal">
-  <h3 data-i18n="m_title">Paramètres du mode IA</h3>
-  <p class="sub" data-i18n="m_sub">Dans l'aperçu Claude, le mode IA fonctionne sans configuration. Pour un site hébergé, indiquez votre clé API Anthropic.</p>
-  <div class="warn" data-i18n="m_warn">⚠️ Une clé saisie ici reste côté navigateur : usage personnel/local uniquement. Pour un site public, passez par un backend qui garde la clé secrète.</div>
-  <div class="field"><label for="apiKey" data-i18n="m_key">Clé API Anthropic (optionnelle)</label><input type="password" id="apiKey" placeholder="sk-ant-..."></div>
-  <div class="field"><label for="modelId" data-i18n="m_model">Modèle (clé perso)</label><input type="text" id="modelId" value="claude-sonnet-4-6" placeholder="claude-sonnet-4-6"></div>
-  <div class="field"><label for="maxTok" data-i18n="m_max">Longueur max de la réponse (tokens)</label><input type="number" id="maxTok" value="4000" min="500" max="16000"></div>
-  <div class="field"><label for="proxyUrl" data-i18n="m_proxy">Backend (proxy) — pour un site hébergé</label><input type="text" id="proxyUrl" value="/api/ocr" placeholder="/api/ocr"></div>
-  <div class="modal-foot"><button class="btn-cancel" id="modalCancel" data-i18n="m_cancel">Annuler</button><button class="btn-save" id="modalSave" data-i18n="m_save">Enregistrer</button></div>
-</div></div>
-
 <div class="modal-bg" id="authBg"><div class="modal">
   <div class="auth-tabs">
     <button class="auth-tab active" id="tabSignin">Connexion</button>
@@ -506,20 +486,8 @@
   <div class="field"><label for="authPass">Mot de passe</label><input type="password" id="authPass" placeholder="••••••••"></div>
   <div class="field" id="authPass2Wrap" style="display:none"><label for="authPass2">Confirmer le mot de passe</label><input type="password" id="authPass2" placeholder="••••••••"></div>
   <button class="btn-save" id="authSubmit" style="width:100%;padding:11px;border-radius:10px;font-size:15px">Se connecter</button>
-  <p class="auth-soon">🔒 Les comptes arrivent bientôt. Cette inscription préparera votre accès aux crédits du mode IA.</p>
+  <p class="auth-soon">🔒 Les comptes arrivent bientôt.</p>
   <div class="modal-foot" style="margin-top:8px"><button class="btn-cancel" id="authCancel">Fermer</button></div>
-</div></div>
-
-<div class="modal-bg" id="analyzeBg"><div class="modal" style="max-width:580px">
-  <h3>🔎 Analyse de l'acte</h3>
-  <p class="sub">Informations généalogiques extraites du texte transcrit.</p>
-  <div id="analyzeLoading" class="p2w-loading" style="display:none"><div class="spinner"></div><span>Analyse en cours…</span></div>
-  <div id="analyzeContent"></div>
-  <div class="modal-foot">
-    <button class="btn-cancel" id="analyzeClose">Fermer</button>
-    <button class="btn-cancel" id="analyzeCopy" style="display:none">Copier</button>
-    <button class="btn-save" id="analyzeCsv" style="display:none">Exporter CSV</button>
-  </div>
 </div></div>
 
 <div class="toast" id="toast"></div>
@@ -530,18 +498,16 @@
   const $=s=>document.querySelector(s);
   const dropzone=$("#dropzone"),previewBox=$("#previewBox"),imgStage=$("#imgStage"),previewImg=$("#previewImg"),overlay=$("#overlay"),selLayer=$("#selLayer"),zoneRect=$("#zoneRect");
   const fileInput=$("#fileInput"),changeBtn=$("#changeBtn"),deleteBtn=$("#deleteBtn"),zoneBtn=$("#zoneBtn"),zoneResetBtn=$("#zoneResetBtn");
-  const engineSel=$("#engine"),langSel=$("#lang"),langCtrl=$("#langCtrl"),enhanceCtrl=$("#enhanceCtrl"),enhanceChk=$("#enhance"),engineNote=$("#engineNote");
+  const langSel=$("#lang"),langCtrl=$("#langCtrl"),enhanceCtrl=$("#enhanceCtrl"),enhanceChk=$("#enhance");
   const pager=$("#pager"),textArea=$("#textArea"),progress=$("#progress"),statusEl=$("#status"),barFill=$("#barFill");
   const legend=$("#legend"),editBtn=$("#editBtn"),copyBtn=$("#copyBtn"),dlBtn=$("#dlBtn"),dlMenu=$("#dlMenu");
-  const analyzeBtn=$("#analyzeBtn"),analyzeBg=$("#analyzeBg"),analyzeContent=$("#analyzeContent"),analyzeLoading=$("#analyzeLoading"),analyzeClose=$("#analyzeClose"),analyzeCopy=$("#analyzeCopy"),analyzeCsv=$("#analyzeCsv");
   const pop=$("#pop"),suggList=$("#suggList"),popInput=$("#popInput"),popOk=$("#popOk"),toast=$("#toast");
-  const gearBtn=$("#gearBtn"),modalBg=$("#modalBg"),apiKeyIn=$("#apiKey"),modelIn=$("#modelId"),maxTokIn=$("#maxTok"),proxyIn=$("#proxyUrl"),modalSave=$("#modalSave"),modalCancel=$("#modalCancel"),themeToggle=$("#themeToggle");
+  const themeToggle=$("#themeToggle");
 
   if(window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
 
   const CONF=80;
   let pages=[], current=-1, activePop=null, zoneMode=false, busy=false;
-  let userKey="",userMax=4000,userModel="claude-sonnet-4-6",proxyUrl="/api/ocr";
   let tessWorker=null,tessLang=null;
 
   const showToast=(m,ms=2800)=>{toast.textContent=m;toast.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(()=>toast.classList.remove("show"),ms);};
@@ -550,16 +516,9 @@
 
   themeToggle.addEventListener("click",()=>{const d=document.documentElement.getAttribute("data-theme")==="dark";document.documentElement.setAttribute("data-theme",d?"light":"dark");});
 
-  function refreshEngineUI(){const ai=engineSel.value==="ai";langCtrl.style.opacity=ai?".4":"1";langSel.disabled=ai;enhanceCtrl.style.opacity=ai?".4":"1";enhanceChk.disabled=ai;engineNote.classList.toggle("show",ai);}
-  refreshEngineUI();
-  engineSel.addEventListener("change",()=>{refreshEngineUI();reprocessCurrent();});
   langSel.addEventListener("change",reprocessCurrent);
   enhanceChk.addEventListener("change",reprocessCurrent);
 
-  gearBtn.addEventListener("click",()=>{apiKeyIn.value=userKey;modelIn.value=userModel;maxTokIn.value=userMax;proxyIn.value=proxyUrl;modalBg.classList.add("open");});
-  modalCancel.addEventListener("click",()=>modalBg.classList.remove("open"));
-  modalBg.addEventListener("click",e=>{if(e.target===modalBg)modalBg.classList.remove("open");});
-  modalSave.addEventListener("click",()=>{userKey=apiKeyIn.value.trim();userModel=modelIn.value.trim()||"claude-sonnet-4-6";userMax=Math.max(500,Math.min(16000,+maxTokIn.value||4000));proxyUrl=proxyIn.value.trim();modalBg.classList.remove("open");showToast("Paramètres enregistrés ✓");});
 
   // ---------- upload ----------
   dropzone.addEventListener("click",()=>fileInput.click());
@@ -607,7 +566,7 @@
     pager.classList.remove("show");pager.innerHTML="";
     document.querySelectorAll("textarea.editor").forEach(t=>t.remove());
     textArea.style.display="";textArea.className="text-area empty";textArea.textContent="Le texte extrait apparaîtra ici";
-    progress.style.display="none";legend.style.display="none";copyBtn.disabled=dlBtn.disabled=analyzeBtn.disabled=true;
+    progress.style.display="none";legend.style.display="none";copyBtn.disabled=dlBtn.disabled=true;
   });
 
   // ---------- pager ----------
@@ -638,8 +597,8 @@
     zoneResetBtn.style.display=(p.crop.w<.999||p.crop.h<.999)?"inline-flex":"none";
     if(p.status==="processing"){progress.style.display="flex";textArea.style.display="none";legend.style.display="none";return;}
     progress.style.display="none";
-    if(!p.done){textArea.style.display="";textArea.className="text-area empty";textArea.textContent="En attente…";legend.style.display="none";copyBtn.disabled=dlBtn.disabled=analyzeBtn.disabled=true;return;}
-    copyBtn.disabled=dlBtn.disabled=analyzeBtn.disabled=false;legend.style.display="flex";
+    if(!p.done){textArea.style.display="";textArea.className="text-area empty";textArea.textContent="En attente…";legend.style.display="none";copyBtn.disabled=dlBtn.disabled=true;return;}
+    copyBtn.disabled=dlBtn.disabled=false;legend.style.display="flex";
     if(p.manual!=null){showEditor(p);return;}
     textArea.style.display="";renderLines(p);
   }
@@ -690,8 +649,7 @@
   async function processPage(p,idx){
     if(idx===current){progress.style.display="flex";statusEl.textContent="Préparation…";barFill.style.width="10%";}
     const region=await getRegionCanvas(p);
-    if(engineSel.value==="ai"){ p.engine="ai"; await ocrAI(p,region,idx); }
-    else { p.engine="tesseract"; await ocrTess(p,region,idx); }
+    p.engine="tesseract"; await ocrTess(p,region,idx);
   }
 
   async function ocrTess(p,region,idx){
@@ -722,57 +680,6 @@
     if(tessWorker){try{await tessWorker.terminate();}catch(_){}}
     tessWorker=await Tesseract.createWorker(lang,1,{logger:m=>{if(m.status==="recognizing text"){statusEl.textContent="Reconnaissance…";barFill.style.width=Math.round(m.progress*100)+"%";}else if(m.status&&m.status.includes("loading"))statusEl.textContent="Téléchargement de la langue…";}});
     tessLang=lang;return tessWorker;
-  }
-
-  function directAnthropic(model,maxTok,messages,key){
-    const headers={"Content-Type":"application/json"};
-    if(key){headers["x-api-key"]=key;headers["anthropic-version"]="2023-06-01";headers["anthropic-dangerous-direct-browser-access"]="true";}
-    return fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers,body:JSON.stringify({model,max_tokens:maxTok,messages})}).then(r=>r.json());
-  }
-  async function callAnthropic(messages){
-    // 1) clé perso saisie → appel direct (usage local/personnel)
-    if(userKey) return directAnthropic(userModel,userMax,messages,userKey);
-    // 2) proxy backend (site hébergé) — détecté automatiquement
-    if(proxyUrl){
-      try{
-        const r=await fetch(proxyUrl,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:userModel,max_tokens:userMax,messages})});
-        const txt=await r.text();let j=null;try{j=JSON.parse(txt);}catch(_){}
-        if(j&&(j.content||j.error)) return j; // vraie réponse via le proxy
-      }catch(_){}
-    }
-    // 3) repli : aperçu Claude (clé gérée par la plateforme)
-    return directAnthropic("claude-sonnet-4-20250514",Math.min(userMax,1000),messages,null);
-  }
-
-  // Réduit + compresse l'image pour l'IA (≈1568 px de côté, JPEG) → envoi beaucoup plus léger
-  function compressForAI(srcCanvas, maxSide=1568, quality=0.85){
-    let w=srcCanvas.width, h=srcCanvas.height;
-    const long=Math.max(w,h);
-    const scale=long>maxSide ? maxSide/long : 1;
-    const cw=Math.max(1,Math.round(w*scale)), ch=Math.max(1,Math.round(h*scale));
-    const c=document.createElement("canvas"); c.width=cw; c.height=ch;
-    const ctx=c.getContext("2d");
-    ctx.fillStyle="#ffffff"; ctx.fillRect(0,0,cw,ch);
-    ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality="high";
-    ctx.drawImage(srcCanvas,0,0,cw,ch);
-    return c.toDataURL("image/jpeg", quality).split(",")[1];
-  }
-
-  async function ocrAI(p,region,idx){
-    if(idx===current){statusEl.textContent="Transcription par l'IA…";barFill.style.width="40%";}
-    const b64=compressForAI(region);
-    const prompt="Transcris fidèlement TOUT le texte de cette image (y compris écriture manuscrite ou ancienne).\nRègles :\n- Conserve l'orthographe d'origine, la ponctuation et les retours à la ligne.\n- Entoure de ⟦ et ⟧ chaque mot dont tu n'es pas certain, avec ta meilleure hypothèse à l'intérieur.\n- Ne traduis pas, ne commente pas. Réponds UNIQUEMENT avec la transcription.";
-    const messages=[{role:"user",content:[{type:"image",source:{type:"base64",media_type:"image/jpeg",data:b64}},{type:"text",text:prompt}]}];
-    const data=await callAnthropic(messages);
-    if(data.error)throw new Error(data.error.message||"API");
-    const text=(data.content||[]).filter(x=>x.type==="text").map(x=>x.text).join("\n").trim();
-    if(!text)throw new Error("réponse vide");
-    p.lines=text.split(/\r?\n/).map(line=>{
-      const lead=(line.match(/^(\s*)/)||["",""])[1].length;
-      const parts=line.trim().length?line.trim().split(/\s+/):[];
-      return{tokens:parts.map((w,i)=>{const unc=/⟦|⟧/.test(w);return{spaces:i===0?Math.min(lead,8):1,t:w.replace(/⟦|⟧/g,""),conf:unc?40:100,fixed:false,alts:null,box:null};})};
-    });
-    if(data.stop_reason==="max_tokens")showToast("Transcription tronquée. Augmentez les tokens (⚙) ou utilisez une Zone.",5000);
   }
 
   // ---------- preprocessing ----------
@@ -1027,7 +934,7 @@
   let curLang="fr";
   const I18N={
     fr:{nav_home:"Accueil",nav_p2w:"PDF → Word",nav_features:"Fonctionnalités",nav_pricing:"Tarifs",nav_faq:"FAQ",nav_api:"API",login:"Se connecter",
-      hero_title:'Convertissez vos <span class="blue">images</span> en <span class="blue">texte</span>',hero_sub:"OCR imprimé, transcription IA du manuscrit, multi-pages, PDF cherchable",
+      hero_title:'Convertissez vos <span class="blue">images</span> en <span class="blue">texte</span>',hero_sub:"OCR de texte imprimé, multi-pages, PDF & images, export PDF cherchable",
       lbl_engine:"Moteur",eng_fast:"OCR rapide (imprimé)",eng_ai:"IA — manuscrit & difficile",lbl_lang:"Langue",lbl_enhance:"Améliorer",
       engine_note:"🖋️ Mode IA : idéal pour l'écriture manuscrite et les documents anciens. La surbrillance mot↔image n'est disponible qu'avec l'OCR rapide.",
       t_image:"IMAGE",dz_title:"Déposez vos images ou un PDF",dz_sub:"plusieurs fichiers acceptés · JPG, PNG, WEBP, TIFF, PDF…",
@@ -1039,7 +946,7 @@
       p2w_title:'PDF → <span class="blue">Word</span>',p2w_sub:"Récupérez le texte d'un PDF dans un document Word éditable, en un clic",p2w_dz_title:"Déposez votre PDF ici",p2w_dz_sub:"ou cliquez pour parcourir · fichiers .pdf",p2w_warn:"⚠️ Ce PDF semble être un scan d'images sans couche de texte. La conversion directe donnera peu ou pas de texte — utilisez plutôt l'outil OCR.",p2w_toocr:"Aller à l'OCR",p2w_convert:"Télécharger en Word (.doc)",p2w_clear:"Changer de PDF",
       m_title:"Paramètres du mode IA",m_sub:"Dans l'aperçu Claude, le mode IA fonctionne sans configuration. Pour un site hébergé, indiquez votre clé API Anthropic.",m_warn:"⚠️ Une clé saisie ici reste côté navigateur : usage personnel/local uniquement. Pour un site public, passez par un backend qui garde la clé secrète.",m_key:"Clé API Anthropic (optionnelle)",m_model:"Modèle (clé perso)",m_max:"Longueur max de la réponse (tokens)",m_cancel:"Annuler",m_save:"Enregistrer"},
     en:{nav_home:"Home",nav_p2w:"PDF → Word",nav_features:"Features",nav_pricing:"Pricing",nav_faq:"FAQ",nav_api:"API",login:"Sign in",
-      hero_title:'Convert your <span class="blue">images</span> into <span class="blue">text</span>',hero_sub:"Printed OCR, AI handwriting transcription, multi-page, searchable PDF",
+      hero_title:'Convert your <span class="blue">images</span> into <span class="blue">text</span>',hero_sub:"Printed-text OCR, multi-page, PDF & images, searchable PDF export",
       lbl_engine:"Engine",eng_fast:"Fast OCR (printed)",eng_ai:"AI — handwriting & difficult",lbl_lang:"Language",lbl_enhance:"Enhance",
       engine_note:"🖋️ AI mode: ideal for handwriting and old documents. Word↔image highlighting is only available with Fast OCR.",
       t_image:"IMAGE",dz_title:"Drop your images or a PDF",dz_sub:"multiple files accepted · JPG, PNG, WEBP, TIFF, PDF…",
@@ -1051,7 +958,7 @@
       p2w_title:'PDF → <span class="blue">Word</span>',p2w_sub:"Get the text of a PDF into an editable Word document, in one click",p2w_dz_title:"Drop your PDF here",p2w_dz_sub:"or click to browse · .pdf files",p2w_warn:"⚠️ This PDF looks like a scanned image with no text layer. Direct conversion will yield little or no text — use the OCR tool instead.",p2w_toocr:"Go to OCR",p2w_convert:"Download as Word (.doc)",p2w_clear:"Change PDF",
       m_title:"AI mode settings",m_sub:"In the Claude preview, AI mode works with no setup. For a hosted site, enter your Anthropic API key.",m_warn:"⚠️ A key entered here stays in the browser: personal/local use only. For a public site, use a backend that keeps the key secret.",m_key:"Anthropic API key (optional)",m_model:"Model (personal key)",m_max:"Max response length (tokens)",m_cancel:"Cancel",m_save:"Save"},
     es:{nav_home:"Inicio",nav_p2w:"PDF → Word",nav_features:"Funciones",nav_pricing:"Precios",nav_faq:"FAQ",nav_api:"API",login:"Iniciar sesión",
-      hero_title:'Convierte tus <span class="blue">imágenes</span> en <span class="blue">texto</span>',hero_sub:"OCR impreso, transcripción IA de manuscritos, multipágina, PDF con búsqueda",
+      hero_title:'Convierte tus <span class="blue">imágenes</span> en <span class="blue">texto</span>',hero_sub:"OCR de texto impreso, multipágina, PDF e imágenes, exportación a PDF con búsqueda",
       lbl_engine:"Motor",eng_fast:"OCR rápido (impreso)",eng_ai:"IA — manuscrito y difícil",lbl_lang:"Idioma",lbl_enhance:"Mejorar",
       engine_note:"🖋️ Modo IA: ideal para escritura manuscrita y documentos antiguos. El resaltado palabra↔imagen solo está disponible con el OCR rápido.",
       t_image:"IMAGEN",dz_title:"Suelta tus imágenes o un PDF",dz_sub:"se aceptan varios archivos · JPG, PNG, WEBP, TIFF, PDF…",
@@ -1063,7 +970,7 @@
       p2w_title:'PDF → <span class="blue">Word</span>',p2w_sub:"Pasa el texto de un PDF a un documento Word editable, en un clic",p2w_dz_title:"Suelta tu PDF aquí",p2w_dz_sub:"o haz clic para buscar · archivos .pdf",p2w_warn:"⚠️ Este PDF parece un escaneo de imágenes sin capa de texto. La conversión directa dará poco o ningún texto — usa mejor la herramienta OCR.",p2w_toocr:"Ir al OCR",p2w_convert:"Descargar como Word (.doc)",p2w_clear:"Cambiar PDF",
       m_title:"Ajustes del modo IA",m_sub:"En la vista previa de Claude, el modo IA funciona sin configuración. Para un sitio alojado, introduce tu clave API de Anthropic.",m_warn:"⚠️ Una clave introducida aquí permanece en el navegador: solo uso personal/local. Para un sitio público, usa un backend que mantenga la clave secreta.",m_key:"Clave API de Anthropic (opcional)",m_model:"Modelo (clave personal)",m_max:"Longitud máx. de respuesta (tokens)",m_cancel:"Cancelar",m_save:"Guardar"},
     de:{nav_home:"Start",nav_p2w:"PDF → Word",nav_features:"Funktionen",nav_pricing:"Preise",nav_faq:"FAQ",nav_api:"API",login:"Anmelden",
-      hero_title:'Wandeln Sie <span class="blue">Bilder</span> in <span class="blue">Text</span> um',hero_sub:"Druck-OCR, KI-Handschriftübertragung, mehrseitig, durchsuchbares PDF",
+      hero_title:'Wandeln Sie <span class="blue">Bilder</span> in <span class="blue">Text</span> um',hero_sub:"OCR für Drucktext, mehrseitig, PDF & Bilder, durchsuchbarer PDF-Export",
       lbl_engine:"Engine",eng_fast:"Schnell-OCR (Druck)",eng_ai:"KI — Handschrift & schwierig",lbl_lang:"Sprache",lbl_enhance:"Verbessern",
       engine_note:"🖋️ KI-Modus: ideal für Handschrift und alte Dokumente. Wort↔Bild-Hervorhebung gibt es nur mit Schnell-OCR.",
       t_image:"BILD",dz_title:"Bilder oder ein PDF hier ablegen",dz_sub:"mehrere Dateien möglich · JPG, PNG, WEBP, TIFF, PDF…",
@@ -1075,7 +982,7 @@
       p2w_title:'PDF → <span class="blue">Word</span>',p2w_sub:"Holen Sie den Text eines PDFs in ein bearbeitbares Word-Dokument, mit einem Klick",p2w_dz_title:"PDF hier ablegen",p2w_dz_sub:"oder klicken zum Durchsuchen · .pdf-Dateien",p2w_warn:"⚠️ Dieses PDF scheint ein gescanntes Bild ohne Textebene zu sein. Die direkte Umwandlung liefert wenig oder keinen Text — nutzen Sie stattdessen das OCR-Werkzeug.",p2w_toocr:"Zum OCR",p2w_convert:"Als Word (.doc) herunterladen",p2w_clear:"PDF ändern",
       m_title:"KI-Modus-Einstellungen",m_sub:"In der Claude-Vorschau funktioniert der KI-Modus ohne Einrichtung. Für eine gehostete Seite geben Sie Ihren Anthropic-API-Schlüssel ein.",m_warn:"⚠️ Ein hier eingegebener Schlüssel bleibt im Browser: nur persönliche/lokale Nutzung. Für eine öffentliche Seite ein Backend verwenden, das den Schlüssel geheim hält.",m_key:"Anthropic-API-Schlüssel (optional)",m_model:"Modell (persönlicher Schlüssel)",m_max:"Max. Antwortlänge (Tokens)",m_cancel:"Abbrechen",m_save:"Speichern"},
     it:{nav_home:"Home",nav_p2w:"PDF → Word",nav_features:"Funzioni",nav_pricing:"Prezzi",nav_faq:"FAQ",nav_api:"API",login:"Accedi",
-      hero_title:'Converti le tue <span class="blue">immagini</span> in <span class="blue">testo</span>',hero_sub:"OCR per stampa, trascrizione IA del manoscritto, multipagina, PDF ricercabile",
+      hero_title:'Converti le tue <span class="blue">immagini</span> in <span class="blue">testo</span>',hero_sub:"OCR per testo stampato, multipagina, PDF e immagini, esportazione PDF ricercabile",
       lbl_engine:"Motore",eng_fast:"OCR rapido (stampa)",eng_ai:"IA — manoscritto e difficile",lbl_lang:"Lingua",lbl_enhance:"Migliora",
       engine_note:"🖋️ Modalità IA: ideale per la scrittura a mano e i documenti antichi. L'evidenziazione parola↔immagine è disponibile solo con l'OCR rapido.",
       t_image:"IMMAGINE",dz_title:"Trascina le tue immagini o un PDF",dz_sub:"accettati più file · JPG, PNG, WEBP, TIFF, PDF…",
@@ -1087,7 +994,7 @@
       p2w_title:'PDF → <span class="blue">Word</span>',p2w_sub:"Porta il testo di un PDF in un documento Word modificabile, in un clic",p2w_dz_title:"Trascina qui il tuo PDF",p2w_dz_sub:"o clicca per sfogliare · file .pdf",p2w_warn:"⚠️ Questo PDF sembra una scansione di immagini senza strato di testo. La conversione diretta darà poco o nessun testo — usa invece lo strumento OCR.",p2w_toocr:"Vai all'OCR",p2w_convert:"Scarica come Word (.doc)",p2w_clear:"Cambia PDF",
       m_title:"Impostazioni modalità IA",m_sub:"Nell'anteprima Claude la modalità IA funziona senza configurazione. Per un sito ospitato, inserisci la tua chiave API Anthropic.",m_warn:"⚠️ Una chiave inserita qui resta nel browser: solo uso personale/locale. Per un sito pubblico usa un backend che mantenga segreta la chiave.",m_key:"Chiave API Anthropic (opzionale)",m_model:"Modello (chiave personale)",m_max:"Lunghezza max risposta (token)",m_cancel:"Annulla",m_save:"Salva"},
     pt:{nav_home:"Início",nav_p2w:"PDF → Word",nav_features:"Funcionalidades",nav_pricing:"Preços",nav_faq:"FAQ",nav_api:"API",login:"Entrar",
-      hero_title:'Converta as suas <span class="blue">imagens</span> em <span class="blue">texto</span>',hero_sub:"OCR de impressos, transcrição IA de manuscritos, multipágina, PDF pesquisável",
+      hero_title:'Converta as suas <span class="blue">imagens</span> em <span class="blue">texto</span>',hero_sub:"OCR de texto impresso, multipágina, PDF e imagens, exportação para PDF pesquisável",
       lbl_engine:"Motor",eng_fast:"OCR rápido (impresso)",eng_ai:"IA — manuscrito e difícil",lbl_lang:"Idioma",lbl_enhance:"Melhorar",
       engine_note:"🖋️ Modo IA: ideal para escrita manuscrita e documentos antigos. O realce palavra↔imagem só está disponível com o OCR rápido.",
       t_image:"IMAGEM",dz_title:"Largue as suas imagens ou um PDF",dz_sub:"vários ficheiros aceites · JPG, PNG, WEBP, TIFF, PDF…",
@@ -1116,49 +1023,6 @@
   langBtn.addEventListener("click",e=>{e.stopPropagation();langMenu.classList.toggle("open");});
   langMenu.addEventListener("click",e=>{const b=e.target.closest("[data-lang]");if(!b)return;applyLang(b.dataset.lang);langMenu.classList.remove("open");});
   document.addEventListener("click",e=>{if(!e.target.closest(".lang-wrap"))langMenu.classList.remove("open");});
-  // ---------- Analyser l'acte (extraction structurée) ----------
-  let lastActes=null;
-  analyzeClose.addEventListener("click",()=>analyzeBg.classList.remove("open"));
-  analyzeBg.addEventListener("click",e=>{if(e.target===analyzeBg)analyzeBg.classList.remove("open");});
-  analyzeBtn.addEventListener("click",runAnalyze);
-  async function runAnalyze(){
-    if(current<0||!pages[current]||!pages[current].done)return;
-    const text=pageText(pages[current]).trim();
-    if(!text)return showToast("Aucun texte à analyser");
-    lastActes=null;analyzeContent.innerHTML="";analyzeCopy.style.display="none";analyzeCsv.style.display="none";
-    analyzeLoading.style.display="flex";analyzeBg.classList.add("open");
-    const prompt="Tu es expert en généalogie et paléographie. Voici la transcription d'un ou plusieurs actes anciens (registre paroissial ou état civil).\nPour CHAQUE acte présent, extrais les informations clés.\nRéponds UNIQUEMENT en JSON valide, sans texte ni balises autour, au format :\n{\"actes\":[{\"type\":\"baptême|mariage|décès|autre\",\"champs\":[{\"label\":\"Date\",\"valeur\":\"...\"},{\"label\":\"Nom\",\"valeur\":\"...\"}]}]}\nInclure selon disponibilité : date, lieu, nom et prénom(s) du sujet, père, mère, parrain, marraine, conjoint(e), témoins, profession, âge, mentions marginales. N'invente rien ; omets les champs absents.\n\nTRANSCRIPTION :\n"+text;
-    try{
-      const data=await callAnthropic([{role:"user",content:[{type:"text",text:prompt}]}]);
-      if(data.error)throw new Error(data.error.message||"API");
-      let raw=(data.content||[]).filter(x=>x.type==="text").map(x=>x.text).join("\n").trim().replace(/```json|```/g,"").trim();
-      const obj=JSON.parse(raw);
-      lastActes=obj.actes||[];
-      renderActes(lastActes);
-    }catch(err){
-      console.error(err);analyzeLoading.style.display="none";
-      analyzeContent.innerHTML='<p style="color:var(--muted);font-size:14px">Analyse impossible ('+esc(err.message||"erreur")+'). Réessayez, ou vérifiez que le mode IA fonctionne. Pour un long texte, traitez un acte à la fois.</p>';
-    }
-  }
-  function renderActes(actes){
-    analyzeLoading.style.display="none";
-    if(!actes||!actes.length){analyzeContent.innerHTML='<p style="color:var(--muted);font-size:14px">Aucun acte identifié dans ce texte.</p>';return;}
-    analyzeContent.innerHTML=actes.map((a,i)=>{
-      const rows=(a.champs||[]).map(c=>`<div class="acte-row"><span class="k">${esc(c.label||"")}</span><span class="v">${esc(c.valeur||"")}</span></div>`).join("");
-      return `<div class="acte-card"><div class="acte-type">${esc(a.type||("Acte "+(i+1)))}</div>${rows}</div>`;
-    }).join("");
-    analyzeCopy.style.display="";analyzeCsv.style.display="";
-  }
-  function actesToText(){return (lastActes||[]).map((a,i)=>{const head=(a.type||("Acte "+(i+1))).toUpperCase();return head+"\n"+(a.champs||[]).map(c=>`${c.label} : ${c.valeur}`).join("\n");}).join("\n\n");}
-  analyzeCopy.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(actesToText());showToast("Analyse copiée ✓");}catch(_){showToast("Copie impossible");}});
-  analyzeCsv.addEventListener("click",()=>{
-    const q=s=>'"'+String(s||"").replace(/"/g,'""')+'"';
-    let csv="Acte,Type,Champ,Valeur\n";
-    (lastActes||[]).forEach((a,i)=>{(a.champs||[]).forEach(c=>{csv+=[i+1,q(a.type),q(c.label),q(c.valeur)].join(",")+"\n";});});
-    saveBlob(new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"}),"acte-analyse.csv");showToast("CSV téléchargé ✓");
-  });
-
-  if(/[?&]admin/i.test(location.search)) gearBtn.style.display="flex";
   applyLang("fr");
 })();
 </script>
