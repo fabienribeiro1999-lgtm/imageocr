@@ -237,6 +237,7 @@
   .dz-hint{display:block;margin-top:12px;font-size:12px;color:var(--muted)}
   .dz-hint kbd{background:var(--bg);border:1px solid var(--border-strong);border-bottom-width:2px;border-radius:5px;padding:1px 6px;font-size:11px;font-family:inherit;color:var(--ink-2)}
   .batch-status{display:flex;align-items:center;gap:10px;background:var(--blue-soft);border:1px solid var(--blue);color:var(--blue);border-radius:12px;padding:11px 16px;margin-bottom:18px;font-size:14px;font-weight:600}
+  .word-count{margin-left:auto;margin-right:12px;font-size:12px;color:var(--muted);font-weight:500;white-space:nowrap}
   .batch-status strong{color:var(--blue)}
   .bspin{width:16px;height:16px;border:2px solid color-mix(in srgb,var(--blue) 30%,transparent);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite;flex:0 0 auto}
   .simple-view{max-width:860px;margin:0 auto}
@@ -398,7 +399,7 @@
 
     <div class="text-area empty" id="textArea" data-i18n="empty_text">Le texte extrait apparaîtra ici</div>
     <div class="progress" id="progress"><div class="spinner"></div><div class="status" id="status">Préparation…</div><div class="bar"><i id="barFill"></i></div></div>
-    <div class="legend" id="legend"><span id="legendText" data-i18n="legend">Mots incertains — cliquez pour corriger · clic = surbrillance sur l'image</span><button class="btn-edit" id="editBtn" data-i18n="btn_editall">Tout modifier</button></div>
+    <div class="legend" id="legend"><span id="legendText" data-i18n="legend">Mots incertains — cliquez pour corriger · clic = surbrillance sur l'image</span><span class="word-count" id="wordCount"></span><button class="btn-edit" id="editBtn" data-i18n="btn_editall">Tout modifier</button></div>
   </div>
 
   <div class="pop" id="pop"><div class="pop-title">Suggestions</div><div class="sugg" id="suggList"></div><div class="pop-edit"><input type="text" id="popInput" placeholder="Correction…"><button id="popOk">OK</button></div></div>
@@ -493,7 +494,7 @@
   </div>
 </section>
 
-<footer><div class="wrap foot"><span class="copy" data-i18n="footer_copy">© 2026 Image2OCR — Tous droits réservés.</span><a href="/convertir-image-en-texte.html">Image en texte</a><a href="/pdf-scanne-en-word.html">PDF scanné en Word</a><a href="/ocr-en-ligne-gratuit.html">OCR gratuit</a><a href="#" id="navLegal" data-i18n="footer_legal">Mentions légales</a><a href="#" id="navPrivacy" data-i18n="footer_privacy">Confidentialité</a><a href="#" id="navContact" data-i18n="footer_contact">Contact</a></div></footer>
+<footer><div class="wrap foot"><span class="copy" data-i18n="footer_copy">© 2026 Image2OCR — Tous droits réservés.</span><a href="/convertir-image-en-texte.html">Image en texte</a><a href="/pdf-scanne-en-word.html">PDF scanné en Word</a><a href="/extraire-texte-capture-ecran.html">Capture d'écran</a><a href="/ocr-telephone-mobile.html">OCR mobile</a><a href="/ocr-en-ligne-gratuit.html">OCR gratuit</a><a href="#" id="navLegal" data-i18n="footer_legal">Mentions légales</a><a href="#" id="navPrivacy" data-i18n="footer_privacy">Confidentialité</a><a href="#" id="navContact" data-i18n="footer_contact">Contact</a></div></footer>
 
 <div class="toast" id="toast"></div>
 
@@ -601,12 +602,19 @@
     clearHighlight();drawZoneRect();
     document.querySelectorAll("textarea.editor").forEach(t=>t.remove());
     zoneResetBtn.style.display=(p.crop.w<.999||p.crop.h<.999)?"inline-flex":"none";
-    if(p.status==="processing"){progress.style.display="flex";textArea.style.display="none";legend.style.display="none";return;}
+    if(p.status==="processing"){progress.style.display="flex";textArea.style.display="none";legend.style.display="none";wordCount.textContent="";return;}
     progress.style.display="none";
-    if(!p.done){textArea.style.display="";textArea.className="text-area empty";textArea.textContent="En attente…";legend.style.display="none";copyBtn.disabled=dlBtn.disabled=true;return;}
-    copyBtn.disabled=dlBtn.disabled=false;legend.style.display="flex";
+    if(!p.done){textArea.style.display="";textArea.className="text-area empty";textArea.textContent="En attente…";legend.style.display="none";wordCount.textContent="";copyBtn.disabled=dlBtn.disabled=true;return;}
+    copyBtn.disabled=dlBtn.disabled=false;legend.style.display="flex";updateWordCount(p);
     if(p.manual!=null){showEditor(p);return;}
     textArea.style.display="";renderLines(p);
+  }
+
+  const wordCount=$("#wordCount");
+  function updateWordCount(p){
+    if(!p||!p.done){wordCount.textContent="";return;}
+    const txt=pageText(p),chars=txt.length,words=(txt.match(/\S+/g)||[]).length;
+    wordCount.textContent=words+" mot"+(words>1?"s":"")+" · "+chars+" caractère"+(chars>1?"s":"");
   }
 
   function renderLines(p){
@@ -767,7 +775,7 @@
   function showEditor(p){
     textArea.style.display="none";
     const ta=document.createElement("textarea");ta.className="editor";ta.value=p.manual;
-    ta.addEventListener("input",()=>p.manual=ta.value);
+    ta.addEventListener("input",()=>{p.manual=ta.value;updateWordCount(p);});
     textArea.insertAdjacentElement("afterend",ta);
     legend.querySelector("span").textContent=t("edit_active");editBtn.style.display="none";
   }
