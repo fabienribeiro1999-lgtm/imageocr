@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +18,29 @@
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <style>
   :root{--blue:#2563eb;--blue-dark:#1d4ed8;--blue-soft:#eff4ff;--bg:#f7f9fc;--card:#fff;--border:#e8ecf2;--border-strong:#dce2ec;--ink:#0f172a;--ink-2:#1e293b;--muted:#5b6678}
+  [data-theme="dark"]{--blue:#4f8cff;--blue-dark:#3b78ee;--blue-soft:#1b2741;--bg:#0e1320;--card:#161d2e;--border:#242d42;--border-strong:#303b54;--ink:#e9eef8;--ink-2:#cbd5e9;--muted:#8896b0;--green:#4ade80}
+  [data-theme="dark"] body{background:var(--bg)}
+  [data-theme="dark"] .dropzone{background:#131a2a}
+  [data-theme="dark"] .dropzone:hover,[data-theme="dark"] .dropzone.drag{background:var(--blue-soft)}
+  [data-theme="dark"] .item,[data-theme="dark"] .fileline,[data-theme="dark"] .pg{background:#131a2a}
+  [data-theme="dark"] .item img,[data-theme="dark"] .pg img{background:#0c1120}
+  [data-theme="dark"] select{background-color:#1d2740}
+  [data-theme="dark"] .item button,[data-theme="dark"] .fileline button{background:#1d2740}
+  [data-theme="dark"] .cta-box{border-color:#2b3a5e}
+  [data-theme="dark"] .note{background:#131a2a}
+  [data-theme="dark"] kbd{background:#1d2740;border-color:#3a4664;color:var(--ink-2)}
+  [data-theme="dark"] .toast{background:#243049;color:#fff}
+  .hdr-right{display:flex;align-items:center;gap:14px}
+  .theme-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:center;color:var(--ink-2);background:transparent;cursor:pointer;flex:0 0 auto}
+  .theme-btn:hover{background:var(--blue-soft);color:var(--blue)}
+  .lang-dd{position:relative}
+  .lang-btn{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--ink-2);border:1px solid var(--border-strong);background:transparent;padding:8px 11px;border-radius:10px;cursor:pointer;font-family:inherit}
+  .lang-btn:hover{background:var(--blue-soft);color:var(--blue)}
+  .lang-menu{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:11px;box-shadow:0 12px 34px rgba(15,23,42,.18);padding:6px;min-width:165px;display:none;z-index:50}
+  .lang-menu.open{display:block}
+  .lang-menu button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 12px;border-radius:8px;font-size:14px;font-weight:500;color:var(--ink-2);background:none;border:none;cursor:pointer;font-family:inherit}
+  .lang-menu button:hover{background:var(--blue-soft);color:var(--blue)}
+  @media(max-width:600px){.nav{display:none}}
   *{box-sizing:border-box}
   body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink-2);line-height:1.6;-webkit-font-smoothing:antialiased}
   a{color:var(--blue);text-decoration:none}
@@ -68,34 +91,34 @@
 <body>
 <header>
   <a class="logo" href="/">Image2<span>OCR</span></a>
-  <nav class="nav"><a href="/">OCR</a><a href="/image-en-pdf.html">Image → PDF</a><a href="/pdf-en-images.html" style="color:var(--blue)">PDF → images</a></nav>
+  <div class="hdr-right"><nav class="nav"><a href="/">OCR</a><a href="/image-en-pdf.html">Image → PDF</a><a href="/pdf-en-images.html" style="color:var(--blue)">PDF → images</a></nav><div class="lang-dd" id="langDD"><button class="lang-btn" id="langBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20"/></svg><span id="langLabel">FR</span></button><div class="lang-menu" id="langMenu"><button data-lang="fr">🇫🇷 Français</button><button data-lang="en">🇬🇧 English</button><button data-lang="es">🇪🇸 Español</button><button data-lang="de">🇩🇪 Deutsch</button><button data-lang="it">🇮🇹 Italiano</button><button data-lang="pt">🇵🇹 Português</button></div></div><button class="theme-btn" id="themeBtn" aria-label="Theme"><svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"></svg></button></div>
 </header>
 <main>
-  <h1>Convertir un PDF en images</h1>
-  <p class="lead">Transformez chaque page d'un PDF en image (JPG ou PNG), gratuitement et directement dans votre navigateur. Aucune inscription, aucun envoi de fichier.</p>
+  <h1 data-i18n="h1">Convertir un PDF en images</h1>
+  <p class="lead" data-i18n="lead">Transformez chaque page d'un PDF en image (JPG ou PNG), gratuitement et directement dans votre navigateur. Aucune inscription, aucun envoi de fichier.</p>
 
   <div class="tool">
     <div class="dropzone" id="dropzone">
       <div class="dz-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
-      <strong>Déposez votre PDF ici</strong>
-      <span>ou cliquez pour le choisir</span>
+      <strong data-i18n="dz_strong">Déposez votre PDF ici</strong>
+      <span data-i18n="dz_sub">ou cliquez pour le choisir</span>
     </div>
     <input type="file" id="fileInput" accept="application/pdf" hidden>
     <div id="fileBox"></div>
 
     <div class="options" id="options" style="display:none">
-      <div class="opt"><label for="format">Format des images</label>
-        <select id="format"><option value="image/jpeg">JPG</option><option value="image/png">PNG (sans perte)</option></select>
+      <div class="opt"><label for="format" data-i18n="lbl_format">Format des images</label>
+        <select id="format"><option value="image/jpeg">JPG</option><option value="image/png" data-i18n="opt_png">PNG (sans perte)</option></select>
       </div>
-      <div class="opt"><label for="scale">Résolution</label>
-        <select id="scale"><option value="1.5">Standard</option><option value="2" selected>Haute</option><option value="3">Très haute</option></select>
+      <div class="opt"><label for="scale" data-i18n="lbl_scale">Résolution</label>
+        <select id="scale"><option value="1.5" data-i18n="opt_std">Standard</option><option value="2" selected data-i18n="opt_high">Haute</option><option value="3" data-i18n="opt_vhigh">Très haute</option></select>
       </div>
     </div>
 
     <div class="gen" id="genRow" style="display:none">
       <button class="btn" id="genBtn">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg>
-        Convertir en images
+        <span data-i18n="btn_conv">Convertir en images</span>
       </button>
       <span class="progress" id="progress"></span>
     </div>
@@ -104,27 +127,27 @@
     <div class="gen" id="zipRow" style="display:none">
       <button class="btn" id="zipBtn">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Télécharger tout (ZIP)
+        <span data-i18n="btn_zip">Télécharger tout (ZIP)</span>
       </button>
-      <span class="progress">Astuce&nbsp;: cliquez une page pour la télécharger seule.</span>
+      <span class="progress" data-i18n="zip_hint">Astuce&nbsp;: cliquez une page pour la télécharger seule.</span>
     </div>
   </div>
 
-  <div class="note">🔒 <strong>100 % privé</strong> — la conversion se fait entièrement dans votre navigateur. Votre PDF n'est jamais envoyé sur un serveur.</div>
+  <div class="note" data-i18n-html="note">🔒 <strong>100 % privé</strong> — la conversion se fait entièrement dans votre navigateur. Votre PDF n'est jamais envoyé sur un serveur.</div>
 
-  <h2>Comment ça marche</h2>
-  <p>Déposez votre PDF, choisissez le format des images et la résolution, puis cliquez sur «&nbsp;Convertir&nbsp;». Chaque page devient une image. Vous pouvez télécharger toutes les pages d'un coup en ZIP, ou cliquer sur une page précise pour la récupérer seule. Le JPG est plus léger, le PNG conserve une qualité parfaite.</p>
+  <h2 data-i18n="h2_how">Comment ça marche</h2>
+  <p data-i18n-html="p_how">Déposez votre PDF, choisissez le format des images et la résolution, puis cliquez sur «&nbsp;Convertir&nbsp;». Chaque page devient une image. Vous pouvez télécharger toutes les pages d'un coup en ZIP, ou cliquer sur une page précise pour la récupérer seule. Le JPG est plus léger, le PNG conserve une qualité parfaite.</p>
 
   <div class="related">
-    <a href="/image-en-pdf.html">→ Convertir des images en PDF</a>
-    <a href="/pdf-scanne-en-word.html">→ Convertir un PDF scanné en Word</a>
-    <a href="/">→ OCR : extraire le texte d'un PDF</a>
+    <a href="/image-en-pdf.html" data-i18n="rel1">→ Convertir des images en PDF</a>
+    <a href="/pdf-scanne-en-word.html" data-i18n="rel2">→ Convertir un PDF scanné en Word</a>
+    <a href="/" data-i18n="rel3">→ OCR : extraire le texte d'un PDF</a>
   </div>
 </main>
 <footer>
   <div class="foot">
     <span>© 2026 Image2OCR</span>
-    <a href="/">Accueil (OCR)</a>
+    <a href="/" data-i18n="foot_home">Accueil (OCR)</a>
     <a href="/image-en-pdf.html">Image → PDF</a>
     <a href="/pdf-en-images.html">PDF → images</a>
   </div>
@@ -134,6 +157,22 @@
 <script>
 (function(){
   const $=s=>document.querySelector(s);
+  var themeBtn=document.getElementById("themeBtn"),themeIcon=document.getElementById("themeIcon");
+  var ICON_MOON='<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',ICON_SUN='<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+  function setThemeIcon(){var d=document.documentElement.getAttribute("data-theme")==="dark";themeIcon.innerHTML=d?ICON_MOON:ICON_SUN;}
+  themeBtn.addEventListener("click",function(){var d=document.documentElement.getAttribute("data-theme")==="dark";document.documentElement.setAttribute("data-theme",d?"light":"dark");setThemeIcon();});
+  setThemeIcon();
+
+  var I18N={"fr": {"h1": "Convertir un PDF en images", "lead": "Transformez chaque page d'un PDF en image (JPG ou PNG), gratuitement et directement dans votre navigateur. Aucune inscription, aucun envoi de fichier.", "dz_strong": "Déposez votre PDF ici", "dz_sub": "ou cliquez pour le choisir", "lbl_format": "Format des images", "opt_png": "PNG (sans perte)", "lbl_scale": "Résolution", "opt_std": "Standard", "opt_high": "Haute", "opt_vhigh": "Très haute", "btn_conv": "Convertir en images", "btn_zip": "Télécharger tout (ZIP)", "zip_hint": "Astuce : cliquez une page pour la télécharger seule.", "note": "🔒 <strong>100 % privé</strong> — la conversion se fait entièrement dans votre navigateur. Votre PDF n'est jamais envoyé sur un serveur.", "h2_how": "Comment ça marche", "p_how": "Déposez votre PDF, choisissez le format des images et la résolution, puis cliquez sur «&nbsp;Convertir&nbsp;». Chaque page devient une image. Vous pouvez télécharger toutes les pages d'un coup en ZIP, ou cliquer sur une page précise pour la récupérer seule. Le JPG est plus léger, le PNG conserve une qualité parfaite.", "rel1": "→ Convertir des images en PDF", "rel2": "→ Convertir un PDF scanné en Word", "rel3": "→ OCR : extraire le texte d'un PDF", "foot_home": "Accueil (OCR)", "page": "Page", "done_count": "{n} page(s) converties ✓", "toast_err": "Erreur : PDF illisible ou protégé", "toast_zip": "ZIP téléchargé ✓", "toast_ziperr": "Erreur ZIP"}, "en": {"h1": "Convert a PDF to images", "lead": "Turn each page of a PDF into an image (JPG or PNG), free and directly in your browser. No sign-up, no file upload.", "dz_strong": "Drop your PDF here", "dz_sub": "or click to choose it", "lbl_format": "Image format", "opt_png": "PNG (lossless)", "lbl_scale": "Resolution", "opt_std": "Standard", "opt_high": "High", "opt_vhigh": "Very high", "btn_conv": "Convert to images", "btn_zip": "Download all (ZIP)", "zip_hint": "Tip: click a page to download it on its own.", "note": "🔒 <strong>100% private</strong> — the conversion happens entirely in your browser. Your PDF is never sent to a server.", "h2_how": "How it works", "p_how": "Drop your PDF, choose the image format and resolution, then click “Convert”. Each page becomes an image. You can download all pages at once as a ZIP, or click a specific page to grab it alone. JPG is lighter, PNG keeps perfect quality.", "rel1": "→ Convert images to PDF", "rel2": "→ Convert a scanned PDF to Word", "rel3": "→ OCR: extract text from a PDF", "foot_home": "Home (OCR)", "page": "Page", "done_count": "{n} page(s) converted ✓", "toast_err": "Error: unreadable or protected PDF", "toast_zip": "ZIP downloaded ✓", "toast_ziperr": "ZIP error"}, "es": {"h1": "Convertir un PDF en imágenes", "lead": "Convierte cada página de un PDF en una imagen (JPG o PNG), gratis y directamente en tu navegador. Sin registro, sin subir archivos.", "dz_strong": "Suelta tu PDF aquí", "dz_sub": "o haz clic para elegirlo", "lbl_format": "Formato de imagen", "opt_png": "PNG (sin pérdida)", "lbl_scale": "Resolución", "opt_std": "Estándar", "opt_high": "Alta", "opt_vhigh": "Muy alta", "btn_conv": "Convertir en imágenes", "btn_zip": "Descargar todo (ZIP)", "zip_hint": "Consejo: haz clic en una página para descargarla sola.", "note": "🔒 <strong>100 % privado</strong> — la conversión ocurre por completo en tu navegador. Tu PDF nunca se envía a un servidor.", "h2_how": "Cómo funciona", "p_how": "Suelta tu PDF, elige el formato de imagen y la resolución, y haz clic en «Convertir». Cada página se convierte en una imagen. Puedes descargar todas las páginas a la vez en ZIP, o hacer clic en una página concreta para obtenerla sola. JPG es más ligero, PNG mantiene una calidad perfecta.", "rel1": "→ Convertir imágenes a PDF", "rel2": "→ Convertir un PDF escaneado a Word", "rel3": "→ OCR: extraer el texto de un PDF", "foot_home": "Inicio (OCR)", "page": "Página", "done_count": "{n} página(s) convertidas ✓", "toast_err": "Error: PDF ilegible o protegido", "toast_zip": "ZIP descargado ✓", "toast_ziperr": "Error de ZIP"}, "de": {"h1": "PDF in Bilder umwandeln", "lead": "Wandeln Sie jede Seite eines PDF in ein Bild (JPG oder PNG) um – kostenlos und direkt im Browser. Keine Anmeldung, kein Datei-Upload.", "dz_strong": "PDF hier ablegen", "dz_sub": "oder klicken zum Auswählen", "lbl_format": "Bildformat", "opt_png": "PNG (verlustfrei)", "lbl_scale": "Auflösung", "opt_std": "Standard", "opt_high": "Hoch", "opt_vhigh": "Sehr hoch", "btn_conv": "In Bilder umwandeln", "btn_zip": "Alle laden (ZIP)", "zip_hint": "Tipp: Auf eine Seite klicken, um sie einzeln zu laden.", "note": "🔒 <strong>100 % privat</strong> — die Umwandlung erfolgt vollständig in Ihrem Browser. Ihr PDF wird nie an einen Server gesendet.", "h2_how": "So funktioniert es", "p_how": "PDF ablegen, Bildformat und Auflösung wählen, dann auf „Umwandeln“ klicken. Jede Seite wird zu einem Bild. Sie können alle Seiten auf einmal als ZIP laden oder auf eine bestimmte Seite klicken, um sie einzeln zu erhalten. JPG ist leichter, PNG behält perfekte Qualität.", "rel1": "→ Bilder in PDF umwandeln", "rel2": "→ Gescanntes PDF in Word umwandeln", "rel3": "→ OCR: Text aus einem PDF extrahieren", "foot_home": "Start (OCR)", "page": "Seite", "done_count": "{n} Seite(n) umgewandelt ✓", "toast_err": "Fehler: unlesbares oder geschütztes PDF", "toast_zip": "ZIP heruntergeladen ✓", "toast_ziperr": "ZIP-Fehler"}, "it": {"h1": "Convertire un PDF in immagini", "lead": "Trasforma ogni pagina di un PDF in un'immagine (JPG o PNG), gratis e direttamente nel browser. Senza registrazione, senza caricare file.", "dz_strong": "Trascina qui il tuo PDF", "dz_sub": "o clicca per sceglierlo", "lbl_format": "Formato immagine", "opt_png": "PNG (senza perdita)", "lbl_scale": "Risoluzione", "opt_std": "Standard", "opt_high": "Alta", "opt_vhigh": "Molto alta", "btn_conv": "Converti in immagini", "btn_zip": "Scarica tutto (ZIP)", "zip_hint": "Suggerimento: clicca una pagina per scaricarla da sola.", "note": "🔒 <strong>100% privato</strong> — la conversione avviene interamente nel tuo browser. Il tuo PDF non viene mai inviato a un server.", "h2_how": "Come funziona", "p_how": "Trascina il PDF, scegli il formato immagine e la risoluzione, poi clicca «Converti». Ogni pagina diventa un'immagine. Puoi scaricare tutte le pagine in una volta in ZIP, o cliccare una pagina specifica per ottenerla da sola. Il JPG è più leggero, il PNG mantiene una qualità perfetta.", "rel1": "→ Convertire immagini in PDF", "rel2": "→ Convertire un PDF scansionato in Word", "rel3": "→ OCR: estrarre il testo da un PDF", "foot_home": "Home (OCR)", "page": "Pagina", "done_count": "{n} pagina/e convertite ✓", "toast_err": "Errore: PDF illeggibile o protetto", "toast_zip": "ZIP scaricato ✓", "toast_ziperr": "Errore ZIP"}, "pt": {"h1": "Converter um PDF em imagens", "lead": "Transforme cada página de um PDF numa imagem (JPG ou PNG), grátis e diretamente no navegador. Sem registo, sem enviar ficheiros.", "dz_strong": "Largue o seu PDF aqui", "dz_sub": "ou clique para escolher", "lbl_format": "Formato das imagens", "opt_png": "PNG (sem perdas)", "lbl_scale": "Resolução", "opt_std": "Padrão", "opt_high": "Alta", "opt_vhigh": "Muito alta", "btn_conv": "Converter em imagens", "btn_zip": "Transferir tudo (ZIP)", "zip_hint": "Dica: clique numa página para a transferir sozinha.", "note": "🔒 <strong>100 % privado</strong> — a conversão acontece inteiramente no seu navegador. O seu PDF nunca é enviado para um servidor.", "h2_how": "Como funciona", "p_how": "Largue o PDF, escolha o formato das imagens e a resolução, depois clique em «Converter». Cada página torna-se uma imagem. Pode transferir todas as páginas de uma vez em ZIP, ou clicar numa página específica para a obter sozinha. O JPG é mais leve, o PNG mantém qualidade perfeita.", "rel1": "→ Converter imagens em PDF", "rel2": "→ Converter um PDF digitalizado em Word", "rel3": "→ OCR: extrair o texto de um PDF", "foot_home": "Início (OCR)", "page": "Página", "done_count": "{n} página(s) convertidas ✓", "toast_err": "Erro: PDF ilegível ou protegido", "toast_zip": "ZIP transferido ✓", "toast_ziperr": "Erro de ZIP"}};
+  var curLang="fr";
+  function t(k){return (I18N[curLang]&&I18N[curLang][k])||I18N.fr[k]||k;}
+  function refreshDynamic(){}
+  function applyLang(l){curLang=l;var d=I18N[l]||I18N.fr;document.querySelectorAll("[data-i18n]").forEach(function(el){var k=el.getAttribute("data-i18n");if(d[k]!=null)el.textContent=d[k];});document.querySelectorAll("[data-i18n-html]").forEach(function(el){var k=el.getAttribute("data-i18n-html");if(d[k]!=null)el.innerHTML=d[k];});document.getElementById("langLabel").textContent=l.toUpperCase();document.documentElement.lang=l;refreshDynamic();}
+  var langBtn=document.getElementById("langBtn"),langMenu=document.getElementById("langMenu");
+  langBtn.addEventListener("click",function(e){e.stopPropagation();langMenu.classList.toggle("open");});
+  document.addEventListener("click",function(){langMenu.classList.remove("open");});
+  langMenu.querySelectorAll("[data-lang]").forEach(function(b){b.addEventListener("click",function(){applyLang(b.dataset.lang);langMenu.classList.remove("open");});});
+
   const dropzone=$("#dropzone"),fileInput=$("#fileInput"),fileBox=$("#fileBox"),options=$("#options"),genRow=$("#genRow"),genBtn=$("#genBtn"),progress=$("#progress"),grid=$("#grid"),zipRow=$("#zipRow"),zipBtn=$("#zipBtn"),toast=$("#toast");
   let pdfFile=null,pages=[]; // pages: {n, blob, url, ext}
   if(window.pdfjsLib)pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
@@ -162,7 +201,7 @@
       const buf=await pdfFile.arrayBuffer();
       const pdf=await pdfjsLib.getDocument({data:buf}).promise;
       for(let n=1;n<=pdf.numPages;n++){
-        progress.textContent="Page "+n+"/"+pdf.numPages+"…";
+        progress.textContent=t("page")+" "+n+"/"+pdf.numPages+"…";
         const page=await pdf.getPage(n);
         const vp=page.getViewport({scale});
         const canvas=document.createElement("canvas");canvas.width=vp.width;canvas.height=vp.height;
@@ -174,15 +213,15 @@
         pages.push({n,blob,url,ext});
         addThumb(n,url,ext);
       }
-      progress.textContent=pdf.numPages+" page"+(pdf.numPages>1?"s":"")+" converties ✓";
+      progress.textContent=t("done_count").replace("{n}",pdf.numPages);
       zipRow.style.display=pages.length?"flex":"none";
-    }catch(err){console.error(err);progress.textContent="";showToast("Erreur : PDF illisible ou protégé");}
+    }catch(err){console.error(err);progress.textContent="";showToast(t("toast_err"));}
     genBtn.disabled=false;
   });
 
   function addThumb(n,url,ext){
     const d=document.createElement("div");d.className="pg";
-    d.innerHTML=`<img src="${url}" alt="Page ${n}"><div class="cap">Page ${n}</div>`;
+    d.innerHTML=`<img src="${url}" alt="Page ${n}"><div class="cap">${t("page")} ${n}</div>`;
     d.onclick=()=>{const a=document.createElement("a");a.href=url;a.download="page-"+String(n).padStart(2,"0")+"."+ext;a.click();};
     grid.appendChild(d);
   }
@@ -196,8 +235,8 @@
       const z=await zip.generateAsync({type:"blob"});
       const a=document.createElement("a");a.href=URL.createObjectURL(z);a.download="pdf-images.zip";a.click();
       setTimeout(()=>URL.revokeObjectURL(a.href),4000);
-      showToast("ZIP téléchargé ✓");
-    }catch(err){console.error(err);showToast("Erreur ZIP");}
+      showToast(t("toast_zip"));
+    }catch(err){console.error(err);showToast(t("toast_ziperr"));}
     zipBtn.disabled=false;
   });
 })();

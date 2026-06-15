@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +17,29 @@
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 <style>
   :root{--blue:#2563eb;--blue-dark:#1d4ed8;--blue-soft:#eff4ff;--bg:#f7f9fc;--card:#fff;--border:#e8ecf2;--border-strong:#dce2ec;--ink:#0f172a;--ink-2:#1e293b;--muted:#5b6678}
+  [data-theme="dark"]{--blue:#4f8cff;--blue-dark:#3b78ee;--blue-soft:#1b2741;--bg:#0e1320;--card:#161d2e;--border:#242d42;--border-strong:#303b54;--ink:#e9eef8;--ink-2:#cbd5e9;--muted:#8896b0;--green:#4ade80}
+  [data-theme="dark"] body{background:var(--bg)}
+  [data-theme="dark"] .dropzone{background:#131a2a}
+  [data-theme="dark"] .dropzone:hover,[data-theme="dark"] .dropzone.drag{background:var(--blue-soft)}
+  [data-theme="dark"] .item,[data-theme="dark"] .fileline,[data-theme="dark"] .pg{background:#131a2a}
+  [data-theme="dark"] .item img,[data-theme="dark"] .pg img{background:#0c1120}
+  [data-theme="dark"] select{background-color:#1d2740}
+  [data-theme="dark"] .item button,[data-theme="dark"] .fileline button{background:#1d2740}
+  [data-theme="dark"] .cta-box{border-color:#2b3a5e}
+  [data-theme="dark"] .note{background:#131a2a}
+  [data-theme="dark"] kbd{background:#1d2740;border-color:#3a4664;color:var(--ink-2)}
+  [data-theme="dark"] .toast{background:#243049;color:#fff}
+  .hdr-right{display:flex;align-items:center;gap:14px}
+  .theme-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:center;color:var(--ink-2);background:transparent;cursor:pointer;flex:0 0 auto}
+  .theme-btn:hover{background:var(--blue-soft);color:var(--blue)}
+  .lang-dd{position:relative}
+  .lang-btn{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--ink-2);border:1px solid var(--border-strong);background:transparent;padding:8px 11px;border-radius:10px;cursor:pointer;font-family:inherit}
+  .lang-btn:hover{background:var(--blue-soft);color:var(--blue)}
+  .lang-menu{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:11px;box-shadow:0 12px 34px rgba(15,23,42,.18);padding:6px;min-width:165px;display:none;z-index:50}
+  .lang-menu.open{display:block}
+  .lang-menu button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 12px;border-radius:8px;font-size:14px;font-weight:500;color:var(--ink-2);background:none;border:none;cursor:pointer;font-family:inherit}
+  .lang-menu button:hover{background:var(--blue-soft);color:var(--blue)}
+  @media(max-width:600px){.nav{display:none}}
   *{box-sizing:border-box}
   body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink-2);line-height:1.6;-webkit-font-smoothing:antialiased}
   a{color:var(--blue);text-decoration:none}
@@ -68,57 +91,57 @@
 <body>
 <header>
   <a class="logo" href="/">Image2<span>OCR</span></a>
-  <nav class="nav"><a href="/">OCR</a><a href="/image-en-pdf.html" style="color:var(--blue)">Image → PDF</a></nav>
+  <div class="hdr-right"><nav class="nav"><a href="/">OCR</a><a href="/image-en-pdf.html" style="color:var(--blue)">Image → PDF</a></nav><div class="lang-dd" id="langDD"><button class="lang-btn" id="langBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20"/></svg><span id="langLabel">FR</span></button><div class="lang-menu" id="langMenu"><button data-lang="fr">🇫🇷 Français</button><button data-lang="en">🇬🇧 English</button><button data-lang="es">🇪🇸 Español</button><button data-lang="de">🇩🇪 Deutsch</button><button data-lang="it">🇮🇹 Italiano</button><button data-lang="pt">🇵🇹 Português</button></div></div><button class="theme-btn" id="themeBtn" aria-label="Theme"><svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"></svg></button></div>
 </header>
 <main>
-  <h1>Convertir des images en PDF</h1>
-  <p class="lead">Regroupez plusieurs images (photos, scans, captures) en un seul fichier PDF, gratuitement et directement dans votre navigateur. Aucune inscription, aucun envoi de fichier.</p>
+  <h1 data-i18n="h1">Convertir des images en PDF</h1>
+  <p class="lead" data-i18n="lead">Regroupez plusieurs images (photos, scans, captures) en un seul fichier PDF, gratuitement et directement dans votre navigateur. Aucune inscription, aucun envoi de fichier.</p>
 
   <div class="tool">
     <div class="dropzone" id="dropzone">
       <div class="dz-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg></div>
-      <strong>Déposez vos images ici</strong>
-      <span>ou cliquez pour les choisir · JPG, PNG, WEBP… · plusieurs fichiers acceptés</span>
+      <strong data-i18n="dz_strong">Déposez vos images ici</strong>
+      <span data-i18n="dz_sub">ou cliquez pour les choisir · JPG, PNG, WEBP… · plusieurs fichiers acceptés</span>
     </div>
     <input type="file" id="fileInput" accept="image/*" multiple hidden>
     <div class="list" id="list"></div>
 
     <div class="options" id="options" style="display:none">
-      <div class="opt"><label for="fmt">Format de page</label>
-        <select id="fmt"><option value="a4">A4</option><option value="letter">Lettre (US)</option><option value="fit">Ajusté à chaque image</option></select>
+      <div class="opt"><label for="fmt" data-i18n="lbl_fmt">Format de page</label>
+        <select id="fmt"><option value="a4">A4</option><option value="letter" data-i18n="opt_letter">Lettre (US)</option><option value="fit" data-i18n="opt_fit">Ajusté à chaque image</option></select>
       </div>
-      <div class="opt"><label for="margin">Marge</label>
-        <select id="margin"><option value="medium">Moyenne</option><option value="small">Petite</option><option value="none">Aucune</option></select>
+      <div class="opt"><label for="margin" data-i18n="lbl_margin">Marge</label>
+        <select id="margin"><option value="medium" data-i18n="opt_medium">Moyenne</option><option value="small" data-i18n="opt_small">Petite</option><option value="none" data-i18n="opt_none">Aucune</option></select>
       </div>
     </div>
 
     <div class="gen">
       <button class="btn" id="genBtn" disabled>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
-        Générer le PDF
+        <span data-i18n="btn_gen">Générer le PDF</span>
       </button>
-      <div class="hint" id="hint">Ajoutez au moins une image pour commencer.</div>
+      <div class="hint" id="hint" data-i18n="hint_empty">Ajoutez au moins une image pour commencer.</div>
     </div>
   </div>
 
-  <div class="note">🔒 <strong>100 % privé</strong> — la conversion se fait entièrement dans votre navigateur. Vos images ne sont jamais envoyées sur un serveur.</div>
+  <div class="note" data-i18n-html="note">🔒 <strong>100 % privé</strong> — la conversion se fait entièrement dans votre navigateur. Vos images ne sont jamais envoyées sur un serveur.</div>
 
-  <h2>Comment ça marche</h2>
-  <p>Déposez ou choisissez vos images, réorganisez-les dans l'ordre souhaité avec les flèches, choisissez le format de page, puis cliquez sur <strong>«&nbsp;Générer le PDF&nbsp;»</strong>. Le fichier est créé instantanément et téléchargé sur votre appareil. Chaque image occupe une page.</p>
+  <h2 data-i18n="h2_how">Comment ça marche</h2>
+  <p data-i18n-html="p_how">Déposez ou choisissez vos images, réorganisez-les dans l'ordre souhaité avec les flèches, choisissez le format de page, puis cliquez sur <strong>«&nbsp;Générer le PDF&nbsp;»</strong>. Le fichier est créé instantanément et téléchargé sur votre appareil. Chaque image occupe une page.</p>
 
-  <h2>Besoin de l'inverse ou de récupérer du texte&nbsp;?</h2>
-  <p>Pour extraire le <strong>texte</strong> d'une image ou d'un PDF scanné, utilisez l'outil principal&nbsp;: <a href="/">Image2OCR</a>.</p>
+  <h2 data-i18n="h2_inv">Besoin de l'inverse ou de récupérer du texte&nbsp;?</h2>
+  <p data-i18n-html="p_inv">Pour extraire le <strong>texte</strong> d'une image ou d'un PDF scanné, utilisez l'outil principal&nbsp;: <a href="/">Image2OCR</a>.</p>
 
   <div class="related">
-    <a href="/">→ OCR : convertir une image en texte</a>
-    <a href="/pdf-scanne-en-word.html">→ Convertir un PDF scanné en Word</a>
-    <a href="/convertir-image-en-texte.html">→ Convertir une image en texte gratuitement</a>
+    <a href="/" data-i18n="rel1">→ OCR : convertir une image en texte</a>
+    <a href="/pdf-scanne-en-word.html" data-i18n="rel2">→ Convertir un PDF scanné en Word</a>
+    <a href="/convertir-image-en-texte.html" data-i18n="rel3">→ Convertir une image en texte gratuitement</a>
   </div>
 </main>
 <footer>
   <div class="foot">
     <span>© 2026 Image2OCR</span>
-    <a href="/">Accueil (OCR)</a>
+    <a href="/" data-i18n="foot_home">Accueil (OCR)</a>
     <a href="/image-en-pdf.html">Image → PDF</a>
     <a href="/ocr-en-ligne-gratuit.html">OCR gratuit</a>
   </div>
@@ -128,6 +151,22 @@
 <script>
 (function(){
   const $=s=>document.querySelector(s);
+  var themeBtn=document.getElementById("themeBtn"),themeIcon=document.getElementById("themeIcon");
+  var ICON_MOON='<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',ICON_SUN='<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+  function setThemeIcon(){var d=document.documentElement.getAttribute("data-theme")==="dark";themeIcon.innerHTML=d?ICON_MOON:ICON_SUN;}
+  themeBtn.addEventListener("click",function(){var d=document.documentElement.getAttribute("data-theme")==="dark";document.documentElement.setAttribute("data-theme",d?"light":"dark");setThemeIcon();});
+  setThemeIcon();
+
+  var I18N={"fr": {"h1": "Convertir des images en PDF", "lead": "Regroupez plusieurs images (photos, scans, captures) en un seul fichier PDF, gratuitement et directement dans votre navigateur. Aucune inscription, aucun envoi de fichier.", "dz_strong": "Déposez vos images ici", "dz_sub": "ou cliquez pour les choisir · JPG, PNG, WEBP… · plusieurs fichiers acceptés", "lbl_fmt": "Format de page", "opt_letter": "Lettre (US)", "opt_fit": "Ajusté à chaque image", "lbl_margin": "Marge", "opt_medium": "Moyenne", "opt_small": "Petite", "opt_none": "Aucune", "btn_gen": "Générer le PDF", "btn_genning": "Génération…", "note": "🔒 <strong>100 % privé</strong> — la conversion se fait entièrement dans votre navigateur. Vos images ne sont jamais envoyées sur un serveur.", "h2_how": "Comment ça marche", "p_how": "Déposez ou choisissez vos images, réorganisez-les dans l'ordre souhaité avec les flèches, choisissez le format de page, puis cliquez sur <strong>«&nbsp;Générer le PDF&nbsp;»</strong>. Le fichier est créé instantanément et téléchargé sur votre appareil. Chaque image occupe une page.", "h2_inv": "Besoin de l'inverse ou de récupérer du texte ?", "p_inv": "Pour extraire le <strong>texte</strong> d'une image ou d'un PDF scanné, utilisez l'outil principal : <a href=\"/\">Image2OCR</a>.", "rel1": "→ OCR : convertir une image en texte", "rel2": "→ Convertir un PDF scanné en Word", "rel3": "→ Convertir une image en texte gratuitement", "foot_home": "Accueil (OCR)", "hint_empty": "Ajoutez au moins une image pour commencer.", "hint_count": "{n} image(s) · 1 image = 1 page", "toast_done": "PDF téléchargé ✓", "toast_err": "Erreur lors de la génération"}, "en": {"h1": "Convert images to PDF", "lead": "Combine several images (photos, scans, screenshots) into a single PDF file, free and directly in your browser. No sign-up, no file upload.", "dz_strong": "Drop your images here", "dz_sub": "or click to choose them · JPG, PNG, WEBP… · multiple files accepted", "lbl_fmt": "Page format", "opt_letter": "Letter (US)", "opt_fit": "Fit to each image", "lbl_margin": "Margin", "opt_medium": "Medium", "opt_small": "Small", "opt_none": "None", "btn_gen": "Generate PDF", "btn_genning": "Generating…", "note": "🔒 <strong>100% private</strong> — the conversion happens entirely in your browser. Your images are never sent to a server.", "h2_how": "How it works", "p_how": "Drop or choose your images, reorder them with the arrows, pick a page format, then click <strong>“Generate PDF”</strong>. The file is created instantly and downloaded to your device. Each image takes one page.", "h2_inv": "Need the reverse, or to get the text?", "p_inv": "To extract the <strong>text</strong> from an image or a scanned PDF, use the main tool: <a href=\"/\">Image2OCR</a>.", "rel1": "→ OCR: convert an image to text", "rel2": "→ Convert a scanned PDF to Word", "rel3": "→ Convert an image to text for free", "foot_home": "Home (OCR)", "hint_empty": "Add at least one image to start.", "hint_count": "{n} image(s) · 1 image = 1 page", "toast_done": "PDF downloaded ✓", "toast_err": "Error while generating"}, "es": {"h1": "Convertir imágenes a PDF", "lead": "Reúne varias imágenes (fotos, escaneos, capturas) en un solo archivo PDF, gratis y directamente en tu navegador. Sin registro, sin subir archivos.", "dz_strong": "Suelta tus imágenes aquí", "dz_sub": "o haz clic para elegirlas · JPG, PNG, WEBP… · se aceptan varios archivos", "lbl_fmt": "Formato de página", "opt_letter": "Carta (US)", "opt_fit": "Ajustar a cada imagen", "lbl_margin": "Margen", "opt_medium": "Medio", "opt_small": "Pequeño", "opt_none": "Ninguno", "btn_gen": "Generar PDF", "btn_genning": "Generando…", "note": "🔒 <strong>100 % privado</strong> — la conversión ocurre por completo en tu navegador. Tus imágenes nunca se envían a un servidor.", "h2_how": "Cómo funciona", "p_how": "Suelta o elige tus imágenes, reordénalas con las flechas, elige un formato de página y haz clic en <strong>«Generar PDF»</strong>. El archivo se crea al instante y se descarga en tu dispositivo. Cada imagen ocupa una página.", "h2_inv": "¿Necesitas lo contrario o recuperar el texto?", "p_inv": "Para extraer el <strong>texto</strong> de una imagen o un PDF escaneado, usa la herramienta principal: <a href=\"/\">Image2OCR</a>.", "rel1": "→ OCR: convertir una imagen en texto", "rel2": "→ Convertir un PDF escaneado a Word", "rel3": "→ Convertir una imagen en texto gratis", "foot_home": "Inicio (OCR)", "hint_empty": "Añade al menos una imagen para empezar.", "hint_count": "{n} imagen(es) · 1 imagen = 1 página", "toast_done": "PDF descargado ✓", "toast_err": "Error al generar"}, "de": {"h1": "Bilder in PDF umwandeln", "lead": "Fassen Sie mehrere Bilder (Fotos, Scans, Screenshots) in einer einzigen PDF-Datei zusammen – kostenlos und direkt im Browser. Keine Anmeldung, kein Datei-Upload.", "dz_strong": "Bilder hier ablegen", "dz_sub": "oder klicken zum Auswählen · JPG, PNG, WEBP… · mehrere Dateien möglich", "lbl_fmt": "Seitenformat", "opt_letter": "Letter (US)", "opt_fit": "An jedes Bild anpassen", "lbl_margin": "Rand", "opt_medium": "Mittel", "opt_small": "Klein", "opt_none": "Keiner", "btn_gen": "PDF erstellen", "btn_genning": "Wird erstellt…", "note": "🔒 <strong>100 % privat</strong> — die Umwandlung erfolgt vollständig in Ihrem Browser. Ihre Bilder werden nie an einen Server gesendet.", "h2_how": "So funktioniert es", "p_how": "Bilder ablegen oder auswählen, mit den Pfeilen ordnen, ein Seitenformat wählen und auf <strong>„PDF erstellen“</strong> klicken. Die Datei wird sofort erstellt und auf Ihr Gerät geladen. Jedes Bild belegt eine Seite.", "h2_inv": "Den umgekehrten Weg oder den Text gewünscht?", "p_inv": "Um den <strong>Text</strong> aus einem Bild oder gescannten PDF zu extrahieren, nutzen Sie das Haupt-Tool: <a href=\"/\">Image2OCR</a>.", "rel1": "→ OCR: Bild in Text umwandeln", "rel2": "→ Gescanntes PDF in Word umwandeln", "rel3": "→ Bild kostenlos in Text umwandeln", "foot_home": "Start (OCR)", "hint_empty": "Fügen Sie mindestens ein Bild hinzu.", "hint_count": "{n} Bild(er) · 1 Bild = 1 Seite", "toast_done": "PDF heruntergeladen ✓", "toast_err": "Fehler bei der Erstellung"}, "it": {"h1": "Convertire immagini in PDF", "lead": "Unisci più immagini (foto, scansioni, screenshot) in un unico file PDF, gratis e direttamente nel browser. Senza registrazione, senza caricare file.", "dz_strong": "Trascina qui le tue immagini", "dz_sub": "o clicca per sceglierle · JPG, PNG, WEBP… · più file accettati", "lbl_fmt": "Formato pagina", "opt_letter": "Lettera (US)", "opt_fit": "Adatta a ogni immagine", "lbl_margin": "Margine", "opt_medium": "Medio", "opt_small": "Piccolo", "opt_none": "Nessuno", "btn_gen": "Genera PDF", "btn_genning": "Generazione…", "note": "🔒 <strong>100% privato</strong> — la conversione avviene interamente nel tuo browser. Le tue immagini non vengono mai inviate a un server.", "h2_how": "Come funziona", "p_how": "Trascina o scegli le immagini, riordinale con le frecce, scegli un formato pagina e clicca su <strong>«Genera PDF»</strong>. Il file viene creato all'istante e scaricato sul dispositivo. Ogni immagine occupa una pagina.", "h2_inv": "Ti serve il contrario o recuperare il testo?", "p_inv": "Per estrarre il <strong>testo</strong> da un'immagine o da un PDF scansionato, usa lo strumento principale: <a href=\"/\">Image2OCR</a>.", "rel1": "→ OCR: convertire un'immagine in testo", "rel2": "→ Convertire un PDF scansionato in Word", "rel3": "→ Convertire un'immagine in testo gratis", "foot_home": "Home (OCR)", "hint_empty": "Aggiungi almeno un'immagine per iniziare.", "hint_count": "{n} immagine/i · 1 immagine = 1 pagina", "toast_done": "PDF scaricato ✓", "toast_err": "Errore durante la generazione"}, "pt": {"h1": "Converter imagens em PDF", "lead": "Junte várias imagens (fotos, digitalizações, capturas) num único ficheiro PDF, grátis e diretamente no navegador. Sem registo, sem enviar ficheiros.", "dz_strong": "Largue as suas imagens aqui", "dz_sub": "ou clique para escolher · JPG, PNG, WEBP… · vários ficheiros aceites", "lbl_fmt": "Formato da página", "opt_letter": "Carta (US)", "opt_fit": "Ajustar a cada imagem", "lbl_margin": "Margem", "opt_medium": "Média", "opt_small": "Pequena", "opt_none": "Nenhuma", "btn_gen": "Gerar PDF", "btn_genning": "A gerar…", "note": "🔒 <strong>100 % privado</strong> — a conversão acontece inteiramente no seu navegador. As suas imagens nunca são enviadas para um servidor.", "h2_how": "Como funciona", "p_how": "Largue ou escolha as imagens, reordene-as com as setas, escolha um formato de página e clique em <strong>«Gerar PDF»</strong>. O ficheiro é criado de imediato e transferido para o seu dispositivo. Cada imagem ocupa uma página.", "h2_inv": "Precisa do inverso ou de obter o texto?", "p_inv": "Para extrair o <strong>texto</strong> de uma imagem ou PDF digitalizado, use a ferramenta principal: <a href=\"/\">Image2OCR</a>.", "rel1": "→ OCR: converter uma imagem em texto", "rel2": "→ Converter um PDF digitalizado em Word", "rel3": "→ Converter uma imagem em texto grátis", "foot_home": "Início (OCR)", "hint_empty": "Adicione pelo menos uma imagem para começar.", "hint_count": "{n} imagem(ns) · 1 imagem = 1 página", "toast_done": "PDF transferido ✓", "toast_err": "Erro ao gerar"}};
+  var curLang="fr";
+  function t(k){return (I18N[curLang]&&I18N[curLang][k])||I18N.fr[k]||k;}
+  function refreshDynamic(){if(typeof items!=="undefined"&&typeof hint!=="undefined")hint.textContent=items.length?t("hint_count").replace("{n}",items.length):t("hint_empty");}
+  function applyLang(l){curLang=l;var d=I18N[l]||I18N.fr;document.querySelectorAll("[data-i18n]").forEach(function(el){var k=el.getAttribute("data-i18n");if(d[k]!=null)el.textContent=d[k];});document.querySelectorAll("[data-i18n-html]").forEach(function(el){var k=el.getAttribute("data-i18n-html");if(d[k]!=null)el.innerHTML=d[k];});document.getElementById("langLabel").textContent=l.toUpperCase();document.documentElement.lang=l;refreshDynamic();}
+  var langBtn=document.getElementById("langBtn"),langMenu=document.getElementById("langMenu");
+  langBtn.addEventListener("click",function(e){e.stopPropagation();langMenu.classList.toggle("open");});
+  document.addEventListener("click",function(){langMenu.classList.remove("open");});
+  langMenu.querySelectorAll("[data-lang]").forEach(function(b){b.addEventListener("click",function(){applyLang(b.dataset.lang);langMenu.classList.remove("open");});});
+
   const dropzone=$("#dropzone"),fileInput=$("#fileInput"),list=$("#list"),options=$("#options"),genBtn=$("#genBtn"),hint=$("#hint"),toast=$("#toast");
   let items=[]; // {file, url, w, h, name}
 
@@ -164,7 +203,7 @@
       </div>`).join("");
     options.style.display=items.length?"flex":"none";
     genBtn.disabled=!items.length;
-    hint.textContent=items.length?(items.length+" image"+(items.length>1?"s":"")+" · 1 image = 1 page"):"Ajoutez au moins une image pour commencer.";
+    hint.textContent=items.length?t("hint_count").replace("{n}",items.length):t("hint_empty");
     list.querySelectorAll(".up").forEach(b=>b.onclick=()=>move(+b.dataset.i,-1));
     list.querySelectorAll(".down").forEach(b=>b.onclick=()=>move(+b.dataset.i,1));
     list.querySelectorAll(".del").forEach(b=>b.onclick=()=>{URL.revokeObjectURL(items[+b.dataset.i].url);items.splice(+b.dataset.i,1);render();});
@@ -190,7 +229,7 @@
 
   genBtn.addEventListener("click",async()=>{
     if(!items.length)return;
-    genBtn.disabled=true;genBtn.textContent="Génération…";
+    genBtn.disabled=true;genBtn.textContent=t("btn_genning");
     try{
       const {jsPDF}=window.jspdf;
       const fmt=$("#fmt").value, margin=MARGINS[$("#margin").value];
@@ -216,9 +255,9 @@
         }
       }
       doc.save("images.pdf");
-      showToast("PDF téléchargé ✓");
-    }catch(err){console.error(err);showToast("Erreur lors de la génération");}
-    genBtn.disabled=false;genBtn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg> Générer le PDF';
+      showToast(t("toast_done"));
+    }catch(err){console.error(err);showToast(t("toast_err"));}
+    genBtn.disabled=false;genBtn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg> '+t("btn_gen");
   });
 })();
 </script>

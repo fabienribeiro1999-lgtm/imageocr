@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +17,29 @@
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <style>
   :root{--blue:#2563eb;--blue-dark:#1d4ed8;--blue-soft:#eff4ff;--bg:#f7f9fc;--card:#fff;--border:#e8ecf2;--border-strong:#dce2ec;--ink:#0f172a;--ink-2:#1e293b;--muted:#5b6678;--green:#16a34a}
+  [data-theme="dark"]{--blue:#4f8cff;--blue-dark:#3b78ee;--blue-soft:#1b2741;--bg:#0e1320;--card:#161d2e;--border:#242d42;--border-strong:#303b54;--ink:#e9eef8;--ink-2:#cbd5e9;--muted:#8896b0;--green:#4ade80}
+  [data-theme="dark"] body{background:var(--bg)}
+  [data-theme="dark"] .dropzone{background:#131a2a}
+  [data-theme="dark"] .dropzone:hover,[data-theme="dark"] .dropzone.drag{background:var(--blue-soft)}
+  [data-theme="dark"] .item,[data-theme="dark"] .fileline,[data-theme="dark"] .pg{background:#131a2a}
+  [data-theme="dark"] .item img,[data-theme="dark"] .pg img{background:#0c1120}
+  [data-theme="dark"] select{background-color:#1d2740}
+  [data-theme="dark"] .item button,[data-theme="dark"] .fileline button{background:#1d2740}
+  [data-theme="dark"] .cta-box{border-color:#2b3a5e}
+  [data-theme="dark"] .note{background:#131a2a}
+  [data-theme="dark"] kbd{background:#1d2740;border-color:#3a4664;color:var(--ink-2)}
+  [data-theme="dark"] .toast{background:#243049;color:#fff}
+  .hdr-right{display:flex;align-items:center;gap:14px}
+  .theme-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:center;color:var(--ink-2);background:transparent;cursor:pointer;flex:0 0 auto}
+  .theme-btn:hover{background:var(--blue-soft);color:var(--blue)}
+  .lang-dd{position:relative}
+  .lang-btn{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--ink-2);border:1px solid var(--border-strong);background:transparent;padding:8px 11px;border-radius:10px;cursor:pointer;font-family:inherit}
+  .lang-btn:hover{background:var(--blue-soft);color:var(--blue)}
+  .lang-menu{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:11px;box-shadow:0 12px 34px rgba(15,23,42,.18);padding:6px;min-width:165px;display:none;z-index:50}
+  .lang-menu.open{display:block}
+  .lang-menu button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 12px;border-radius:8px;font-size:14px;font-weight:500;color:var(--ink-2);background:none;border:none;cursor:pointer;font-family:inherit}
+  .lang-menu button:hover{background:var(--blue-soft);color:var(--blue)}
+  @media(max-width:600px){.nav{display:none}}
   *{box-sizing:border-box}
   body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink-2);line-height:1.6;-webkit-font-smoothing:antialiased}
   a{color:var(--blue);text-decoration:none}
@@ -69,55 +92,55 @@
 <body>
 <header>
   <a class="logo" href="/">Image2<span>OCR</span></a>
-  <nav class="nav"><a href="/">OCR</a><a href="/image-en-pdf.html">Image → PDF</a><a href="/compresser-image.html" style="color:var(--blue)">Compresser</a></nav>
+  <div class="hdr-right"><nav class="nav"><a href="/">OCR</a><a href="/image-en-pdf.html">Image → PDF</a><a href="/compresser-image.html" style="color:var(--blue)">Compresser</a></nav><div class="lang-dd" id="langDD"><button class="lang-btn" id="langBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20"/></svg><span id="langLabel">FR</span></button><div class="lang-menu" id="langMenu"><button data-lang="fr">🇫🇷 Français</button><button data-lang="en">🇬🇧 English</button><button data-lang="es">🇪🇸 Español</button><button data-lang="de">🇩🇪 Deutsch</button><button data-lang="it">🇮🇹 Italiano</button><button data-lang="pt">🇵🇹 Português</button></div></div><button class="theme-btn" id="themeBtn" aria-label="Theme"><svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"></svg></button></div>
 </header>
 <main>
-  <h1>Compresser une image</h1>
-  <p class="lead">Réduisez le poids de vos images (JPG, PNG, WEBP) en quelques secondes, gratuitement et directement dans votre navigateur. Idéal pour envoyer un fichier plus léger ou alléger un site.</p>
+  <h1 data-i18n="h1">Compresser une image</h1>
+  <p class="lead" data-i18n="lead">Réduisez le poids de vos images (JPG, PNG, WEBP) en quelques secondes, gratuitement et directement dans votre navigateur. Idéal pour envoyer un fichier plus léger ou alléger un site.</p>
 
   <div class="tool">
     <div class="dropzone" id="dropzone">
       <div class="dz-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg></div>
-      <strong>Déposez vos images ici</strong>
-      <span>ou cliquez pour les choisir · JPG, PNG, WEBP · plusieurs fichiers acceptés</span>
+      <strong data-i18n="dz_strong">Déposez vos images ici</strong>
+      <span data-i18n="dz_sub">ou cliquez pour les choisir · JPG, PNG, WEBP · plusieurs fichiers acceptés</span>
     </div>
     <input type="file" id="fileInput" accept="image/*" multiple hidden>
     <div class="list" id="list"></div>
 
     <div class="options" id="options" style="display:none">
-      <div class="opt"><label for="level">Niveau de compression</label>
-        <select id="level"><option value="0.55">Forte (plus léger)</option><option value="0.7" selected>Moyenne (recommandé)</option><option value="0.85">Légère (meilleure qualité)</option></select>
+      <div class="opt"><label for="level" data-i18n="lbl_level">Niveau de compression</label>
+        <select id="level"><option value="0.55" data-i18n="opt_strong">Forte (plus léger)</option><option value="0.7" selected data-i18n="opt_med">Moyenne (recommandé)</option><option value="0.85" data-i18n="opt_light">Légère (meilleure qualité)</option></select>
       </div>
-      <div class="opt"><label for="format">Format de sortie</label>
-        <select id="format"><option value="image/jpeg">JPG</option><option value="image/webp">WEBP (plus léger)</option></select>
+      <div class="opt"><label for="format" data-i18n="lbl_format">Format de sortie</label>
+        <select id="format"><option value="image/jpeg">JPG</option><option value="image/webp" data-i18n="opt_webp">WEBP (plus léger)</option></select>
       </div>
-      <label class="chk"><input type="checkbox" id="resize"> Réduire à 1920px max</label>
+      <label class="chk"><input type="checkbox" id="resize"> <span data-i18n="chk_resize">Réduire à 1920px max</span></label>
     </div>
 
     <div class="gen">
       <button class="btn" id="genBtn" disabled>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Compresser &amp; télécharger
+        <span data-i18n="btn_gen">Compresser &amp; télécharger</span>
       </button>
       <span class="summary" id="summary"></span>
     </div>
   </div>
 
-  <div class="note">🔒 <strong>100 % privé</strong> — la compression se fait entièrement dans votre navigateur. Vos images ne sont jamais envoyées sur un serveur.</div>
+  <div class="note" data-i18n-html="note">🔒 <strong>100 % privé</strong> — la compression se fait entièrement dans votre navigateur. Vos images ne sont jamais envoyées sur un serveur.</div>
 
-  <h2>Comment ça marche</h2>
-  <p>Déposez vos images, choisissez le niveau de compression et le format, puis cliquez sur le bouton. Pour une seule image, le fichier compressé est téléchargé directement&nbsp;; pour plusieurs, vous obtenez un fichier ZIP. Le WEBP offre généralement le meilleur rapport poids/qualité.</p>
+  <h2 data-i18n="h2_how">Comment ça marche</h2>
+  <p data-i18n-html="p_how">Déposez vos images, choisissez le niveau de compression et le format, puis cliquez sur le bouton. Pour une seule image, le fichier compressé est téléchargé directement&nbsp;; pour plusieurs, vous obtenez un fichier ZIP. Le WEBP offre généralement le meilleur rapport poids/qualité.</p>
 
   <div class="related">
-    <a href="/pdf-en-images.html">→ Convertir un PDF en images</a>
-    <a href="/image-en-pdf.html">→ Convertir des images en PDF</a>
-    <a href="/">→ OCR : convertir une image en texte</a>
+    <a href="/pdf-en-images.html" data-i18n="rel1">→ Convertir un PDF en images</a>
+    <a href="/image-en-pdf.html" data-i18n="rel2">→ Convertir des images en PDF</a>
+    <a href="/" data-i18n="rel3">→ OCR : convertir une image en texte</a>
   </div>
 </main>
 <footer>
   <div class="foot">
     <span>© 2026 Image2OCR</span>
-    <a href="/">Accueil (OCR)</a>
+    <a href="/" data-i18n="foot_home">Accueil (OCR)</a>
     <a href="/image-en-pdf.html">Image → PDF</a>
     <a href="/compresser-image.html">Compresser</a>
   </div>
@@ -127,6 +150,22 @@
 <script>
 (function(){
   const $=s=>document.querySelector(s);
+  var themeBtn=document.getElementById("themeBtn"),themeIcon=document.getElementById("themeIcon");
+  var ICON_MOON='<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',ICON_SUN='<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+  function setThemeIcon(){var d=document.documentElement.getAttribute("data-theme")==="dark";themeIcon.innerHTML=d?ICON_MOON:ICON_SUN;}
+  themeBtn.addEventListener("click",function(){var d=document.documentElement.getAttribute("data-theme")==="dark";document.documentElement.setAttribute("data-theme",d?"light":"dark");setThemeIcon();});
+  setThemeIcon();
+
+  var I18N={"fr": {"h1": "Compresser une image", "lead": "Réduisez le poids de vos images (JPG, PNG, WEBP) en quelques secondes, gratuitement et directement dans votre navigateur. Idéal pour envoyer un fichier plus léger ou alléger un site.", "dz_strong": "Déposez vos images ici", "dz_sub": "ou cliquez pour les choisir · JPG, PNG, WEBP · plusieurs fichiers acceptés", "lbl_level": "Niveau de compression", "opt_strong": "Forte (plus léger)", "opt_med": "Moyenne (recommandé)", "opt_light": "Légère (meilleure qualité)", "lbl_format": "Format de sortie", "opt_webp": "WEBP (plus léger)", "chk_resize": "Réduire à 1920px max", "btn_gen": "Compresser & télécharger", "note": "🔒 <strong>100 % privé</strong> — la compression se fait entièrement dans votre navigateur. Vos images ne sont jamais envoyées sur un serveur.", "h2_how": "Comment ça marche", "p_how": "Déposez vos images, choisissez le niveau de compression et le format, puis cliquez sur le bouton. Pour une seule image, le fichier compressé est téléchargé directement&nbsp;; pour plusieurs, vous obtenez un fichier ZIP. Le WEBP offre généralement le meilleur rapport poids/qualité.", "rel1": "→ Convertir un PDF en images", "rel2": "→ Convertir des images en PDF", "rel3": "→ OCR : convertir une image en texte", "foot_home": "Accueil (OCR)", "toast_done": "Téléchargé ✓", "toast_err": "Erreur de compression", "less": "en moins"}, "en": {"h1": "Compress an image", "lead": "Reduce the size of your images (JPG, PNG, WEBP) in seconds, free and directly in your browser. Ideal for sending a lighter file or speeding up a website.", "dz_strong": "Drop your images here", "dz_sub": "or click to choose them · JPG, PNG, WEBP · multiple files accepted", "lbl_level": "Compression level", "opt_strong": "Strong (lighter)", "opt_med": "Medium (recommended)", "opt_light": "Light (best quality)", "lbl_format": "Output format", "opt_webp": "WEBP (lighter)", "chk_resize": "Resize to max 1920px", "btn_gen": "Compress & download", "note": "🔒 <strong>100% private</strong> — compression happens entirely in your browser. Your images are never sent to a server.", "h2_how": "How it works", "p_how": "Drop your images, choose the compression level and format, then click the button. For a single image, the compressed file downloads directly; for several, you get a ZIP file. WEBP usually offers the best size/quality ratio.", "rel1": "→ Convert a PDF to images", "rel2": "→ Convert images to PDF", "rel3": "→ OCR: convert an image to text", "foot_home": "Home (OCR)", "toast_done": "Downloaded ✓", "toast_err": "Compression error", "less": "smaller"}, "es": {"h1": "Comprimir una imagen", "lead": "Reduce el peso de tus imágenes (JPG, PNG, WEBP) en segundos, gratis y directamente en tu navegador. Ideal para enviar un archivo más ligero o aligerar un sitio.", "dz_strong": "Suelta tus imágenes aquí", "dz_sub": "o haz clic para elegirlas · JPG, PNG, WEBP · se aceptan varios archivos", "lbl_level": "Nivel de compresión", "opt_strong": "Fuerte (más ligero)", "opt_med": "Media (recomendado)", "opt_light": "Ligera (mejor calidad)", "lbl_format": "Formato de salida", "opt_webp": "WEBP (más ligero)", "chk_resize": "Reducir a 1920px máx.", "btn_gen": "Comprimir y descargar", "note": "🔒 <strong>100 % privado</strong> — la compresión ocurre por completo en tu navegador. Tus imágenes nunca se envían a un servidor.", "h2_how": "Cómo funciona", "p_how": "Suelta tus imágenes, elige el nivel de compresión y el formato, y haz clic en el botón. Para una sola imagen, el archivo comprimido se descarga directamente; para varias, obtienes un ZIP. WEBP suele ofrecer la mejor relación peso/calidad.", "rel1": "→ Convertir un PDF en imágenes", "rel2": "→ Convertir imágenes a PDF", "rel3": "→ OCR: convertir una imagen en texto", "foot_home": "Inicio (OCR)", "toast_done": "Descargado ✓", "toast_err": "Error de compresión", "less": "menos"}, "de": {"h1": "Bild komprimieren", "lead": "Verringern Sie die Größe Ihrer Bilder (JPG, PNG, WEBP) in Sekunden – kostenlos und direkt im Browser. Ideal, um eine leichtere Datei zu senden oder eine Website zu beschleunigen.", "dz_strong": "Bilder hier ablegen", "dz_sub": "oder klicken zum Auswählen · JPG, PNG, WEBP · mehrere Dateien möglich", "lbl_level": "Komprimierungsgrad", "opt_strong": "Stark (leichter)", "opt_med": "Mittel (empfohlen)", "opt_light": "Leicht (beste Qualität)", "lbl_format": "Ausgabeformat", "opt_webp": "WEBP (leichter)", "chk_resize": "Auf max. 1920px verkleinern", "btn_gen": "Komprimieren & laden", "note": "🔒 <strong>100 % privat</strong> — die Komprimierung erfolgt vollständig in Ihrem Browser. Ihre Bilder werden nie an einen Server gesendet.", "h2_how": "So funktioniert es", "p_how": "Bilder ablegen, Komprimierungsgrad und Format wählen, dann auf die Schaltfläche klicken. Bei einem Bild wird die Datei direkt geladen; bei mehreren erhalten Sie eine ZIP-Datei. WEBP bietet meist das beste Verhältnis von Größe und Qualität.", "rel1": "→ PDF in Bilder umwandeln", "rel2": "→ Bilder in PDF umwandeln", "rel3": "→ OCR: Bild in Text umwandeln", "foot_home": "Start (OCR)", "toast_done": "Heruntergeladen ✓", "toast_err": "Komprimierungsfehler", "less": "weniger"}, "it": {"h1": "Comprimere un'immagine", "lead": "Riduci il peso delle tue immagini (JPG, PNG, WEBP) in pochi secondi, gratis e direttamente nel browser. Ideale per inviare un file più leggero o alleggerire un sito.", "dz_strong": "Trascina qui le tue immagini", "dz_sub": "o clicca per sceglierle · JPG, PNG, WEBP · più file accettati", "lbl_level": "Livello di compressione", "opt_strong": "Forte (più leggero)", "opt_med": "Media (consigliato)", "opt_light": "Leggera (qualità migliore)", "lbl_format": "Formato di uscita", "opt_webp": "WEBP (più leggero)", "chk_resize": "Riduci a max 1920px", "btn_gen": "Comprimi e scarica", "note": "🔒 <strong>100% privato</strong> — la compressione avviene interamente nel tuo browser. Le tue immagini non vengono mai inviate a un server.", "h2_how": "Come funziona", "p_how": "Trascina le immagini, scegli il livello di compressione e il formato, poi clicca il pulsante. Per una sola immagine il file compresso si scarica subito; per più immagini ottieni un file ZIP. Il WEBP offre di solito il miglior rapporto peso/qualità.", "rel1": "→ Convertire un PDF in immagini", "rel2": "→ Convertire immagini in PDF", "rel3": "→ OCR: convertire un'immagine in testo", "foot_home": "Home (OCR)", "toast_done": "Scaricato ✓", "toast_err": "Errore di compressione", "less": "in meno"}, "pt": {"h1": "Comprimir uma imagem", "lead": "Reduza o tamanho das suas imagens (JPG, PNG, WEBP) em segundos, grátis e diretamente no navegador. Ideal para enviar um ficheiro mais leve ou aligeirar um site.", "dz_strong": "Largue as suas imagens aqui", "dz_sub": "ou clique para escolher · JPG, PNG, WEBP · vários ficheiros aceites", "lbl_level": "Nível de compressão", "opt_strong": "Forte (mais leve)", "opt_med": "Média (recomendado)", "opt_light": "Ligeira (melhor qualidade)", "lbl_format": "Formato de saída", "opt_webp": "WEBP (mais leve)", "chk_resize": "Reduzir para 1920px máx.", "btn_gen": "Comprimir e transferir", "note": "🔒 <strong>100 % privado</strong> — a compressão acontece inteiramente no seu navegador. As suas imagens nunca são enviadas para um servidor.", "h2_how": "Como funciona", "p_how": "Largue as imagens, escolha o nível de compressão e o formato e clique no botão. Para uma só imagem, o ficheiro comprimido é transferido diretamente; para várias, obtém um ZIP. O WEBP costuma oferecer a melhor relação tamanho/qualidade.", "rel1": "→ Converter um PDF em imagens", "rel2": "→ Converter imagens em PDF", "rel3": "→ OCR: converter uma imagem em texto", "foot_home": "Início (OCR)", "toast_done": "Transferido ✓", "toast_err": "Erro de compressão", "less": "a menos"}};
+  var curLang="fr";
+  function t(k){return (I18N[curLang]&&I18N[curLang][k])||I18N.fr[k]||k;}
+  function refreshDynamic(){}
+  function applyLang(l){curLang=l;var d=I18N[l]||I18N.fr;document.querySelectorAll("[data-i18n]").forEach(function(el){var k=el.getAttribute("data-i18n");if(d[k]!=null)el.textContent=d[k];});document.querySelectorAll("[data-i18n-html]").forEach(function(el){var k=el.getAttribute("data-i18n-html");if(d[k]!=null)el.innerHTML=d[k];});document.getElementById("langLabel").textContent=l.toUpperCase();document.documentElement.lang=l;refreshDynamic();}
+  var langBtn=document.getElementById("langBtn"),langMenu=document.getElementById("langMenu");
+  langBtn.addEventListener("click",function(e){e.stopPropagation();langMenu.classList.toggle("open");});
+  document.addEventListener("click",function(){langMenu.classList.remove("open");});
+  langMenu.querySelectorAll("[data-lang]").forEach(function(b){b.addEventListener("click",function(){applyLang(b.dataset.lang);langMenu.classList.remove("open");});});
+
   const dropzone=$("#dropzone"),fileInput=$("#fileInput"),list=$("#list"),options=$("#options"),genBtn=$("#genBtn"),summary=$("#summary"),toast=$("#toast");
   let items=[];
   function showToast(m){toast.textContent=m;toast.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(()=>toast.classList.remove("show"),2600);}
@@ -193,9 +232,9 @@
       if(blobs.length===1){download(blobs[0].blob,blobs[0].name);}
       else if(blobs.length>1&&window.JSZip){const zip=new JSZip();blobs.forEach(x=>zip.file(x.name,x.blob));const z=await zip.generateAsync({type:"blob"});download(z,"images-compressees.zip");}
       const saved=totalOld>0?Math.round((1-totalNew/totalOld)*100):0;
-      summary.textContent="✓ "+fmtSize(totalOld)+" → "+fmtSize(totalNew)+" ("+saved+"% en moins)";
-      showToast("Téléchargé ✓");
-    }catch(err){console.error(err);showToast("Erreur de compression");}
+      summary.textContent="✓ "+fmtSize(totalOld)+" → "+fmtSize(totalNew)+" ("+saved+"% "+t("less")+")";
+      showToast(t("toast_done"));
+    }catch(err){console.error(err);showToast(t("toast_err"));}
     genBtn.disabled=false;
   });
   function download(blob,name){const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000);}
